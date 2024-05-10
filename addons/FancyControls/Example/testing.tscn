@@ -1,0 +1,662 @@
+[gd_scene load_steps=6 format=3 uid="uid://dyd671fyvenq3"]
+
+[ext_resource type="Script" path="res://addons/FancyControls/Example/testing.gd" id="1_4dv0c"]
+[ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedBoxContainer/AnimatedBoxContainer.gd" id="1_hssgr"]
+[ext_resource type="Script" path="res://addons/FancyControls/Example/AnimatedFuncs.gd" id="3_5r14o"]
+[ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedRoundContainer/AnimatedRoundContainer.gd" id="3_j83mo"]
+[ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedGridContainer/AnimatedGridContainer.gd" id="4_rlq7o"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_4dv0c")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimatedBoxContainer" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+script = ExtResource("1_hssgr")
+box_direction = 1
+item_function_script = ExtResource("3_5r14o")
+hovered = &"item_hovered_example"
+unhovered = &"item_unhovered_example"
+focused = &""
+unfocused = &""
+input = &""
+
+[node name="Panel" type="Panel" parent="VBoxContainer/AnimatedBoxContainer"]
+layout_mode = 0
+offset_left = 28.0
+offset_right = 68.0
+offset_bottom = 40.0
+
+[node name="Panel2" type="Panel" parent="VBoxContainer/AnimatedBoxContainer"]
+layout_mode = 0
+offset_left = 124.0
+offset_right = 164.0
+offset_bottom = 40.0
+
+[node name="Panel3" type="Panel" parent="VBoxContainer/AnimatedBoxContainer"]
+layout_mode = 0
+offset_left = 220.0
+offset_right = 260.0
+offset_bottom = 40.0
+
+[node name="Panel4" type="Panel" parent="VBoxContainer/AnimatedBoxContainer"]
+layout_mode = 0
+offset_left = 316.0
+offset_right = 356.0
+offset_bottom = 40.0
+
+[node name="Panel5" type="Panel" parent="VBoxContainer/AnimatedBoxContainer"]
+layout_mode = 0
+offset_left = 412.0
+offset_right = 452.0
+offset_bottom = 40.0
+
+[node name="Panel6" type="Panel" parent="VBoxContainer/AnimatedBoxContainer"]
+layout_mode = 0
+offset_left = 508.0
+offset_right = 548.0
+offset_bottom = 40.0
+
+[node name="Panel7" type="Panel" parent="VBoxContainer/AnimatedBoxContainer"]
+layout_mode = 0
+offset_left = 604.0
+offset_right = 644.0
+offset_bottom = 40.0
+
+[node name="Panel8" type="Panel" parent="VBoxContainer/AnimatedBoxContainer"]
+layout_mode = 0
+offset_left = 700.0
+offset_right = 740.0
+offset_bottom = 40.0
+
+[node name="Panel9" type="Panel" parent="VBoxContainer/AnimatedBoxContainer"]
+layout_mode = 0
+offset_left = 796.0
+offset_right = 836.0
+offset_bottom = 40.0
+
+[node name="Panel10" type="Panel" parent="VBoxContainer/AnimatedBoxContainer"]
+layout_mode = 0
+offset_left = 892.0
+offset_right = 932.0
+offset_bottom = 40.0
+
+[node name="Panel11" type="Panel" parent="VBoxContainer/AnimatedBoxContainer"]
+layout_mode = 0
+offset_left = 988.0
+offset_right = 1028.0
+offset_bottom = 40.0
+
+[node name="Panel12" type="Panel" parent="VBoxContainer/AnimatedBoxContainer"]
+layout_mode = 0
+offset_left = 1084.0
+offset_right = 1124.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 256
+
+[node name="AnimatedRoundContainer" type="Control" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 214)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 1
+script = ExtResource("3_j83mo")
+box_direction = 1
+border_padding = Vector2(24, 24)
+item_function_script = ExtResource("3_5r14o")
+hovered = &"item_hovered_example"
+unhovered = &"item_unhovered_example"
+focused = null
+unfocused = null
+input = null
+
+[node name="Panel" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer"]
+layout_mode = 0
+offset_left = 86.5
+offset_top = 4.0
+offset_right = 126.5
+offset_bottom = 44.0
+
+[node name="Panel2" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer"]
+layout_mode = 0
+offset_left = 144.836
+offset_top = 28.3101
+offset_right = 184.836
+offset_bottom = 68.3101
+
+[node name="Panel3" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 87.0
+offset_right = 209.0
+offset_bottom = 127.0
+
+[node name="Panel4" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer"]
+layout_mode = 0
+offset_left = 144.836
+offset_top = 145.69
+offset_right = 184.836
+offset_bottom = 185.69
+
+[node name="Panel5" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer"]
+layout_mode = 0
+offset_left = 86.5
+offset_top = 170.0
+offset_right = 126.5
+offset_bottom = 210.0
+
+[node name="Panel6" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer"]
+layout_mode = 0
+offset_left = 28.1637
+offset_top = 145.69
+offset_right = 68.1637
+offset_bottom = 185.69
+
+[node name="Panel7" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 87.0
+offset_right = 44.0
+offset_bottom = 127.0
+
+[node name="Panel8" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer"]
+layout_mode = 0
+offset_left = 28.1637
+offset_top = 28.3101
+offset_right = 68.1637
+offset_bottom = 68.3102
+
+[node name="Buttons" type="Control" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 213)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("3_j83mo")
+do_rotation = false
+hovered = null
+unhovered = null
+focused = null
+unfocused = null
+input = null
+
+[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer/Buttons"]
+layout_mode = 2
+offset_left = 57.0
+offset_top = -15.5
+offset_right = 156.0
+offset_bottom = 15.5
+text = "Swap Up"
+
+[node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer/Buttons"]
+layout_mode = 2
+offset_left = -49.5
+offset_top = 91.0
+offset_right = 49.5
+offset_bottom = 122.0
+text = "Swap Left"
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer/Buttons"]
+layout_mode = 2
+offset_left = 57.0
+offset_top = 197.5
+offset_right = 156.0
+offset_bottom = 228.5
+text = "Swap Down"
+
+[node name="Button4" type="Button" parent="VBoxContainer/HBoxContainer/Buttons"]
+layout_mode = 2
+offset_left = 163.5
+offset_top = 91.0
+offset_right = 262.5
+offset_bottom = 122.0
+text = "Swap Right"
+
+[node name="AnimatedRoundContainer2" type="Control" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 214)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 1
+script = ExtResource("3_j83mo")
+box_direction = 1
+border_padding = Vector2(24, 24)
+hovered = null
+unhovered = null
+focused = null
+unfocused = null
+input = null
+
+[node name="Panel" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer2"]
+layout_mode = 0
+offset_left = 87.0
+offset_top = 4.0
+offset_right = 127.0
+offset_bottom = 44.0
+
+[node name="Panel5" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer2"]
+layout_mode = 0
+offset_left = 145.69
+offset_top = 28.3101
+offset_right = 185.69
+offset_bottom = 68.3101
+
+[node name="Panel6" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer2"]
+layout_mode = 0
+offset_left = 170.0
+offset_top = 87.0
+offset_right = 210.0
+offset_bottom = 127.0
+
+[node name="Panel7" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer2"]
+layout_mode = 0
+offset_left = 145.69
+offset_top = 145.69
+offset_right = 185.69
+offset_bottom = 185.69
+
+[node name="Panel8" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer2"]
+layout_mode = 0
+offset_left = 87.0
+offset_top = 170.0
+offset_right = 127.0
+offset_bottom = 210.0
+
+[node name="Panel2" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer2"]
+layout_mode = 0
+offset_left = 28.3101
+offset_top = 145.69
+offset_right = 68.3101
+offset_bottom = 185.69
+
+[node name="Panel3" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer2"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 87.0
+offset_right = 44.0
+offset_bottom = 127.0
+
+[node name="Panel4" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer2"]
+layout_mode = 0
+offset_left = 28.3101
+offset_top = 28.3101
+offset_right = 68.3101
+offset_bottom = 68.3102
+
+[node name="AnimatedBoxContainer2" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+script = ExtResource("1_hssgr")
+box_direction = 1
+hovered = null
+unhovered = null
+focused = null
+unfocused = null
+input = null
+
+[node name="AnimatedGridContainer" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 256)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+script = ExtResource("4_rlq7o")
+expand_direction = 1
+item_spacing = Vector2(42, 42)
+item_function_script = ExtResource("3_5r14o")
+hovered = &"item_hovered_example"
+unhovered = &"item_unhovered_example"
+focused = &""
+unfocused = &""
+input = null
+
+[node name="Panel" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel117" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_top = 46.3333
+offset_right = 40.0
+offset_bottom = 86.3333
+
+[node name="Panel118" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_top = 92.6667
+offset_right = 40.0
+offset_bottom = 132.667
+
+[node name="Panel114" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_top = 139.0
+offset_right = 39.9999
+offset_bottom = 179.0
+
+[node name="Panel116" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_top = 185.333
+offset_right = 40.0
+offset_bottom = 225.333
+
+[node name="Panel115" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_top = 231.667
+offset_right = 39.9999
+offset_bottom = 271.667
+
+[node name="Panel2" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 42.0
+offset_right = 82.0001
+offset_bottom = 40.0
+
+[node name="Panel27" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 46.3333
+offset_right = 82.0001
+offset_bottom = 86.3333
+
+[node name="Panel3" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 92.6667
+offset_right = 81.9998
+offset_bottom = 132.667
+
+[node name="Panel5" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 139.0
+offset_right = 81.9996
+offset_bottom = 179.0
+
+[node name="Panel113" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 185.333
+offset_right = 81.9998
+offset_bottom = 225.333
+
+[node name="Panel6" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 231.667
+offset_right = 81.9998
+offset_bottom = 271.667
+
+[node name="Panel7" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 84.0
+offset_right = 124.0
+offset_bottom = 40.0
+
+[node name="Panel4" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 46.3333
+offset_right = 124.0
+offset_bottom = 86.3333
+
+[node name="Panel8" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 92.6667
+offset_right = 124.0
+offset_bottom = 132.667
+
+[node name="Panel9" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 139.0
+offset_right = 124.0
+offset_bottom = 179.0
+
+[node name="Panel10" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 185.333
+offset_right = 124.0
+offset_bottom = 225.333
+
+[node name="Panel11" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 231.667
+offset_right = 124.0
+offset_bottom = 271.667
+
+[node name="Panel12" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 126.0
+offset_right = 166.0
+offset_bottom = 40.0
+
+[node name="Panel13" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 46.3333
+offset_right = 166.0
+offset_bottom = 86.3333
+
+[node name="Panel14" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 92.6667
+offset_right = 166.0
+offset_bottom = 132.667
+
+[node name="Panel15" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 139.0
+offset_right = 166.0
+offset_bottom = 179.0
+
+[node name="Panel16" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 185.333
+offset_right = 166.0
+offset_bottom = 225.333
+
+[node name="Panel17" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 231.667
+offset_right = 166.0
+offset_bottom = 271.667
+
+[node name="Panel18" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 168.0
+offset_right = 207.999
+offset_bottom = 40.0
+
+[node name="Panel19" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 46.3333
+offset_right = 208.0
+offset_bottom = 86.3333
+
+[node name="Panel20" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 92.6667
+offset_right = 208.0
+offset_bottom = 132.667
+
+[node name="Panel21" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 139.0
+offset_right = 208.0
+offset_bottom = 179.0
+
+[node name="Panel22" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 185.333
+offset_right = 208.0
+offset_bottom = 225.333
+
+[node name="Panel23" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 231.667
+offset_right = 208.0
+offset_bottom = 271.667
+
+[node name="Panel24" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 210.0
+offset_right = 249.999
+offset_bottom = 40.0
+
+[node name="Panel25" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 210.0
+offset_top = 46.3333
+offset_right = 250.0
+offset_bottom = 86.3333
+
+[node name="Panel35" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 210.0
+offset_top = 92.6667
+offset_right = 250.0
+offset_bottom = 132.667
+
+[node name="Panel36" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 210.0
+offset_top = 139.0
+offset_right = 250.0
+offset_bottom = 179.0
+
+[node name="Panel26" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 210.0
+offset_top = 185.333
+offset_right = 250.0
+offset_bottom = 225.333
+
+[node name="Panel28" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 210.0
+offset_top = 231.667
+offset_right = 250.0
+offset_bottom = 271.667
+
+[node name="Panel29" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 252.0
+offset_right = 292.0
+offset_bottom = 40.0
+
+[node name="Panel30" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 252.0
+offset_top = 46.3333
+offset_right = 292.0
+offset_bottom = 86.3333
+
+[node name="Panel31" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 252.0
+offset_top = 92.6667
+offset_right = 292.0
+offset_bottom = 132.667
+
+[node name="Panel32" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 252.0
+offset_top = 139.0
+offset_right = 292.0
+offset_bottom = 179.0
+
+[node name="Panel33" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 252.0
+offset_top = 185.333
+offset_right = 292.0
+offset_bottom = 225.333
+
+[node name="Panel34" type="Panel" parent="VBoxContainer/AnimatedGridContainer"]
+layout_mode = 0
+offset_left = 252.0
+offset_top = 231.667
+offset_right = 292.0
+offset_bottom = 271.667
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 142.0
+offset_right = 184.0
+offset_bottom = 191.0
+text = "Has hover/unhover
+linked to a function"
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 33.0
+offset_right = 191.0
+offset_bottom = 82.0
+text = "Has hover/unhover
+linked to a function"
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 315.0
+offset_right = 179.0
+offset_bottom = 364.0
+text = "Has hover/unhover
+linked to a function"
+
+[node name="Label5" type="Label" parent="."]
+layout_mode = 0
+offset_left = 406.0
+offset_top = 210.0
+offset_right = 757.0
+offset_bottom = 259.0
+text = "This also uses one of the containers
+they can use any control node not just panels"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="."]
+layout_mode = 0
+offset_left = 969.0
+offset_top = 150.0
+offset_right = 1120.0
+offset_bottom = 199.0
+text = "does not have any
+signals linked"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Buttons/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Buttons/Button3" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Buttons/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Buttons/Button4" to="." method="_on_button_4_pressed"]
