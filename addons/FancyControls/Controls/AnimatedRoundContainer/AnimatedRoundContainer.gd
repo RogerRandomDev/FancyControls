@@ -16,7 +16,7 @@ func _ready():
 func _update_spacings(animated:bool=true)->void:
 	
 	animated = animated and not Engine.is_editor_hint()
-	if get_child_count()==0 or Engine.is_editor_hint():return
+	if get_child_count()==0:return
 	
 	var nodes_to_space=get_children()
 	var node_count=nodes_to_space.size()
@@ -40,10 +40,8 @@ func _editor_fit_contents()->void:
 	var node_count=nodes_to_space.size()
 	var offset=size*0.5
 	for id in node_count:
-		var rotated_by=(id/float(node_count))*PI*2*(box_direction*2-1)+deg_to_rad(initial_rotation_degrees)
-		var spaced_position=Vector2(0,-1).rotated(rotated_by)
-		var target_position=(spaced_position*(size*0.5-border_padding)+offset-nodes_to_space[id].size*0.5)
-		nodes_to_space[id].position=target_position
+		var target_position=get_target_position_for_item(id)-nodes_to_space[id].size*0.5
+		nodes_to_space[id].global_position=target_position
 		
 
 func get_target_position_for_item(id:int)->Vector2:

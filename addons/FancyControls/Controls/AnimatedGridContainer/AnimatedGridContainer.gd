@@ -1,11 +1,16 @@
 @tool
+@icon("res://addons/FancyControls/Controls/AnimatedGridContainer/AnimatedGridContainer.png")
 extends AnimatedContainer
 class_name AnimatedGridContainer
+## Grid container based on the [AnimatedContainer] for handling a grid with a known width or height.
 
+## If the container grows vertically or horizontally
 @export_enum("Vertical","Horizontal") var expand_direction:int=0:
 	set(v):
 		expand_direction=v
 		_notification(NOTIFICATION_RESIZED)
+## Spacing between item middles. If items overlap remember the spacing doesn't account for item size.
+## You have to account for that in the spacing as well.
 @export var item_spacing:Vector2=Vector2.ZERO:
 	set(v):
 		item_spacing=v
@@ -39,6 +44,8 @@ func _editor_fit_contents()->void:
 		nodes_to_space[id].global_position=target_position
 		
 
+## returns the vector2 for where the given item id is placed.
+## only returns correctly assuming [param id] is already within the items in the container.
 func get_target_position_for_item(id:int)->Vector2:
 	if item_spacing.x==0 or item_spacing.y==0 or size.x==0 or size.y==0:return Vector2.ZERO
 	var node_count=get_child_count()

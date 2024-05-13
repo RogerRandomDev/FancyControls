@@ -1,51 +1,59 @@
 @tool
 extends Control
 class_name AnimatedItem
+## The base item used by [AnimatedContainer] nodes and their subtypes.
+## Contains the managing systems for its animating.
 
+## The node that is contained within this [AnimatedItem]
 var attached_item:Node
+## The node that contains this [AnimatedItem].
+## This node has to be a [AnimatedContainer] or one of its subtypes.
 var connected_control:Node
-
+## The position to animate the [AnimatedItem] to from the current position.
+## Automatically animates when changed.
 var targeted_position:Vector2:
 	set(v):
 		if Engine.is_editor_hint():return
 		var travel_distance=(v-global_position).length()
 		targeted_position=v
 		if is_inside_tree():
-			if tween_position:tween_position.kill()
-			tween_position=create_tween()
-			tween_position.tween_property(self,'global_position',targeted_position,sqrt(travel_distance/pixels_per_second))
+			if _tween_position:_tween_position.kill()
+			_tween_position=create_tween()
+			_tween_position.tween_property(self,'global_position',targeted_position,sqrt(travel_distance/pixels_per_second))
 		else:
 			global_position=targeted_position
+## The rotation to animate the [AnimatedItem] to from the current rotation.
+## Automatically animates when changed.
 var targeted_rotation:float:
 	set(v):
 		if Engine.is_editor_hint():return
-		var travel_distance=angle_difference(v,rotation)
+		var travel_distance=abs(angle_difference(v,rotation))
+		
 		targeted_rotation=v
 		if is_inside_tree():
-			if tween_rotation:tween_rotation.kill()
-			tween_rotation=create_tween()
+			if _tween_rotation:_tween_rotation.kill()
+			_tween_rotation=create_tween()
 			#this is to make sure it takes the shortest path it can
-			if abs(v-rotation)>PI:
-				targeted_rotation=-(targeted_rotation-PI*sign(targeted_rotation))
-				#targeted_rotation=-(targeted_rotation-PI)
-			tween_rotation.tween_property(self,'rotation',targeted_rotation,abs(sqrt(travel_distance/PI * 0.5)*0.5))
-			#this is to finish it and make it a positive value at the end
-			if abs(v-rotation)>PI:
-				tween_rotation.tween_property(self,'rotation',targeted_rotation if targeted_rotation > 0 else -targeted_rotation+PI,0.0)
+			targeted_rotation=lerp_angle(rotation,targeted_rotation,1.0)
+			
+			_tween_rotation.tween_property(self,'rotation',targeted_rotation,sqrt(travel_distance/PI)*0.25)
+			#_tween_rotation.tween_property(self,'rotation',targeted_rotation,0.25)
 		else:
 			rotation=targeted_rotation
-
-var targeted_scale:Vector2:
+		
+## The scale to animate the [AnimatedItem] to from the current scale.
+## Automatically animates when changed.
+var targeted_scale:Vector2=Vector2.ONE:
 	set(v):
 		if Engine.is_editor_hint():return
 		var travel_distance=(scale-v).length()
 		targeted_scale=v
 		if is_inside_tree():
-			if tween_scale:tween_scale.kill()
-			tween_scale=create_tween()
+			if _tween_scale:_tween_scale.kill()
+			_tween_scale=create_tween()
 			#this is to make sure it takes the shortest path it can
 				#targeted_rotation=-(targeted_rotation-PI)
-			tween_scale.tween_property(self,'scale',targeted_scale,sqrt(travel_distance/scale_rate_per_second))
+			_tween_scale.tween_property(self,'scale',targeted_scale,sqrt(travel_distance/scale_rate_per_second))
 		else:
 			scale=targeted_scale
 
@@ -54,9 +62,9 @@ var scale_rate_per_second:float=16.0
 ##change this value to adjust how fast the item moves to the chosen location when it is changed
 var pixels_per_second:float=4608.0
 
-var tween_position:Tween
-var tween_rotation:Tween
-var tween_scale:Tween
+var _tween_position:Tween
+var _tween_rotation:Tween
+var _tween_scale:Tween
 
 func _init(connected_to:Node=null,attached_to:Node=null):
 	#this line is so pre-build ones don't break when loading
@@ -88,7 +96,8 @@ func _init(connected_to:Node=null,attached_to:Node=null):
 	
 	bind_interaction_signals()
 
-#used to allow the containers to receive them
+## binds the signals from the [member attached_item] to emit from self to allow the [member connected_control]
+## to recieve them and process them accordingly based on its [member AnimatedContainer.item_actions]
 func bind_interaction_signals()->void:
 	if attached_item == null:return
 	attached_item.mouse_entered.connect(emit_signal.bind("mouse_entered"))
@@ -108,7 +117,8 @@ func check_if_needed(value)->void:
 		queue_free()
 
 
-
+## emited when the item contained changes size.
+## recenters the contained item in self
 func attached_item_size_changed()->void:
 	if attached_item==null:return
 	attached_item.position=-attached_item.size*0.5

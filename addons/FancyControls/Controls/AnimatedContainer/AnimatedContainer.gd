@@ -1,23 +1,30 @@
 @tool
 extends Control
 class_name AnimatedContainer
+## Base container class for handling all AnimatedContainer related needs.
+## Stores the basic info for what is used by them all.
 
-##updates the box contents whenever a child node is added
+
+## updates the box contents whenever a child node is added
 @export var auto_update:bool=true
 
+## if the contained items will animate or not
 @export var animate_spacing:bool=true
 
+
+## the added space from the edge for all contained items
 @export var border_padding:Vector2=Vector2.ZERO:
 	set(v):
 		border_padding=v
 		_notification(NOTIFICATION_RESIZED)
 
 @export_group("item functionality")
+##the script that contains the functions that will be used by the contained [AnimatedItem] nodes
 @export var item_function_script:Script:
 	set(v):
 		item_function_script=v
 		notify_property_list_changed()
-var item_function_holder:Node=Node.new()
+var _item_function_holder:Node=Node.new()
 
 
 
@@ -27,7 +34,7 @@ var item_function_holder:Node=Node.new()
 
 func _ready():
 	if not Engine.is_editor_hint():
-		item_function_holder.set_script(item_function_script)
+		_item_function_holder.set_script(item_function_script)
 		var is_auto=auto_update
 		auto_update=false
 		for child in get_children():
@@ -35,7 +42,7 @@ func _ready():
 			self.add_child(child,false)
 		auto_update=is_auto
 		_attach_signal_links()
-	_update_spacings.call_deferred(false)
+		_update_spacings.call_deferred(false)
 	
 
 
@@ -45,8 +52,8 @@ func _editor_fit_contents()->void:pass
 
 
 
-## overriding the default to allow some custom stuff to be handled.
-## if set to an internal child, it will be stored normally and not as an item to hold
+## Overriding the default to allow some custom stuff to be handled.
+## If set to an internal child, it will be stored normally and not as an item to hold
 func add_child(child:Node,internal:bool=false,internal_mode:Node.InternalMode=Node.INTERNAL_MODE_DISABLED)->void:
 	if child is AnimatedItem or Engine.is_editor_hint() or internal:
 		super.add_child(child,internal,internal_mode)
@@ -70,12 +77,14 @@ func add_child(child:Node,internal:bool=false,internal_mode:Node.InternalMode=No
 
 
 
-##basically just get_child()
+## Basically just get_child()
 func get_item(item_id:int=-1)->AnimatedItem:
 	if item_id<0 or item_id>get_child_count()-1:return null
 	return get_child(item_id)
 
-
+## Specialized version of [method add_child] that allows the item added to be reparented
+## if it was already connected to anything. [param animate_position] will make the item
+## animate itself from where it was to where it should be.
 func add_item(item:AnimatedItem,animate_position:bool=false)->void:
 	if animate_position:
 		var start_position=item.global_position
@@ -92,6 +101,9 @@ func add_item(item:AnimatedItem,animate_position:bool=false)->void:
 		add_child(item)
 	attach_signals_to_item(item)
 
+
+## Swaps the items at position [param id_1] and [param id_2].
+## Is animated if [member animate_spacing] is set to true.
 func swap_items(id_1:int,id_2:int)->void:
 	if not(get_child_count()>id_1 and get_child_count()>id_2 and id_1>=0 and id_2>=0):return
 	var first:AnimatedItem=get_child(id_1)
@@ -100,12 +112,24 @@ func swap_items(id_1:int,id_2:int)->void:
 	move_child(second,id_1)
 
 
+## used to make the items move forwards by putting the last item in the first item position
+func shift_items_forward()->void:
+	if get_child_count()<1:return
+	move_child(get_child(get_child_count()-1),0)
+## reverse of [method shift_items_forward] where it pushes items from the first spot to the last
+## to let them cycle
+func shift_items_back()->void:
+	if get_child_count()<1:return
+	move_child(get_child(0),get_child_count()-1)
 
+
+
+## Makes [AnimatedItem] move from the [param from_position] to [param to_position]
 func animate_item_from_position(item:AnimatedItem,from_position:Vector2,to_position:Vector2)->void:
 	item.global_position=from_position
 	item.targeted_position=to_position
 
-
+## Used by containers based on this for getting where the [AnimatedItem] nodes place themselves
 func get_target_position_for_item(id:int)->Vector2:return Vector2.ZERO
 
 
@@ -114,7 +138,7 @@ func get_target_position_for_item(id:int)->Vector2:return Vector2.ZERO
 
 
 
-##used to handle some events that are emitted
+#used to handle some events that are emitted
 func _notification(what):
 	match what:
 		NOTIFICATION_CHILD_ORDER_CHANGED:
@@ -129,7 +153,7 @@ func _notification(what):
 				else:_update_spacings.call_deferred()
 
 
-
+##the actions linked to the [AnimatedItem] nodes in the containers.
 const item_actions:Array=[
 	&"hovered",
 	&"unhovered",
@@ -137,11 +161,11 @@ const item_actions:Array=[
 	&"unfocused",
 	&"input"
 ]
-var hovered:StringName=&""
-var unhovered:StringName=&""
-var focused:StringName=&""
-var unfocused:StringName=&""
-var input:StringName=&""
+var _hovered:StringName=&""
+var _unhovered:StringName=&""
+var _focused:StringName=&""
+var _unfocused:StringName=&""
+var _input:StringName=&""
 
 
 
@@ -154,7 +178,7 @@ func _get_property_list():
 	result.append_array(
 		item_actions.map(
 			func (x): return {
-				&"name": x,
+				&"name": "_"+x,
 				&"type": TYPE_STRING_NAME,
 				&"usage": PROPERTY_USAGE_DEFAULT,
 				&"hint": PROPERTY_HINT_ENUM_SUGGESTION,
@@ -163,23 +187,23 @@ func _get_property_list():
 		)
 	)
 	return result
-##internal only, this handles linking the properties for signals to the functions being called
+#internal only, this handles linking the properties for signals to the functions being called
 func _attach_signal_links()->void:
 	if not (item_function_script is Script and item_function_script != null):return
 	#loop all children and apply the linking to the items
 	for item in get_children():
 		if not item is AnimatedItem:continue
 		attach_signals_to_item(item)
-
+##used internally to connect the signal functions to the [AnimatedItem] nodes
 func attach_signals_to_item(item:AnimatedItem)->void:
 	for sig in item.get_signal_list():
 		if not ["mouse_entered","mouse_exited","focus_entered","focus_exited","gui_input"].has(sig.name):continue
 		for con in item.get_signal_connection_list(sig.name):
 			item.disconnect(sig.name,con.callable)
-	if hovered!=&"":item.mouse_entered.connect(item_function_holder.call.bind(hovered,item))
-	if unhovered!=&"":item.mouse_exited.connect(item_function_holder.call.bind(unhovered,item))
-	if focused!=&"":item.focus_entered.connect(item_function_holder.call.bind(focused,item))
-	if unfocused!=&"":item.focus_exited.connect(item_function_holder.call.bind(unfocused,item))
-	if input!=&"":item.gui_input.connect(item_function_holder.call.bind(input,item))
+	if _hovered!=&"":item.mouse_entered.connect(_item_function_holder.call.bind(_hovered,item))
+	if _unhovered!=&"":item.mouse_exited.connect(_item_function_holder.call.bind(_unhovered,item))
+	if _focused!=&"":item.focus_entered.connect(_item_function_holder.call.bind(_focused,item))
+	if _unfocused!=&"":item.focus_exited.connect(_item_function_holder.call.bind(_unfocused,item))
+	if _input!=&"":item.gui_input.connect(_item_function_holder.call.bind(_input,item))
 
 
