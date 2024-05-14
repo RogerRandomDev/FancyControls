@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dyd671fyvenq3"]
+[gd_scene load_steps=8 format=3 uid="uid://dyd671fyvenq3"]
 
 [ext_resource type="Script" path="res://addons/FancyControls/Example/testing.gd" id="1_4dv0c"]
 [ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedBoxContainer/AnimatedBoxContainer.gd" id="1_hssgr"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedRoundContainer/AnimatedRoundContainer.gd" id="3_j83mo"]
 [ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedFromCenterRoundContainer/AnimatedFromCenterRoundContainer.gd" id="5_4vyu1"]
 [ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedGridSlideInContainer/AnimatedGridSlideInContainer.gd" id="5_lwohf"]
+[ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedItem/FancyAnimatedItem/FancyAnimatedItem.gd" id="7_7gc43"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -758,6 +759,18 @@ offset_right = 351.0
 offset_bottom = 166.0
 text = "Cycle Container
 Back"
+
+[node name="FancyAnimatedItem" type="Control" parent="."]
+anchors_preset = 0
+script = ExtResource("7_7gc43")
+position_count = 0
+rotation_count = 0
+scale_count = 0
+
+[node name="Panel" type="Panel" parent="FancyAnimatedItem"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Buttons/Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Buttons/Button3" to="." method="_on_button_3_pressed"]
