@@ -50,11 +50,13 @@ var targeted_rotation:
 			_tween_rotation=create_tween()
 			_tween_rotation.set_trans(_rot_trans)
 			#this is to make sure it takes the shortest path it can
-			targeted_rotation=lerp_angle(rotation,targeted_rotation,1.0)
+			if abs(targeted_rotation)<PI*2:
+				targeted_rotation=lerp_angle(rotation,targeted_rotation,1.0)
 			
 			_tween_rotation.tween_property(self,'rotation',targeted_rotation,_rot_travel_time if _rot_travel_time>=0 else sqrt(travel_distance/PI)*0.25)
 			_rot_travel_time=-1.0
 			_rot_trans=Tween.TRANS_LINEAR
+			
 			#_tween_rotation.tween_property(self,'rotation',targeted_rotation,0.25)
 		else:
 			rotation=targeted_rotation

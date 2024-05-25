@@ -26,7 +26,7 @@ class_name AnimatedContainer
 		notify_property_list_changed()
 var _item_function_holder:Node=Node.new()
 
-
+var item_origin_positions:Array=[]
 
 
 
@@ -43,7 +43,12 @@ func _ready():
 		auto_update=is_auto
 		_attach_signal_links()
 		_update_spacings.call_deferred(false)
-	
+		
+
+func _update_start_positions()->void:
+	item_origin_positions.resize(get_child_count())
+	for i in get_child_count():
+		item_origin_positions[i]=get_target_position_for_item(i)
 
 
 func _update_spacings(animated:bool=true)->void:pass
@@ -59,9 +64,8 @@ func add_child(child:Node,internal:bool=false,internal_mode:Node.InternalMode=No
 		super.add_child(child,internal,internal_mode)
 		if Engine.is_editor_hint():
 			_editor_fit_contents()
-		
 		return
-	var child_holder=AnimatedItem.new(self,child)
+	var child_holder=FancyAnimatedItem.new(self,child)
 	if not Engine.is_editor_hint():attach_signals_to_item(child_holder)
 	
 	super.add_child(child_holder,internal,internal_mode)
@@ -133,6 +137,24 @@ func animate_item_from_position(item:AnimatedItem,from_position:Vector2,to_posit
 func get_target_position_for_item(id:int)->Vector2:return Vector2.ZERO
 
 
+func animate_items_with_chain(chain_name:String)->void:
+	var scr=load("res://TestScriptSave.gd")
+	
+	var container_data={
+		"size":size,
+		"global_position":global_position,
+		"item_origins":item_origin_positions,
+		"rotation":rotation
+	}
+	var bound_call=scr.call.bind(get_child_count(),container_data)
+	for i in get_child_count():
+		var child=get_child(i)
+		var response=bound_call.call(chain_name,child,i)
+		if response == null:continue
+		for p in response.Positions:child.chain_action(0,p.goal,p.duration,p.tween_type)
+		for p in response.Rotations:child.chain_action(1,p.goal,p.duration,p.tween_type)
+		for p in response.Scales:child.chain_action(2,p.goal,p.duration,p.tween_type)
+	
 
 
 

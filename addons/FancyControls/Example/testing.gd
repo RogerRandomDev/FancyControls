@@ -1,21 +1,13 @@
 extends Control
 
 
+
+
 func _ready():
+	await get_tree().process_frame
+	await get_tree().process_frame
+	$VBoxContainer/AnimatedBoxContainer.animate_items_with_chain("slide_down_to_side")
 	
-	$FancyAnimatedItem.chain_action(
-		FancyAnimatedItem.AnimatableTypes.POSITION,
-		Vector2(0,256),
-		1.0,
-		Tween.TRANS_CUBIC
-	)
-	$FancyAnimatedItem.chain_action(
-		FancyAnimatedItem.AnimatableTypes.POSITION,
-		Vector2(256,256),
-		1.0,
-		Tween.TRANS_CUBIC
-	)
-	$FancyAnimatedItem._target_chains_updated("position")
 
 func _on_button_pressed():
 	if $VBoxContainer/AnimatedBoxContainer.get_child_count()<=0:return

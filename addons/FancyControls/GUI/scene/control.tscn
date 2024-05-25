@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/block/BlockUI.gd" id="6_bgwiu"]
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/GraphNode.gd" id="7_ww25m"]
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/CodeBox.gd" id="8_ii3ab"]
-[ext_resource type="CodeHighlighter" path="res://addons/FancyControls/GUI/codehighlight.tres" id="9_8spe6"]
+[ext_resource type="CodeHighlighter" uid="uid://g0qjjgb0nwf8" path="res://addons/FancyControls/GUI/codehighlight.tres" id="9_8spe6"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fbxee"]
 content_margin_left = 12.0
@@ -163,7 +163,7 @@ block_1/runnable = false
 block_1/type = "function"
 block_1/properties_count = 3
 block_1/property_0/name = "Input"
-block_1/property_0/type = 4
+block_1/property_0/type = 5
 block_1/property_0/editable = true
 block_1/property_0/connect_left = true
 block_1/property_0/connect_right = false

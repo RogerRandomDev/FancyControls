@@ -14,7 +14,7 @@ func _ready():
 	initial_rotation_degrees=deg_to_rad(initial_rotation_degrees)
 
 func _update_spacings(animated:bool=true)->void:
-	
+	_update_start_positions()
 	animated = animated and not Engine.is_editor_hint()
 	if get_child_count()==0:return
 	

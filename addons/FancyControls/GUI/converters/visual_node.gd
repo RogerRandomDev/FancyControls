@@ -81,6 +81,10 @@ func get_function_content()->String:
 			return "var %s = Vector2(%s,%s)\n\t"%[data.value,get_value(1),get_value(2)]
 		"SetPosition":
 			return "output_data.Positions.push_back({'goal':%s,'duration':%s,'tween_type':%s})\n\t"%[get_value(0),get_value(1),get_value(2)]
+		"SetRotation":
+			return "output_data.Rotations.push_back({'goal':%s,'duration':%s,'tween_type':%s})\n\t"%[get_value(0),get_value(1),get_value(2)]
+		"SetScale":
+			return "output_data.Scales.push_back({'goal':%s,'duration':%s,'tween_type':%s})\n\t"%[get_value(0),get_value(1),get_value(2)]
 		"Rotate":
 			return "var %s = %s.rotated(%s)\n\t"%[data.value,get_value(1),get_value(2)]
 	

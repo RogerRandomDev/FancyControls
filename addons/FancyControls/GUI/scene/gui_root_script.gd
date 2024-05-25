@@ -4,7 +4,8 @@ extends Control
 @onready var json_converted=load("res://addons/FancyControls/GUI/converters/json_visual_converter.gd").new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	DirAccess.make_dir_recursive_absolute("res://AnimationChains/example_animation_chains")
+	
 func _input(event):
 	if visible and event is InputEventKey and event.is_pressed() and event.ctrl_pressed and String(self.get_path_to(get_tree().root.gui_get_focus_owner())).begins_with("."):
 		accept_event()

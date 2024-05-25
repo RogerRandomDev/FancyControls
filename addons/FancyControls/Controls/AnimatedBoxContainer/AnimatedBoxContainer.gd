@@ -10,9 +10,11 @@ class_name AnimatedBoxContainer
 
 
 func _update_spacings(animated:bool=true)->void:
-	
+	_update_start_positions()
 	animated = animated and not Engine.is_editor_hint()
+	
 	if get_child_count()==0 or Engine.is_editor_hint():return
+	
 	
 	var nodes_to_space=get_children()
 	var node_count=nodes_to_space.size()

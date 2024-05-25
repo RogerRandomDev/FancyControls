@@ -11,3 +11,9 @@ func reload_codeview()->void:
 	for variable in converted_view.variables:
 		$CodeEdit.syntax_highlighter.add_member_keyword_color(variable,Color("66ffd1"))
 	
+	var scr=GDScript.new()
+	scr.source_code="extends RefCounted\n"+converted_view.code
+	ResourceSaver.save(scr,"res://TestScriptSave.gd")
+	
+	
+	
