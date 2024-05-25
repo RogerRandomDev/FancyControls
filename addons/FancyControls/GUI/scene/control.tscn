@@ -1,0 +1,622 @@
+[gd_scene load_steps=10 format=3 uid="uid://bd5e2fiftorgo"]
+
+[ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/gui_root_script.gd" id="2_g6mr6"]
+[ext_resource type="Texture2D" uid="uid://bhvhlwa1y2ec" path="res://addons/FancyControls/GUI/scene/2d.res" id="3_2xky7"]
+[ext_resource type="Texture2D" uid="uid://b5vkq3256l43k" path="res://addons/FancyControls/GUI/scene/script.res" id="4_dh5u7"]
+[ext_resource type="Script" path="res://addons/FancyControls/GUI/block/BlockList.gd" id="5_n5rgj"]
+[ext_resource type="Script" path="res://addons/FancyControls/GUI/block/BlockUI.gd" id="6_bgwiu"]
+[ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/GraphNode.gd" id="7_ww25m"]
+[ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/CodeBox.gd" id="8_ii3ab"]
+[ext_resource type="CodeHighlighter" path="res://addons/FancyControls/GUI/codehighlight.tres" id="9_8spe6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fbxee"]
+content_margin_left = 12.0
+content_margin_right = 12.0
+
+[node name="Control" type="Control"]
+custom_minimum_size = Vector2(768, 512)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+script = ExtResource("2_g6mr6")
+
+[node name="Box" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 2
+
+[node name="TopBar" type="PanelContainer" parent="Box"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.06
+mouse_filter = 1
+
+[node name="TabBar" type="TabBar" parent="Box/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_colors/font_selected_color = Color(0.4, 0.701961, 1, 1)
+theme_override_styles/tab_selected = SubResource("StyleBoxEmpty_fbxee")
+theme_override_styles/tab_hovered = SubResource("StyleBoxEmpty_fbxee")
+theme_override_styles/tab_unselected = SubResource("StyleBoxEmpty_fbxee")
+theme_override_styles/tab_disabled = SubResource("StyleBoxEmpty_fbxee")
+theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_fbxee")
+theme_override_styles/button_pressed = SubResource("StyleBoxEmpty_fbxee")
+theme_override_styles/button_highlight = SubResource("StyleBoxEmpty_fbxee")
+tab_count = 2
+tab_alignment = 1
+clip_tabs = false
+scrolling_enabled = false
+tab_0/title = "GUI"
+tab_0/icon = ExtResource("3_2xky7")
+tab_1/title = "Code View"
+tab_1/icon = ExtResource("4_dh5u7")
+
+[node name="Label" type="LineEdit" parent="Box/TopBar"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+placeholder_text = "Name Of Current Chain"
+max_length = 24
+expand_to_text_length = true
+middle_mouse_paste_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+flat = true
+caret_blink = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Box/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 8
+alignment = 2
+
+[node name="Button" type="Button" parent="Box/TopBar/HBoxContainer"]
+layout_mode = 2
+text = "Save Chain"
+
+[node name="Button2" type="Button" parent="Box/TopBar/HBoxContainer"]
+layout_mode = 2
+text = "Load Chain"
+
+[node name="MainBox" type="HBoxContainer" parent="Box"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Box/MainBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Box/MainBox/VBoxContainer"]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="Box/MainBox/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_to_text_length = true
+
+[node name="OptionButton" type="OptionButton" parent="Box/MainBox/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+item_count = 4
+selected = 0
+popup/item_0/text = "Any"
+popup/item_0/id = 0
+popup/item_1/text = "Bool"
+popup/item_1/id = 1
+popup/item_2/text = "Float"
+popup/item_2/id = 2
+popup/item_3/text = "Vector2"
+popup/item_3/id = 3
+
+[node name="BlockList" type="ItemList" parent="Box/MainBox/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
+allow_reselect = true
+max_text_lines = 3
+text_overrun_behavior = 0
+item_count = 11
+item_0/text = "Float"
+item_1/text = "DecomposeVector"
+item_2/text = "ComposeVector"
+item_3/text = "Add"
+item_4/text = "Sub"
+item_5/text = "Mul"
+item_6/text = "Div"
+item_7/text = "Rotate"
+item_8/text = "SetPosition"
+item_9/text = "SetRotation"
+item_10/text = "SetScale"
+script = ExtResource("5_n5rgj")
+block_count = 11
+block_0/name = &"Float"
+block_0/category = &"Float"
+block_0/runnable = false
+block_0/type = "variable"
+block_0/properties_count = 2
+block_0/property_0/name = "Name"
+block_0/property_0/type = 4
+block_0/property_0/editable = true
+block_0/property_0/connect_left = false
+block_0/property_0/connect_right = false
+block_0/property_0/default = "Test"
+block_0/property_1/name = "Value"
+block_0/property_1/type = 3
+block_0/property_1/editable = true
+block_0/property_1/connect_left = true
+block_0/property_1/connect_right = true
+block_0/property_1/default = 0
+block_1/name = &"DecomposeVector"
+block_1/category = &"Vector2,Float"
+block_1/runnable = false
+block_1/type = "function"
+block_1/properties_count = 3
+block_1/property_0/name = "Input"
+block_1/property_0/type = 4
+block_1/property_0/editable = true
+block_1/property_0/connect_left = true
+block_1/property_0/connect_right = false
+block_1/property_0/default = "Default"
+block_1/property_1/name = "x"
+block_1/property_1/type = 3
+block_1/property_1/editable = false
+block_1/property_1/connect_left = false
+block_1/property_1/connect_right = true
+block_1/property_1/default = 0
+block_1/property_2/name = "y"
+block_1/property_2/type = 3
+block_1/property_2/editable = false
+block_1/property_2/connect_left = false
+block_1/property_2/connect_right = true
+block_1/property_2/default = 0
+block_2/name = &"ComposeVector"
+block_2/category = &"Vector2,Float"
+block_2/runnable = false
+block_2/type = "variablefunction"
+block_2/properties_count = 3
+block_2/property_0/name = "                     Out"
+block_2/property_0/type = 5
+block_2/property_0/editable = true
+block_2/property_0/connect_left = false
+block_2/property_0/connect_right = true
+block_2/property_0/default = 0
+block_2/property_1/name = "x"
+block_2/property_1/type = 3
+block_2/property_1/editable = true
+block_2/property_1/connect_left = true
+block_2/property_1/connect_right = false
+block_2/property_1/default = 0
+block_2/property_2/name = "y"
+block_2/property_2/type = 3
+block_2/property_2/editable = true
+block_2/property_2/connect_left = true
+block_2/property_2/connect_right = false
+block_2/property_2/default = 0
+block_3/name = &"Add"
+block_3/category = &"Float"
+block_3/runnable = false
+block_3/type = "variablefunction"
+block_3/properties_count = 3
+block_3/property_0/name = "                     Out"
+block_3/property_0/type = 3
+block_3/property_0/editable = false
+block_3/property_0/connect_left = false
+block_3/property_0/connect_right = true
+block_3/property_0/default = 0
+block_3/property_1/name = "A"
+block_3/property_1/type = 3
+block_3/property_1/editable = true
+block_3/property_1/connect_left = true
+block_3/property_1/connect_right = false
+block_3/property_1/default = 0
+block_3/property_2/name = "B"
+block_3/property_2/type = 3
+block_3/property_2/editable = true
+block_3/property_2/connect_left = true
+block_3/property_2/connect_right = false
+block_3/property_2/default = 0
+block_4/name = &"Sub"
+block_4/category = &"Float"
+block_4/runnable = false
+block_4/type = "variablefunction"
+block_4/properties_count = 3
+block_4/property_0/name = "                     Out"
+block_4/property_0/type = 3
+block_4/property_0/editable = false
+block_4/property_0/connect_left = false
+block_4/property_0/connect_right = true
+block_4/property_0/default = 0
+block_4/property_1/name = "A"
+block_4/property_1/type = 3
+block_4/property_1/editable = true
+block_4/property_1/connect_left = true
+block_4/property_1/connect_right = false
+block_4/property_1/default = 0
+block_4/property_2/name = "B"
+block_4/property_2/type = 3
+block_4/property_2/editable = true
+block_4/property_2/connect_left = true
+block_4/property_2/connect_right = false
+block_4/property_2/default = 0
+block_5/name = &"Mul"
+block_5/category = &"Float"
+block_5/runnable = false
+block_5/type = "variablefunction"
+block_5/properties_count = 3
+block_5/property_0/name = "                     Out"
+block_5/property_0/type = 3
+block_5/property_0/editable = false
+block_5/property_0/connect_left = false
+block_5/property_0/connect_right = true
+block_5/property_0/default = 0
+block_5/property_1/name = "A"
+block_5/property_1/type = 3
+block_5/property_1/editable = true
+block_5/property_1/connect_left = true
+block_5/property_1/connect_right = false
+block_5/property_1/default = 0
+block_5/property_2/name = "B"
+block_5/property_2/type = 3
+block_5/property_2/editable = true
+block_5/property_2/connect_left = true
+block_5/property_2/connect_right = false
+block_5/property_2/default = 0
+block_6/name = &"Div"
+block_6/category = &"Float"
+block_6/runnable = false
+block_6/type = "variablefunction"
+block_6/properties_count = 3
+block_6/property_0/name = "                     Out"
+block_6/property_0/type = 3
+block_6/property_0/editable = false
+block_6/property_0/connect_left = false
+block_6/property_0/connect_right = true
+block_6/property_0/default = 0
+block_6/property_1/name = "A"
+block_6/property_1/type = 3
+block_6/property_1/editable = true
+block_6/property_1/connect_left = true
+block_6/property_1/connect_right = false
+block_6/property_1/default = 0
+block_6/property_2/name = "B"
+block_6/property_2/type = 3
+block_6/property_2/editable = true
+block_6/property_2/connect_left = true
+block_6/property_2/connect_right = false
+block_6/property_2/default = 0
+block_7/name = &"Rotate"
+block_7/category = &"Vector2"
+block_7/runnable = false
+block_7/type = "variablefunction"
+block_7/properties_count = 3
+block_7/property_0/name = "                     Out"
+block_7/property_0/type = 5
+block_7/property_0/editable = false
+block_7/property_0/connect_left = false
+block_7/property_0/connect_right = true
+block_7/property_0/default = 0
+block_7/property_1/name = "Vector"
+block_7/property_1/type = 5
+block_7/property_1/editable = true
+block_7/property_1/connect_left = true
+block_7/property_1/connect_right = false
+block_7/property_1/default = 0
+block_7/property_2/name = "Rotation"
+block_7/property_2/type = 3
+block_7/property_2/editable = true
+block_7/property_2/connect_left = true
+block_7/property_2/connect_right = false
+block_7/property_2/default = 0
+block_8/name = &"SetPosition"
+block_8/category = &"Vector2,Goals,Tween,Int"
+block_8/runnable = true
+block_8/type = "function"
+block_8/properties_count = 3
+block_8/property_0/name = "Goal"
+block_8/property_0/type = 5
+block_8/property_0/editable = true
+block_8/property_0/connect_left = true
+block_8/property_0/connect_right = false
+block_8/property_0/default = Vector2(0, 0)
+block_8/property_1/name = "Travel Time"
+block_8/property_1/type = 3
+block_8/property_1/editable = true
+block_8/property_1/connect_left = false
+block_8/property_1/connect_right = false
+block_8/property_1/default = -1.0
+block_8/property_2/name = "Transition"
+block_8/property_2/type = 34
+block_8/property_2/editable = true
+block_8/property_2/connect_left = false
+block_8/property_2/connect_right = false
+block_8/property_2/default = PackedStringArray("TRANS_LINEAR", "TRANS_SINE", "TRANS_QUINT", "TRANS_QUART", "TRANS_QUAD", "TRANS_EXPO", "TRANS_ELASTIC", "TRANS_CUBIC", "TRANS_CIRC", "TRANS_BOUNCE", "TRANS_BACK", "TRANS_SPRING", "Tween.")
+block_9/name = &"SetRotation"
+block_9/category = &"Float,Goals,Tween,Int"
+block_9/runnable = true
+block_9/type = "function"
+block_9/properties_count = 3
+block_9/property_0/name = "Goal"
+block_9/property_0/type = 3
+block_9/property_0/editable = true
+block_9/property_0/connect_left = true
+block_9/property_0/connect_right = false
+block_9/property_0/default = 0
+block_9/property_1/name = "Travel Time"
+block_9/property_1/type = 3
+block_9/property_1/editable = true
+block_9/property_1/connect_left = true
+block_9/property_1/connect_right = false
+block_9/property_1/default = -1.0
+block_9/property_2/name = "Transition"
+block_9/property_2/type = 34
+block_9/property_2/editable = true
+block_9/property_2/connect_left = false
+block_9/property_2/connect_right = false
+block_9/property_2/default = PackedStringArray("TRANS_LINEAR", "TRANS_SINE", "TRANS_QUINT", "TRANS_QUART", "TRANS_QUAD", "TRANS_EXPO", "TRANS_ELASTIC", "TRANS_CUBIC", "TRANS_CIRC", "TRANS_BOUNCE", "TRANS_BACK", "TRANS_SPRING", "Tween.")
+block_10/name = &"SetScale"
+block_10/category = &"Vector2,Goals,Tween,Int"
+block_10/runnable = true
+block_10/type = "function"
+block_10/properties_count = 3
+block_10/property_0/name = "Goal"
+block_10/property_0/type = 5
+block_10/property_0/editable = true
+block_10/property_0/connect_left = true
+block_10/property_0/connect_right = false
+block_10/property_0/default = 0
+block_10/property_1/name = "Travel Time"
+block_10/property_1/type = 3
+block_10/property_1/editable = true
+block_10/property_1/connect_left = true
+block_10/property_1/connect_right = false
+block_10/property_1/default = -1.0
+block_10/property_2/name = "Transition"
+block_10/property_2/type = 34
+block_10/property_2/editable = true
+block_10/property_2/connect_left = false
+block_10/property_2/connect_right = false
+block_10/property_2/default = PackedStringArray("TRANS_LINEAR", "TRANS_SINE", "TRANS_QUINT", "TRANS_QUART", "TRANS_QUAD", "TRANS_EXPO", "TRANS_ELASTIC", "TRANS_CUBIC", "TRANS_CIRC", "TRANS_BOUNCE", "TRANS_BACK", "TRANS_SPRING", "Tween.")
+
+[node name="BlockUI" type="GraphEdit" parent="Box/MainBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+right_disconnects = true
+minimap_enabled = false
+show_menu = false
+show_zoom_buttons = false
+show_grid_buttons = false
+show_minimap_button = false
+show_arrange_button = false
+script = ExtResource("6_bgwiu")
+metadata/func_name = "unset_name"
+
+[node name="StartNode" type="GraphNode" parent="Box/MainBox/BlockUI"]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 203.0
+mouse_filter = 1
+draggable = false
+title = "func_name"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 0.462745, 0.392157, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = true
+slot/1/right_type = 5
+slot/1/right_color = Color(0.45098, 1, 0.45098, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+slot/2/left_enabled = false
+slot/2/left_type = 0
+slot/2/left_color = Color(1, 1, 1, 1)
+slot/2/left_icon = null
+slot/2/right_enabled = true
+slot/2/right_type = 5
+slot/2/right_color = Color(0.45098, 1, 0.45098, 1)
+slot/2/right_icon = null
+slot/2/draw_stylebox = true
+slot/3/left_enabled = false
+slot/3/left_type = 0
+slot/3/left_color = Color(1, 1, 1, 1)
+slot/3/left_icon = null
+slot/3/right_enabled = true
+slot/3/right_type = 3
+slot/3/right_color = Color(1, 0.945098, 0.411765, 1)
+slot/3/right_icon = null
+slot/3/draw_stylebox = true
+slot/4/left_enabled = false
+slot/4/left_type = 0
+slot/4/left_color = Color(1, 1, 1, 1)
+slot/4/left_icon = null
+slot/4/right_enabled = true
+slot/4/right_type = 3
+slot/4/right_color = Color(1, 0.945098, 0.411765, 1)
+slot/4/right_icon = null
+slot/4/draw_stylebox = true
+slot/5/left_enabled = false
+slot/5/left_type = 0
+slot/5/left_color = Color(1, 1, 1, 1)
+slot/5/left_icon = null
+slot/5/right_enabled = true
+slot/5/right_type = 3
+slot/5/right_color = Color(1, 0.945098, 0.411765, 1)
+slot/5/right_icon = null
+slot/5/draw_stylebox = true
+script = ExtResource("7_ww25m")
+metadata/runnable = true
+metadata/type = "function"
+metadata/action = "INITIALIZE"
+metadata/value_0 = "run_item_if_seen_it_is_an_error"
+metadata/value_1 = "item_node.global_position"
+metadata/value_2 = "item_node.scale"
+metadata/value_3 = "item_node.rotation"
+metadata/value_count = 4
+metadata/value_4 = "item_index"
+metadata/value_5 = "total_items"
+
+[node name="Label" type="Label" parent="Box/MainBox/BlockUI/StartNode"]
+layout_mode = 2
+mouse_filter = 1
+text = "RUN"
+
+[node name="Label2" type="Label" parent="Box/MainBox/BlockUI/StartNode"]
+layout_mode = 2
+mouse_filter = 1
+text = "Position"
+
+[node name="Label4" type="Label" parent="Box/MainBox/BlockUI/StartNode"]
+layout_mode = 2
+mouse_filter = 1
+text = "Scale"
+
+[node name="Label3" type="Label" parent="Box/MainBox/BlockUI/StartNode"]
+layout_mode = 2
+mouse_filter = 1
+text = "Rotation"
+
+[node name="Label5" type="Label" parent="Box/MainBox/BlockUI/StartNode"]
+layout_mode = 2
+mouse_filter = 1
+text = "index"
+
+[node name="Label6" type="Label" parent="Box/MainBox/BlockUI/StartNode"]
+layout_mode = 2
+mouse_filter = 1
+text = "total items"
+
+[node name="StartContainerNode" type="GraphNode" parent="Box/MainBox/BlockUI"]
+layout_mode = 0
+offset_top = 224.0
+offset_right = 128.0
+offset_bottom = 377.0
+mouse_filter = 1
+position_offset = Vector2(0, 224)
+draggable = false
+title = "Container"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 5
+slot/0/right_color = Color(0.45098, 1, 0.45098, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = true
+slot/1/right_type = 5
+slot/1/right_color = Color(0.45098, 1, 0.45098, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+slot/2/left_enabled = false
+slot/2/left_type = 0
+slot/2/left_color = Color(1, 1, 1, 1)
+slot/2/left_icon = null
+slot/2/right_enabled = true
+slot/2/right_type = 5
+slot/2/right_color = Color(0.45098, 1, 0.45098, 1)
+slot/2/right_icon = null
+slot/2/draw_stylebox = true
+slot/3/left_enabled = false
+slot/3/left_type = 0
+slot/3/left_color = Color(1, 1, 1, 1)
+slot/3/left_icon = null
+slot/3/right_enabled = true
+slot/3/right_type = 3
+slot/3/right_color = Color(1, 0.945098, 0.411765, 1)
+slot/3/right_icon = null
+slot/3/draw_stylebox = true
+script = ExtResource("7_ww25m")
+metadata/runnable = false
+metadata/type = "function"
+metadata/action = "INITIALIZE_CONTAINER"
+metadata/value_0 = "container_info.size"
+metadata/value_1 = "container_info.global_position"
+metadata/value_2 = "container_info.item_origins[item_index]"
+metadata/value_3 = "container_info.rotation"
+metadata/value_count = 4
+
+[node name="Label3" type="Label" parent="Box/MainBox/BlockUI/StartContainerNode"]
+layout_mode = 2
+mouse_filter = 1
+text = "Size"
+
+[node name="Label4" type="Label" parent="Box/MainBox/BlockUI/StartContainerNode"]
+layout_mode = 2
+mouse_filter = 1
+text = "Position"
+
+[node name="Label" type="Label" parent="Box/MainBox/BlockUI/StartContainerNode"]
+layout_mode = 2
+mouse_filter = 1
+text = "Item Origin"
+
+[node name="Label2" type="Label" parent="Box/MainBox/BlockUI/StartContainerNode"]
+layout_mode = 2
+mouse_filter = 1
+text = "Rotation"
+
+[node name="CodeBox" type="HBoxContainer" parent="Box"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("8_ii3ab")
+
+[node name="CodeEdit" type="CodeEdit" parent="Box/CodeBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "var testing"
+editable = false
+selecting_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+minimap_draw = true
+syntax_highlighter = ExtResource("9_8spe6")
+draw_tabs = true
+gutters_draw_line_numbers = true
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
+initial_position = 4
+dialog_text = "This name is already being used by an animation.
+Are you sure you want to overwrite it?"
+
+[connection signal="tab_selected" from="Box/TopBar/TabBar" to="." method="_on_tab_bar_tab_selected"]
+[connection signal="text_changed" from="Box/TopBar/Label" to="Box/MainBox/BlockUI" method="_on_func_name_text_changed"]
+[connection signal="pressed" from="Box/TopBar/HBoxContainer/Button" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="Box/TopBar/HBoxContainer/Button2" to="." method="_on_load_button_pressed"]
+[connection signal="text_changed" from="Box/MainBox/VBoxContainer/HBoxContainer/LineEdit" to="Box/MainBox/VBoxContainer/BlockList" method="_on_line_edit_text_changed"]
+[connection signal="item_selected" from="Box/MainBox/VBoxContainer/HBoxContainer/OptionButton" to="Box/MainBox/VBoxContainer/BlockList" method="_on_option_button_item_selected"]
+[connection signal="item_selected" from="Box/MainBox/VBoxContainer/BlockList" to="Box/MainBox/VBoxContainer/BlockList" method="_on_item_selected"]
+[connection signal="connection_request" from="Box/MainBox/BlockUI" to="Box/MainBox/BlockUI" method="_on_connection_request"]
+[connection signal="delete_nodes_request" from="Box/MainBox/BlockUI" to="Box/MainBox/BlockUI" method="_on_delete_nodes_request"]
+[connection signal="disconnection_request" from="Box/MainBox/BlockUI" to="Box/MainBox/BlockUI" method="_on_disconnection_request"]
+[connection signal="duplicate_nodes_request" from="Box/MainBox/BlockUI" to="Box/MainBox/BlockUI" method="_on_duplicate_nodes_request"]
+[connection signal="node_deselected" from="Box/MainBox/BlockUI" to="Box/MainBox/BlockUI" method="_on_node_deselected"]
+[connection signal="node_selected" from="Box/MainBox/BlockUI" to="Box/MainBox/BlockUI" method="_on_node_selected"]
+[connection signal="confirmed" from="ConfirmationDialog" to="." method="_save_confirmed"]

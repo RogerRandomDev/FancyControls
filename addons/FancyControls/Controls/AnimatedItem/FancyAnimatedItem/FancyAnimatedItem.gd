@@ -93,8 +93,9 @@ func _target_chains_updated(updated_set:String)->void:
 func _set(property, value):
 	if property.contains("count"):
 		target_chains[property.trim_suffix("_count")].resize(value)
-		var nulls=target_chains[property.trim_suffix("_count")].find(null)
-		if nulls>-1:
+		var null_count=target_chains[property.trim_suffix("_count")].count(null)
+		while target_chains[property.trim_suffix("_count")].find(null)>-1:
+			var nulls=target_chains[property.trim_suffix("_count")].find(null)
 			match property:
 				"position_count":
 					target_chains[property.trim_suffix("_count")][nulls]={
