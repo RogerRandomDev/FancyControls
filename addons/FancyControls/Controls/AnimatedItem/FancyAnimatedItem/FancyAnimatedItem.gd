@@ -25,7 +25,7 @@ func chain_action(on_type:AnimatableTypes,target:Variant,duration:float=-1,tween
 				"duration":duration,
 				"tween":tween_type
 			})
-			if _tween_position==null||not _tween_position.is_running():_target_chains_updated.call_deferred("position")
+			if _tween_position==null||not _tween_position.is_running():_target_chains_updated("position")
 			
 		AnimatableTypes.ROTATION:
 			assert(target is float)
@@ -34,7 +34,7 @@ func chain_action(on_type:AnimatableTypes,target:Variant,duration:float=-1,tween
 				"duration":duration,
 				"tween":tween_type
 			})
-			if _tween_rotation==null||not _tween_rotation.is_running():_target_chains_updated.call_deferred("rotation")
+			if _tween_rotation==null||not _tween_rotation.is_running():_target_chains_updated("rotation")
 			
 		AnimatableTypes.SCALE:
 			assert(target is Vector2)
@@ -43,7 +43,7 @@ func chain_action(on_type:AnimatableTypes,target:Variant,duration:float=-1,tween
 				"duration":duration,
 				"tween":tween_type
 			})
-			if _tween_scale==null||not _tween_scale.is_running():_target_chains_updated.call_deferred("scale")
+			if _tween_scale==null||not _tween_scale.is_running():_target_chains_updated("scale")
 
 
 
@@ -69,9 +69,10 @@ func _target_chains_updated(updated_set:String)->void:
 			_rot_trans=front_index.tween
 			_rot_travel_time=front_index.duration
 			targeted_rotation=front_index.goal
+			await get_tree().process_frame
 			#so if the animator isnt creating a tween it just 
 			if _tween_rotation!=null:
-				_tween_rotation.set_trans(front_index.tween)
+				#_tween_rotation.set_trans(front_index.tween)
 				_tween_rotation.finished.connect(_target_chains_updated.bind("rotation"))
 			else:
 				_target_chains_updated("rotation")
@@ -81,9 +82,10 @@ func _target_chains_updated(updated_set:String)->void:
 			_scale_trans=front_index.tween
 			_scale_travel_time=front_index.duration
 			targeted_scale=front_index.goal
+			await get_tree().process_frame
 			#so if the animator isnt creating a tween it just 
 			if _tween_scale!=null:
-				_tween_scale.set_trans(front_index.tween)
+				#_tween_scale.set_trans(front_index.tween)
 				_tween_scale.finished.connect(_target_chains_updated.bind("scale"))
 			else:_target_chains_updated("scale")
 

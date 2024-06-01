@@ -1,0 +1,14 @@
+[remap]
+
+importer="FACS.Visual"
+type="Resource"
+uid="uid://chxs745agjrmv"
+path="res://.godot/imported/test.FACSVis-bc266bc4cd50b648fae39f5575840976.res"
+
+[deps]
+
+source_file="res://FACS/Editor/test.FACSVis"
+dest_files=["res://.godot/imported/test.FACSVis-bc266bc4cd50b648fae39f5575840976.res"]
+
+[params]
+

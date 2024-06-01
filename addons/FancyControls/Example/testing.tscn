@@ -287,7 +287,7 @@ offset_bottom = 210.0
 layout_mode = 0
 offset_left = 28.3101
 offset_top = 145.69
-offset_right = 68.3102
+offset_right = 68.3101
 offset_bottom = 185.69
 
 [node name="Panel7" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer2"]

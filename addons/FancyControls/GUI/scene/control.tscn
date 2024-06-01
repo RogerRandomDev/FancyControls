@@ -1,13 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://bd5e2fiftorgo"]
+[gd_scene load_steps=12 format=3 uid="uid://bd5e2fiftorgo"]
 
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/gui_root_script.gd" id="2_g6mr6"]
 [ext_resource type="Texture2D" uid="uid://bhvhlwa1y2ec" path="res://addons/FancyControls/GUI/scene/2d.res" id="3_2xky7"]
+[ext_resource type="Texture2D" uid="uid://crddlvxtjq48j" path="res://addons/FancyControls/GUI/scene/ClassList.svg" id="4_cm06k"]
 [ext_resource type="Texture2D" uid="uid://b5vkq3256l43k" path="res://addons/FancyControls/GUI/scene/script.res" id="4_dh5u7"]
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/block/BlockList.gd" id="5_n5rgj"]
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/block/BlockUI.gd" id="6_bgwiu"]
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/GraphNode.gd" id="7_ww25m"]
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/CodeBox.gd" id="8_ii3ab"]
 [ext_resource type="CodeHighlighter" uid="uid://g0qjjgb0nwf8" path="res://addons/FancyControls/GUI/codehighlight.tres" id="9_8spe6"]
+[ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/GroupsBox.gd" id="10_p5gwx"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fbxee"]
 content_margin_left = 12.0
@@ -53,7 +55,7 @@ theme_override_styles/tab_disabled = SubResource("StyleBoxEmpty_fbxee")
 theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_fbxee")
 theme_override_styles/button_pressed = SubResource("StyleBoxEmpty_fbxee")
 theme_override_styles/button_highlight = SubResource("StyleBoxEmpty_fbxee")
-tab_count = 2
+tab_count = 3
 tab_alignment = 1
 clip_tabs = false
 scrolling_enabled = false
@@ -61,6 +63,8 @@ tab_0/title = "GUI"
 tab_0/icon = ExtResource("3_2xky7")
 tab_1/title = "Code View"
 tab_1/icon = ExtResource("4_dh5u7")
+tab_2/title = "Groups"
+tab_2/icon = ExtResource("4_cm06k")
 
 [node name="Label" type="LineEdit" parent="Box/TopBar"]
 custom_minimum_size = Vector2(240, 0)
@@ -89,6 +93,7 @@ layout_mode = 2
 text = "Load Chain"
 
 [node name="MainBox" type="HBoxContainer" parent="Box"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -601,10 +606,66 @@ syntax_highlighter = ExtResource("9_8spe6")
 draw_tabs = true
 gutters_draw_line_numbers = true
 
+[node name="GroupsBox" type="VBoxContainer" parent="Box"]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("10_p5gwx")
+
+[node name="Tree" type="Tree" parent="Box/GroupsBox"]
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+columns = 4
+column_titles_visible = true
+allow_reselect = true
+allow_search = false
+hide_root = true
+scroll_horizontal_enabled = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Box/GroupsBox"]
+layout_mode = 2
+alignment = 2
+
+[node name="Button" type="Button" parent="Box/GroupsBox/HBoxContainer"]
+layout_mode = 2
+text = "Create Group"
+
+[node name="Button2" type="Button" parent="Box/GroupsBox/HBoxContainer"]
+layout_mode = 2
+text = "Remove Group"
+
 [node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
 initial_position = 4
 dialog_text = "This name is already being used by an animation.
 Are you sure you want to overwrite it?"
+
+[node name="ChainLoadDialog" type="FileDialog" parent="."]
+title = "Open a File"
+initial_position = 4
+size = Vector2i(384, 256)
+ok_button_text = "Open"
+file_mode = 0
+root_subfolder = "res://FACS/Editor/"
+filters = PackedStringArray("*.FACSVis", "*.gd")
+
+[node name="ChainChooseDialog" type="FileDialog" parent="."]
+title = "Open a File"
+initial_position = 4
+size = Vector2i(384, 256)
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.FACSVis", "*.gd")
+
+[node name="ChainChooseForGroup" type="FileDialog" parent="."]
+title = "Open a File"
+initial_position = 4
+size = Vector2i(384, 256)
+ok_button_text = "Open"
+file_mode = 0
+root_subfolder = "res://"
+filters = PackedStringArray("*.FACSVis", "*.gd")
 
 [connection signal="tab_selected" from="Box/TopBar/TabBar" to="." method="_on_tab_bar_tab_selected"]
 [connection signal="text_changed" from="Box/TopBar/Label" to="Box/MainBox/BlockUI" method="_on_func_name_text_changed"]
@@ -619,4 +680,14 @@ Are you sure you want to overwrite it?"
 [connection signal="duplicate_nodes_request" from="Box/MainBox/BlockUI" to="Box/MainBox/BlockUI" method="_on_duplicate_nodes_request"]
 [connection signal="node_deselected" from="Box/MainBox/BlockUI" to="Box/MainBox/BlockUI" method="_on_node_deselected"]
 [connection signal="node_selected" from="Box/MainBox/BlockUI" to="Box/MainBox/BlockUI" method="_on_node_selected"]
+[connection signal="button_clicked" from="Box/GroupsBox/Tree" to="Box/GroupsBox" method="_on_tree_button_clicked"]
+[connection signal="item_activated" from="Box/GroupsBox/Tree" to="Box/GroupsBox" method="_on_tree_item_activated"]
+[connection signal="item_collapsed" from="Box/GroupsBox/Tree" to="Box/GroupsBox" method="_on_tree_item_collapsed"]
+[connection signal="item_edited" from="Box/GroupsBox/Tree" to="Box/GroupsBox" method="_on_tree_item_edited"]
+[connection signal="item_selected" from="Box/GroupsBox/Tree" to="Box/GroupsBox" method="_on_tree_item_selected"]
+[connection signal="pressed" from="Box/GroupsBox/HBoxContainer/Button" to="Box/GroupsBox" method="_on_create_group_button_pressed"]
+[connection signal="pressed" from="Box/GroupsBox/HBoxContainer/Button2" to="Box/GroupsBox" method="_on_remove_group_button_pressed"]
 [connection signal="confirmed" from="ConfirmationDialog" to="." method="_save_confirmed"]
+[connection signal="file_selected" from="ChainLoadDialog" to="." method="_on_chain_load_dialog_file_selected"]
+[connection signal="file_selected" from="ChainChooseDialog" to="Box/GroupsBox" method="_on_chain_choose_dialog_file_selected"]
+[connection signal="file_selected" from="ChainChooseForGroup" to="Box/GroupsBox" method="_on_chain_choose_for_group_file_selected"]

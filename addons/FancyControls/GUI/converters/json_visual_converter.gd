@@ -10,10 +10,12 @@ func convert_tree(graph:GraphEdit)->Dictionary:
 	node_list.erase(graph.get_child(0))
 	node_list.erase(graph.get_child(1))
 	var converted_list=[]
+	var compiled_list=[]
 	var converted_connections=[]
 	for node in node_list:
 		var n=visual_node.new(node,graph)
 		converted_list.push_back(n.get_json())
+		compiled_list.push_back(n.get_compile_format_json(graph))
 	for connection in graph.get_connection_list():
 		converted_connections.push_back(
 			{
@@ -24,7 +26,7 @@ func convert_tree(graph:GraphEdit)->Dictionary:
 			}
 		)
 	
-	return {"nodes":converted_list,"connections":converted_connections}
+	return {"nodes":converted_list,"connections":converted_connections,"compiler_data":compiled_list}
 
 
 func convert_json(json_data,graph:GraphEdit,blockList):

@@ -34,6 +34,7 @@ var targeted_position:
 			_tween_position.tween_property(self,'global_position',targeted_position,_pos_travel_time if _pos_travel_time>=0 else sqrt(travel_distance/pixels_per_second))
 			_pos_travel_time=-1.0
 			_pos_trans=Tween.TRANS_LINEAR
+			
 		else:
 			global_position=targeted_position
 ## The rotation to animate the [AnimatedItem] to from the current rotation.
@@ -117,9 +118,9 @@ func _init(connected_to:Node=null,attached_to:Node=null):
 	position.y=connected_to.size.y*0.5
 	
 	child_exiting_tree.connect(check_if_needed)
-	
-	
 	bind_interaction_signals()
+
+
 
 ## binds the signals from the [member attached_item] to emit from self to allow the [member connected_control]
 ## to recieve them and process them accordingly based on its [member AnimatedContainer.item_actions]

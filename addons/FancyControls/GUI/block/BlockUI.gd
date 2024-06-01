@@ -9,10 +9,15 @@ func _ready():
 	$StartNode.set_meta(&"action","INITIALIZE")
 	$StartNode.set_meta(&"value_0","run_item_if_seen_it_is_an_error")
 	$StartNode.set_meta(&"value_1","item_node.global_position")
+	$StartNode.set_meta(&"type_1",TYPE_VECTOR2)
 	$StartNode.set_meta(&"value_2","item_node.scale")
+	$StartNode.set_meta(&"type_2",TYPE_VECTOR2)
 	$StartNode.set_meta(&"value_3","item_node.rotation")
+	$StartNode.set_meta(&"type_3",TYPE_FLOAT)
 	$StartNode.set_meta(&"value_4","item_index")
+	$StartNode.set_meta(&"type_4",TYPE_INT)
 	$StartNode.set_meta(&"value_5","total_items")
+	$StartNode.set_meta(&"type_5",TYPE_INT)
 	$StartNode.set_meta(&"value_count",4)
 	
 	$StartContainerNode.set_meta(&"runnable",false)
@@ -28,6 +33,8 @@ func _ready():
 	
 	set_meta(&"func_name","unset_name")
 	add_valid_connection_type(0,0)
+	add_valid_connection_type(TYPE_FLOAT,TYPE_VECTOR2)
+	add_valid_connection_type(TYPE_VECTOR2,TYPE_FLOAT)
 
 
 
@@ -56,14 +63,23 @@ func _on_connection_request(from_node, from_port, to_node, to_port):
 
 
 func _on_disconnection_request(from_node, from_port, to_node, to_port):
+	#needs fixed this still doesnt properly update the type of resource connected for ADD_connected and ADD_disconnected.
+	#great pain fills me
+	
 	#hide the editable section when it is set externally
 	var node_port=get_node(String(to_node)).get_child(get_node(String(to_node)).get_input_port_slot(to_port))
-	get_node(String(to_node)).emit_signal("disconnected_port",to_port-int(node_port.get_parent().get_meta(&"runnable")),node_port)
+	get_node(String(to_node)).emit_signal("disconnected_port",get_node(String(to_node)).get_input_port_slot(to_port),node_port)
 	if node_port.get_child_count()>1:node_port.get_child(1).show()
-	
-	
-	
 	disconnect_node(from_node,from_port,to_node,to_port)
+	
+	var node=get_node(String(from_node))
+	if code_funcs.has_method(str(node.get_meta(&"action"))+"_disconnected"):
+		code_funcs.call_deferred(node.get_meta(&"action")+"_disconnected",node,to_node,from_port,to_port,self)
+	node =get_node(String(to_node))
+	if code_funcs.has_method(str(node.get_meta(&"action"))+"_disconnected"):
+		code_funcs.call_deferred(node.get_meta(&"action")+"_disconnected",node,from_node,from_port,to_port,self)
+	
+	
 	
 
 

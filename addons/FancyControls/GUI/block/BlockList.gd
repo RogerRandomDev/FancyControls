@@ -75,6 +75,8 @@ func build_block_node(block):
 		built_block.set_slot_enabled_left(i,block_property.connect_left)
 		built_block.set_slot_enabled_right(i,block_property.connect_right)
 		built_block.set_meta(&"value_%s"%str(val),block_property.default)
+		built_block.set_meta(&"type_%s"%str(val),block_property.type)
+		built_block.set_meta(&"reset_type_%s"%str(val),block_property.type)
 		match block_property.type:
 			TYPE_INT:
 				pass
@@ -87,31 +89,28 @@ func build_block_node(block):
 					added_item.add_child(edit)
 					edit.set_meta(&"reset_value",block_property.default)
 					edit.set_meta(&"link",['value_changed',block_property.default,func(v,link_block):
+						if not edit.visible:return
 						if v is float:edit.value=v
 						link_block.set_meta(&"value_%s"%str(val),v)])
 					edit.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 					edit.owner=built_block
-				if block_property.connect_left:
-					built_block.set_slot_type_left(i,TYPE_FLOAT)
-					built_block.set_slot_color_left(i,Color('FFF169'))
-				if block_property.connect_right:
-					built_block.set_slot_type_right(i,TYPE_FLOAT)
-					built_block.set_slot_color_right(i,Color('FFF169'))
+				BlockColoring.ChangePortType(built_block,i,
+				int(block_property.connect_left)+int(block_property.connect_right)*2,
+				TYPE_FLOAT
+				)
 			TYPE_BOOL:
 				pass
 			TYPE_VECTOR2:
-				
-				if block_property.connect_left:
-					built_block.set_slot_type_left(i,TYPE_VECTOR2)
-					built_block.set_slot_color_left(i,Color('73ff73'))
-				if block_property.connect_right:
-					built_block.set_slot_type_right(i,TYPE_VECTOR2)
-					built_block.set_slot_color_right(i,Color('73ff73'))
+				BlockColoring.ChangePortType(built_block,i,
+				int(block_property.connect_left)+int(block_property.connect_right)*2,
+				TYPE_VECTOR2
+				)
 			TYPE_STRING:
 				var edit=LineEdit.new()
 				added_item.add_child(edit)
 				edit.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 				edit.set_meta(&"link",['text_changed',block_property.default,func(v,link_block):
+					if not edit.visible:return
 					if v is String:edit.text=v
 					link_block.set_meta(&"value_%s"%str(val),v)])
 				#edit.text=block_property.default
@@ -358,7 +357,10 @@ func create_item_block(name_of_block,select:bool=true):
 					await get_tree().process_frame
 					var ind=added_block.get_children().find(child)-int(added_block.get_meta(&"runnable"))
 					if options.has_meta(&"reset_value"):
-						added_block.connect("disconnected_port",func(v,b):if b==options.get_parent():added_block.set_meta(&"value_%s"%str(ind),options.get_meta(&"reset_value")))
+						added_block.connect("disconnected_port",func(v,b):
+							if b==options.get_parent():
+								added_block.set_meta(&"value_%s"%str(ind),options.get_meta(&"reset_value"))
+							)
 					if added_block.has_meta(&"value_%s"%str(ind)):
 						var val=added_block.get_meta(&"value_%s"%str(ind))
 						if options is SpinBox and val is float:
@@ -371,6 +373,7 @@ func create_item_block(name_of_block,select:bool=true):
 				options.remove_meta(&"link")
 	added_block.disconnected_port.connect(func(id,node):
 		added_block.set_meta(&"value_%s"%str(id),added_block.get_meta(&"default_%s"%str(id)))
+		added_block.set_meta(&"type_%s"%str(id),added_block.get_meta(&"reset_type_%s"%str(id)))
 	)
 	
 	$"../../BlockUI".add_child(added_block)

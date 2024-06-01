@@ -6,7 +6,7 @@ extends Control
 func _ready():
 	await get_tree().process_frame
 	await get_tree().process_frame
-	$VBoxContainer/AnimatedBoxContainer.animate_items_with_chain("slide_down_to_side")
+	$VBoxContainer/AnimatedBoxContainer.animate_items_with_chain("unset_name")
 	
 
 func _on_button_pressed():
