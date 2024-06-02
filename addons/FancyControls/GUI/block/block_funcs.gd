@@ -48,33 +48,79 @@ func Float_connected(self_node,from_node,from_port,to_port,graph):
 	self_node.set_meta(&"value_1",val)
 
 
-func Add_connected(self_node,from_node,from_port,to_port,graph):
+func Add_connected(from_node,to_node,from_port,to_port,graph):
+	var self_node=graph.get_node(String(to_node))
 	var node=graph.get_node(String(from_node))
-	var port=node.get_output_port_slot(from_port)
 	var based_on=node if node.get_meta(&"action") =="Add" else self_node
+	var added_vector:bool=false
 	
-	if get_value_type(based_on,2) == TYPE_VECTOR2 or get_value_type(based_on,1) == TYPE_VECTOR2:
-		BlockColoring.ChangePortType(self_node,0,2,TYPE_VECTOR2)
-		BlockColoring.ChangePortType(self_node,1,1,TYPE_VECTOR2)
-		BlockColoring.ChangePortType(self_node,2,1,TYPE_VECTOR2)
+	if based_on==self_node:
+		var s_port=node.get_output_port_slot(from_port)-int(node.get_meta(&"runnable",false))
+		var val=node.get_meta(&"type_%s"%str(s_port))
+		var to_slot=based_on.get_input_port_slot(to_port)
+		based_on.set_meta(&"connected_left_%s"%str(to_slot),max(based_on.get_meta(&"connected_left_%s"%str(to_slot),0)+1,0))
+		node.set_meta(&"connected_right_%s"%str(s_port),max(node.get_meta(&"connected_right_%s"%str(s_port),0)+1,0))
+		if val==TYPE_VECTOR2:added_vector=true
 	else:
-		if not get_value_type(based_on,0) == TYPE_VECTOR2:
-			BlockColoring.ChangePortType(self_node,0,2,TYPE_FLOAT)
-		BlockColoring.ChangePortType(self_node,1,1,TYPE_FLOAT)
-		BlockColoring.ChangePortType(self_node,2,1,TYPE_FLOAT)
+		var s_port=self_node.get_input_port_slot(to_port)-int(self_node.get_meta(&"runnable",false))
+		var val=self_node.get_meta(&"type_%s"%str(s_port))
+		
+		var to_slot=based_on.get_output_port_slot(from_port)
+		based_on.set_meta(&"connected_right_%s"%str(to_slot),max(based_on.get_meta(&"connected_right_%s"%str(to_slot),0)+1,0))
+		self_node.set_meta(&"connected_left_%s"%str(s_port),max(self_node.get_meta(&"connected_left_%s"%str(s_port),0)+1,0))
+		
+		if val==TYPE_VECTOR2:added_vector=true
+	
+	
+	if added_vector or get_value_type(based_on,2) == TYPE_VECTOR2 or get_value_type(based_on,1) == TYPE_VECTOR2 or get_value_type(based_on,0) == TYPE_VECTOR2:
+		BlockColoring.ChangePortType(based_on,0,2,TYPE_VECTOR2)
+		BlockColoring.ChangePortType(based_on,1,1,TYPE_VECTOR2)
+		BlockColoring.ChangePortType(based_on,2,1,TYPE_VECTOR2)
+	else:
+		BlockColoring.ChangePortType(based_on,0,2,TYPE_FLOAT)
+		BlockColoring.ChangePortType(based_on,1,1,TYPE_FLOAT)
+		BlockColoring.ChangePortType(based_on,2,1,TYPE_FLOAT)
 
 
 
 
-func Add_disconnected(self_node,from_node,from_port,to_port,graph):
+func Add_disconnected(from_node,to_node,from_port,to_port,graph):
+	var self_node=graph.get_node(String(to_node))
 	var node=graph.get_node(String(from_node))
 	var based_on=node if node.get_meta(&"action") =="Add" else self_node
 	
-	based_on.set_meta(&"type_%s"%str(based_on.get_input_port_slot(to_port)),TYPE_FLOAT)
+	if based_on==self_node:
+		var s_port=node.get_output_port_slot(from_port)-int(node.get_meta(&"runnable",false))
+		var to_slot=based_on.get_input_port_slot(to_port)
+		based_on.set_meta(&"connected_left_%s"%str(to_slot),max(based_on.get_meta(&"connected_left_%s"%str(to_slot),0)-1,0))
+		node.set_meta(&"connected_right_%s"%str(s_port),max(node.get_meta(&"connected_right_%s"%str(node.get_output_port_slot(s_port)),0)-1,0))
+		
+		
+		BlockColoring.ChangePortType(based_on,to_slot,3,TYPE_FLOAT)
+	else:
+		var s_port=self_node.get_input_port_slot(to_port)-int(self_node.get_meta(&"runnable",false))
+		var to_slot=based_on.get_output_port_slot(from_port)
+		
+		based_on.set_meta(&"connected_right_%s"%str(to_slot),max(based_on.get_meta(&"connected_right_%s"%str(to_slot),0)-1,0))
+		self_node.set_meta(&"connected_left_%s"%str(s_port),max(self_node.get_meta(&"connected_left_%s"%str(s_port),0)-1,0))
+		
+		BlockColoring.ChangePortType(based_on,to_slot,3,TYPE_FLOAT)
+		
+	for value in based_on.get_meta(&"value_count"):
+		if based_on.get_meta(&"connected_left_%s"%str(value),0)>0 or based_on.get_meta(&"connected_right_%s"%str(value),0)>0:continue
+		
+		BlockColoring.ChangePortType(based_on,value,3,TYPE_FLOAT)
 	
 	
-	if not (get_value_type(based_on,2) == TYPE_VECTOR2 or get_value_type(based_on,1) == TYPE_VECTOR2):
-		BlockColoring.ChangePortType(self_node,1,1,TYPE_FLOAT)
-		BlockColoring.ChangePortType(self_node,2,1,TYPE_FLOAT)
-		if not get_value_type(based_on,0) == TYPE_VECTOR2:
-			BlockColoring.ChangePortType(self_node,0,2,TYPE_FLOAT)
+	
+	
+	
+	
+	if get_value_type(based_on,2) == TYPE_VECTOR2 or get_value_type(based_on,1) == TYPE_VECTOR2 or get_value_type(based_on,0) == TYPE_VECTOR2:
+		BlockColoring.ChangePortType(based_on,0,2,TYPE_VECTOR2)
+		BlockColoring.ChangePortType(based_on,1,1,TYPE_VECTOR2)
+		BlockColoring.ChangePortType(based_on,2,1,TYPE_VECTOR2)
+	else:
+		BlockColoring.ChangePortType(based_on,0,2,TYPE_FLOAT)
+		BlockColoring.ChangePortType(based_on,1,1,TYPE_FLOAT)
+		BlockColoring.ChangePortType(based_on,2,1,TYPE_FLOAT)

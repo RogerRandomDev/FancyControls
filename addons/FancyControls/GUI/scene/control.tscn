@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bd5e2fiftorgo"]
+[gd_scene load_steps=11 format=3 uid="uid://bd5e2fiftorgo"]
 
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/gui_root_script.gd" id="2_g6mr6"]
 [ext_resource type="Texture2D" uid="uid://bhvhlwa1y2ec" path="res://addons/FancyControls/GUI/scene/2d.res" id="3_2xky7"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://b5vkq3256l43k" path="res://addons/FancyControls/GUI/scene/script.res" id="4_dh5u7"]
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/block/BlockList.gd" id="5_n5rgj"]
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/block/BlockUI.gd" id="6_bgwiu"]
-[ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/GraphNode.gd" id="7_ww25m"]
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/CodeBox.gd" id="8_ii3ab"]
 [ext_resource type="CodeHighlighter" uid="uid://g0qjjgb0nwf8" path="res://addons/FancyControls/GUI/codehighlight.tres" id="9_8spe6"]
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/GroupsBox.gd" id="10_p5gwx"]
@@ -413,7 +412,7 @@ offset_right = 128.0
 offset_bottom = 203.0
 mouse_filter = 1
 draggable = false
-title = "func_name"
+title = "Item"
 slot/0/left_enabled = false
 slot/0/left_type = 0
 slot/0/left_color = Color(1, 1, 1, 1)
@@ -468,7 +467,6 @@ slot/5/right_type = 3
 slot/5/right_color = Color(1, 0.945098, 0.411765, 1)
 slot/5/right_icon = null
 slot/5/draw_stylebox = true
-script = ExtResource("7_ww25m")
 metadata/runnable = true
 metadata/type = "function"
 metadata/action = "INITIALIZE"
@@ -479,6 +477,12 @@ metadata/value_3 = "item_node.rotation"
 metadata/value_count = 4
 metadata/value_4 = "item_index"
 metadata/value_5 = "total_items"
+metadata/type_1 = 5
+metadata/type_2 = 5
+metadata/type_3 = 3
+metadata/type_4 = 2
+metadata/type_5 = 2
+metadata/type_0 = 0
 
 [node name="Label" type="Label" parent="Box/MainBox/BlockUI/StartNode"]
 layout_mode = 2
@@ -555,7 +559,6 @@ slot/3/right_type = 3
 slot/3/right_color = Color(1, 0.945098, 0.411765, 1)
 slot/3/right_icon = null
 slot/3/draw_stylebox = true
-script = ExtResource("7_ww25m")
 metadata/runnable = false
 metadata/type = "function"
 metadata/action = "INITIALIZE_CONTAINER"
