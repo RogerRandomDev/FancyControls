@@ -1,6 +1,8 @@
 @tool
 extends Tree
 
+
+
 ##gonna use a custom _get_property_list() method to work on this and make it easier to work with
 var block_list:Array=[]
 var built_nodes:Dictionary={

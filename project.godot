@@ -13,7 +13,7 @@ config_version=5
 config/name="FancyControls"
 run/main_scene="res://addons/FancyControls/Example/testing.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
-config/icon="res://FACS/icon.svg"
+config/icon="res://icon.svg"
 
 [display]
 

@@ -102,7 +102,11 @@ func _on_tree_item_edited():
 		var name_changed_successfully:bool=manager.change_group_name(old_name,prev_selected.get_text(0))
 		if not name_changed_successfully:
 			prev_selected.set_text(0,old_name)
-		else:prev_selected.set_meta(&"group_name",prev_selected.get_text(0))
+		else:
+			prev_selected.set_meta(&"group_name",prev_selected.get_text(0))
+			for child in prev_selected.get_children():
+				child.set_meta(&"group_name",prev_selected.get_text(0))
+			
 	else:
 		#now when you are changing an items contents within the groupings
 		var name_changed_successfully:bool=manager.change_group_binding_name(prev_selected.get_meta(&"group_name"),prev_selected.get_meta(&"linked_resource"),prev_selected.get_text(0))

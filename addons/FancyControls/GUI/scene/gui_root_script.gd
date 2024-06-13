@@ -72,9 +72,8 @@ func _on_chain_load_dialog_file_selected(path):
 		if child.name=="StartNode":continue
 		if child.name=="StartContainerNode":continue
 		$Box/MainBox/BlockUI.remove_child(child)
-		child.queue_free()
+		child.free()
 	$Box/MainBox/BlockUI.clear_connections()
-	await get_tree().process_frame
 	var file=FileAccess.open(path,FileAccess.READ)
 	#decompress the file, the last 4 bytes are listing how big it should be after decompression
 	var buffer=file.get_buffer(file.get_length())

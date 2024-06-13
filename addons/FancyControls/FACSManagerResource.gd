@@ -53,6 +53,7 @@ func change_group_name(old_name:String,new_name:String)->bool:
 	return true
 
 func change_group_binding_name(group_name:String,on_resource:FACSGroupBinding,new_name:String)->bool:
+	
 	if !Groups.has(group_name):return false
 	if RegEx.create_from_string("[^A-Za-z0-9]").search(new_name)!=null:return false
 	if new_name.contains(" "):return false
