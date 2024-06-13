@@ -143,7 +143,7 @@ func _on_tree_button_clicked(item, column, id, mouse_button_index):
 			pass
 		1:
 			#compile grouping
-			pass
+			FACSGroupCompiler.compile_group(item,$"../MainBox/BlockUI",$"../MainBox/VBoxContainer/BlockList")
 	
 
 

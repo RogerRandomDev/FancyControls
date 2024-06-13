@@ -5,8 +5,20 @@ extends Control
 
 
 
+
+func reset_editor_container_previews()->void:
+	for animated_cont in $Box/CodeBox/VBoxContainer/Container.get_children():
+		if animated_cont is AnimatedContainer:
+			animated_cont._editor_fit_contents()
+			
+			animated_cont._update_start_positions(false)
+			animated_cont.clear_animations()
+					
+
+
+
 func _input(event):
-	if visible and event is InputEventKey and event.is_pressed() and event.ctrl_pressed and String(self.get_path_to(get_tree().root.gui_get_focus_owner())).begins_with("."):
+	if visible and event is InputEventKey and event.is_pressed() and event.ctrl_pressed:
 		accept_event()
 
 func _on_tab_bar_tab_selected(tab):
@@ -14,7 +26,10 @@ func _on_tab_bar_tab_selected(tab):
 	$Box/CodeBox.visible=tab==1
 	$Box/GroupsBox.visible=tab==2
 	if tab==1:
-		$Box/CodeBox.reload_codeview()
+		reset_editor_container_previews()
+		
+		$Box/CodeBox.reload_codeview.call_deferred()
+		
 
 
 func _on_save_button_pressed():
@@ -75,3 +90,10 @@ func _on_chain_load_dialog_file_selected(path):
 		$Box/MainBox/VBoxContainer/BlockList
 	)
 	file.close()
+	
+	if $Box/TopBar/TabBar.current_tab==1:
+		reset_editor_container_previews()
+		
+		$Box/CodeBox.reload_codeview.call_deferred()
+	
+	

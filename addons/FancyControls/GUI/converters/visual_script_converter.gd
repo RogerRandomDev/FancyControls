@@ -1,10 +1,10 @@
 @tool
 extends RefCounted
+class_name FACSVISCompiler
 
 
 
-
-func convert_node(node:GraphNode,graph:GraphEdit):
+static func convert_node(node:GraphNode,graph:GraphEdit):
 	var chain=[]
 	var connections=graph.get_connection_list().filter(func(v):
 		return v.to_node==node.name)
@@ -14,8 +14,8 @@ func convert_node(node:GraphNode,graph:GraphEdit):
 	chain.push_back(node.name)
 	return chain
 
-func convert_chain_to_code(chain:Array,graph)->Dictionary:
-	var code_out="static func %s(item_node:AnimatedItem,item_index=0,total_items=1,container_info={}):\n\t"%graph.get_meta(&"func_name")
+static func convert_chain_to_code(chain:Array,graph,method_name:String=graph.get_meta(&"func_name"))->Dictionary:
+	var code_out="func %METHOD_NAME%(item_node:AnimatedItem,item_index:float=0,total_items:float=1,container_info={}):\n\t\n\t"
 	var final_chain=[]
 	chain.map(func(v):if !final_chain.has(v):final_chain.push_back(v))
 	chain=final_chain
@@ -30,7 +30,7 @@ func convert_chain_to_code(chain:Array,graph)->Dictionary:
 	return {"code":code_out,"variables":variable_list}
 
 
-func convert_visual(graph:GraphEdit)->Dictionary:
+static func convert_visual(graph:GraphEdit)->Dictionary:
 	var connection_list:=graph.get_connection_list()
 	var chains_to_start:Array=[]
 	var runnable_nodes = graph.get_children().filter(func(v):return v.get_meta(&"runnable"))

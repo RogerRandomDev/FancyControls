@@ -16,6 +16,7 @@ var data={
 var link_node
 
 func _init(node,graph)->void:
+	
 	on_graph=graph
 	link_node=node
 	if not node.has_meta("type"):
@@ -71,7 +72,7 @@ func convert_value_type(value,to_type:int=TYPE_NIL,on_node:GraphNode=null):
 			if String(value).begins_with("Tween."):
 				cur_type=TYPE_INT
 			else:
-				if on_node.has_meta(value):
+				if on_node and on_node.has_meta(value):
 					cur_type=typeof(on_node.get_meta(value))
 	match to_type:
 		TYPE_FLOAT:
@@ -131,7 +132,7 @@ func get_content()->String:
 	if not data.has("type"):return ""
 	match data.type:
 		nodeTypes.Variable:
-			return "var %s:%s=%s\n\t"%[data.name,data.var_type.to_lower(),get_value(-1)]
+			return "var %s:%s=%s\n\t"%[data.name,data.var_type.to_lower().capitalize().replace(" ",""),get_value(-1)]
 		nodeTypes.Function:
 			return get_function_content()
 		nodeTypes.VariableFunction:

@@ -25,7 +25,7 @@ func chain_action(on_type:AnimatableTypes,target:Variant,duration:float=-1,tween
 				"duration":duration,
 				"tween":tween_type
 			})
-			if _tween_position==null||not _tween_position.is_running():_target_chains_updated("position")
+			if _tween_position==null||not _tween_position.is_valid():_target_chains_updated("position")
 			
 		AnimatableTypes.ROTATION:
 			assert(target is float)
@@ -34,7 +34,7 @@ func chain_action(on_type:AnimatableTypes,target:Variant,duration:float=-1,tween
 				"duration":duration,
 				"tween":tween_type
 			})
-			if _tween_rotation==null||not _tween_rotation.is_running():_target_chains_updated("rotation")
+			if _tween_rotation==null||not _tween_position.is_valid():_target_chains_updated("rotation")
 			
 		AnimatableTypes.SCALE:
 			assert(target is Vector2)
@@ -43,7 +43,7 @@ func chain_action(on_type:AnimatableTypes,target:Variant,duration:float=-1,tween
 				"duration":duration,
 				"tween":tween_type
 			})
-			if _tween_scale==null||not _tween_scale.is_running():_target_chains_updated("scale")
+			if _tween_scale==null||not _tween_position.is_valid():_target_chains_updated("scale")
 
 
 
@@ -52,7 +52,7 @@ func chain_action(on_type:AnimatableTypes,target:Variant,duration:float=-1,tween
 
 ##handles running the chain when it is added
 func _target_chains_updated(updated_set:String)->void:
-	if Engine.is_editor_hint():return
+	#if Engine.is_editor_hint():return
 	match updated_set:
 		"position":
 			var front_index=target_chains["position"].pop_front()

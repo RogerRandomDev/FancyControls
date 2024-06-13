@@ -26,9 +26,13 @@ func _ready():
 	$StartContainerNode.set_meta(&"type","function")
 	$StartContainerNode.set_meta(&"action","INITIALIZE_CONTAINER")
 	$StartContainerNode.set_meta(&"value_0","container_info.size")
+	$StartContainerNode.set_meta(&"type_0",TYPE_VECTOR2)
 	$StartContainerNode.set_meta(&"value_1","container_info.global_position")
+	$StartContainerNode.set_meta(&"type_1",TYPE_VECTOR2)
 	$StartContainerNode.set_meta(&"value_2","container_info.item_origins[item_index]")
+	$StartContainerNode.set_meta(&"type_2",TYPE_VECTOR2)
 	$StartContainerNode.set_meta(&"value_3","container_info.rotation")
+	$StartContainerNode.set_meta(&"type_3",TYPE_FLOAT)
 	$StartContainerNode.set_meta(&"value_count",4)
 	
 	
@@ -45,6 +49,7 @@ func _ready():
 
 
 func _on_connection_request(from_node, from_port, to_node, to_port):
+	if code_funcs==null:code_funcs=code_block_funcs.new()
 	#hide the editable section when it is set externally
 	var node_port=get_node(String(to_node)).get_child(get_node(String(to_node)).get_input_port_slot(to_port))
 	#actions can only chain
@@ -59,7 +64,10 @@ func _on_connection_request(from_node, from_port, to_node, to_port):
 	var node=get_node(String(from_node))
 	if code_funcs.has_method(str(node.get_meta(&"action"))+"_connected"):
 		code_funcs.call_deferred(node.get_meta(&"action")+"_connected",from_node,to_node,from_port,to_port,self)
-	if node_port.get_child_count()>1:node_port.get_child(1).hide()
+	if node_port.get_child_count()>1:
+		for child in range(1,node_port.get_child_count()):
+			node_port.get_child(child).hide()
+		
 	node.get_output_port_slot(from_port)
 	
 	node=get_node(String(to_node))
@@ -78,7 +86,9 @@ func _on_disconnection_request(from_node, from_port, to_node, to_port):
 	#hide the editable section when it is set externally
 	var node_port=get_node(String(to_node)).get_child(get_node(String(to_node)).get_input_port_slot(to_port))
 	get_node(String(to_node)).emit_signal("disconnected_port",get_node(String(to_node)).get_input_port_slot(to_port),node_port)
-	if node_port.get_child_count()>1:node_port.get_child(1).show()
+	if node_port.get_child_count()>1:
+		for child in range(1,node_port.get_child_count()):
+			node_port.get_child(child).show()
 	disconnect_node(from_node,from_port,to_node,to_port)
 	
 	var node=get_node(String(from_node))
@@ -99,7 +109,10 @@ func _on_delete_nodes_request(nodes):
 	if start_at>-1:nodes.remove_at(start_at)
 	for node in nodes:
 		var grabbed = get_node(String(node))
-		get_connection_list().map(func(v):if v.from_node==node||v.to_node==node:disconnect_node(v.from_node,v.from_port,v.to_node,v.to_port))
+		get_connection_list().map(func(v):if v.from_node==node||v.to_node==node:
+			_on_disconnection_request(v.from_node,v.from_port,v.to_node,v.to_port)
+			)
+		
 		grabbed.queue_free()
 
 

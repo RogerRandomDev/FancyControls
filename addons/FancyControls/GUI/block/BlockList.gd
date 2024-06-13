@@ -1,5 +1,5 @@
 @tool
-extends ItemList
+extends Tree
 
 ##gonna use a custom _get_property_list() method to work on this and make it easier to work with
 var block_list:Array=[]
@@ -7,9 +7,14 @@ var built_nodes:Dictionary={
 	
 }
 
+var block_categories={}
+
+var root_item:TreeItem
 
 func _ready():
 	clear()
+	root_item=create_item()
+	
 	#loads the blocks into the ui to edit with
 	#this will need heavily remade for now i just need it functional though
 	for block in block_list:
@@ -17,16 +22,15 @@ func _ready():
 
 
 
-
 func search_items(search_string:String="",search_category:String="")->void:
-	clear()
+	
 	search_string=search_string.to_lower()
 	search_category=search_category.to_lower()
 	var used_list:=block_list.filter(func(block):
 		return (search_category=="any"||block.category.to_lower().split(",").has(search_category)) and (block.name.to_lower().contains(search_string)||search_string=="")
 	)
-	for block in used_list:
-		add_item(block.name)
+	#for block in used_list:
+		#add_item(block.name)
 
 
 
@@ -35,9 +39,16 @@ func search_items(search_string:String="",search_category:String="")->void:
 
 
 func build_block_node(block):
-	add_item(
-		block.name
-	)
+	
+	for category in block.category.split(","):
+		if not block_categories.has(category):
+			block_categories[category]=root_item.create_child()
+			block_categories[category].set_text(0,category)
+			block_categories[category].collapsed=true
+		var child=block_categories[category].create_child()
+		child.set_text(0,block.name)
+	
+	
 	var built_block=GraphNode.new()
 	built_block.set_script(load("res://addons/FancyControls/GUI/block/block_script.gd"))
 	built_block.size.x=160
@@ -105,13 +116,61 @@ func build_block_node(block):
 				int(block_property.connect_left)+int(block_property.connect_right)*2,
 				TYPE_VECTOR2
 				)
+				if block_property.editable:
+					var edit=SpinBox.new()
+					edit.allow_greater=true
+					edit.allow_lesser=true
+					edit.step=0.01
+					added_item.add_child(edit)
+					edit.set_meta(&"reset_value",block_property.default.x)
+					edit.set_meta(&"link",['value_changed',block_property.default.x,func(v,link_block):
+						if not edit.visible:return
+						if v is Vector2:v=v.x
+						if v is float:edit.value=v
+						var link_val=link_block.get_meta(&"value_%s"%str(val))
+						if link_val is String:
+							pass
+						else:
+							link_block.set_meta(&"value_%s"%str(val),Vector2(v,link_block.get_meta(&"value_%s"%str(val)).y))
+							edit.value=v
+							])
+							
+					edit.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+					edit.owner=built_block
+				if block_property.editable:
+					var edit=SpinBox.new()
+					edit.allow_greater=true
+					edit.allow_lesser=true
+					edit.step=0.01
+					added_item.add_child(edit)
+					edit.set_meta(&"reset_value",block_property.default.y)
+					edit.set_meta(&"link",['value_changed',block_property.default.y,func(v,link_block):
+						if not edit.visible:return
+						if v is Vector2:v=v.y
+						
+						if v is float:edit.value=v
+						
+						if link_block.get_meta(&"value_%s"%str(val)) is String:
+							pass
+						else:
+							link_block.set_meta(&"value_%s"%str(val),Vector2(link_block.get_meta(&"value_%s"%str(val)).x,v))
+							edit.value=v
+							])
+							
+					edit.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+					edit.owner=built_block
 			TYPE_STRING:
 				var edit=LineEdit.new()
 				added_item.add_child(edit)
 				edit.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 				edit.set_meta(&"link",['text_changed',block_property.default,func(v,link_block):
 					if not edit.visible:return
-					if v is String:edit.text=v
+					if v is String:
+						while v.begins_with("("):
+							v=v.trim_prefix("(")
+						
+						edit.text=v
+					
 					link_block.set_meta(&"value_%s"%str(val),v)])
 				#edit.text=block_property.default
 				edit.owner=built_block
@@ -339,13 +398,22 @@ func _get_property_list():
 	
 	return result
 
-
-func _on_item_selected(index):
-	var name_of_block=get_item_text(index)
+func _on_item_selected():
+	##code that allows me to collapse all but the current relevant category group
+	#var chosen_item=get_selected()
+	#while chosen_item.get_parent()!=root_item:
+		#chosen_item=chosen_item.get_parent()
+	#
+	#for item in root_item.get_children():
+		#item.collapsed=item!=get_selected()
+	if get_selected().get_parent()==root_item:return
+	
+	var name_of_block=get_selected().get_text(0)
+	if not built_nodes.has(name_of_block):return
 	create_item_block(name_of_block)
 
 
-func create_item_block(name_of_block,select:bool=true):
+func create_item_block(name_of_block,select:bool=true,attach_to:Node=null):
 	var added_block=built_nodes[name_of_block].instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
 	#compiles info as needed to re-link cause it hates me
 	for child in added_block.get_children():
@@ -353,36 +421,47 @@ func create_item_block(name_of_block,select:bool=true):
 			if options.has_meta(&"link"):
 				var link_info=options.get_meta(&"link")
 				options.connect(link_info[0],link_info[2].bind(added_block))
-				(func():
-					await get_tree().process_frame
-					var ind=added_block.get_children().find(child)-int(added_block.get_meta(&"runnable"))
-					if options.has_meta(&"reset_value"):
-						added_block.connect("disconnected_port",func(v,b):
-							if b==options.get_parent():
-								added_block.set_meta(&"value_%s"%str(ind),options.get_meta(&"reset_value"))
-							)
-					if added_block.has_meta(&"value_%s"%str(ind)):
-						var val=added_block.get_meta(&"value_%s"%str(ind))
-						if options is SpinBox and val is float:
-							options.value=val
-						if options is LineEdit and val is String:
-							options.text=val
-						return options.emit_signal(link_info[0],val)
-					options.emit_signal(link_info[0],link_info[1])
-				).call_deferred()
+				item_block_func.call_deferred(options,link_info,added_block,child)
 				options.remove_meta(&"link")
 	added_block.disconnected_port.connect(func(id,node):
 		added_block.set_meta(&"value_%s"%str(id),added_block.get_meta(&"default_%s"%str(id)))
 		added_block.set_meta(&"type_%s"%str(id),added_block.get_meta(&"reset_type_%s"%str(id)))
 	)
-	
-	$"../../BlockUI".add_child(added_block)
+	if attach_to==null:attach_to=$"../../BlockUI"
+	attach_to.add_child(added_block)
 	if !select:return added_block
 	await get_tree().process_frame
-	$"../../BlockUI".set_selected(added_block)
-	$"../../BlockUI".grab_focus()
-	added_block.position_offset=($"../../BlockUI".scroll_offset+$"../../BlockUI".size*0.5-added_block.size*0.5-size*Vector2(0.5,0))/$"../../BlockUI".zoom
+	if attach_to==$"../../BlockUI":
+		$"../../BlockUI".set_selected(added_block)
+		$"../../BlockUI".grab_focus()
+		added_block.position_offset=($"../../BlockUI".scroll_offset+$"../../BlockUI".size*0.5-added_block.size*0.5-size*Vector2(0.5,0))/$"../../BlockUI".zoom
 	return added_block
+
+
+func item_block_func(options,link_info,added_block,child):
+	await get_tree().process_frame
+	var ind=added_block.get_children().find(child)-int(added_block.get_meta(&"runnable"))
+	if options.has_meta(&"reset_value"):
+		added_block.connect("disconnected_port",func(v,b):
+			if b==options.get_parent():
+				added_block.set_meta(&"value_%s"%str(ind),options.get_meta(&"reset_value"))
+			)
+	
+	if added_block.has_meta(&"value_%s"%str(ind)):
+		var val=added_block.get_meta(&"value_%s"%str(ind))
+		if options is SpinBox and val is Vector2:
+			
+			options.value=val[int(options.get_parent().get_children().find(options))-1]
+		
+		if options is SpinBox and val is float:
+			options.value=val
+		if options is LineEdit and val is String:
+			options.text=val
+		return options.emit_signal(link_info[0],val)
+	options.emit_signal(link_info[0],link_info[1])
+
+
+
 
 
 func _on_option_button_item_selected(index):

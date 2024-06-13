@@ -1,11 +1,11 @@
 @tool
 extends RefCounted
+class_name FACSJson
 
 
 
 
-
-func convert_tree(graph:GraphEdit)->Dictionary:
+static func convert_tree(graph:GraphEdit)->Dictionary:
 	var node_list=graph.get_children()
 	node_list.erase(graph.get_child(0))
 	node_list.erase(graph.get_child(1))
@@ -29,18 +29,27 @@ func convert_tree(graph:GraphEdit)->Dictionary:
 	return {"nodes":converted_list,"connections":converted_connections,"compiler_data":compiled_list}
 
 
-func convert_json(json_data,graph:GraphEdit,blockList):
+##fixes issues when converting between json text and godot dictionaries making vectors and other types into strings
+static func correct_variable_typing(value):
+	if value is String and value.begins_with("("):value = str_to_var("Vector2"+value)
+	return value
+
+
+static func convert_json(json_data,graph:GraphEdit,blockList):
+	
 	for node_data in json_data.nodes:
-		var node=blockList.create_item_block(node_data.name if not node_data.has("var_type") else node_data.var_type,false)
+		var node=blockList.create_item_block(node_data.name if not node_data.has("var_type") else node_data.var_type,false,graph)
 		node.position_offset=str_to_var("Vector2"+node_data.position)
 		(func():
 			var i=0
 			if node_data.type==0:
 				node.set_meta(&"value_0",node_data["var_name"])
-				node.set_meta(&"value_1",node_data["value"])
+				var value=correct_variable_typing(node_data["value"])
+				node.set_meta(&"value_1",value)
 			
 			while node_data.has("value_%s"%str(i)):
-				node.set_meta(&"value_%s"%str(i),node_data["value_%s"%str(i)])
+				var value=correct_variable_typing(node_data["value_%s"%str(i)])
+				node.set_meta(&"value_%s"%str(i),value)
 				i+=1
 		).call()
 	graph.current_selected_nodes=[]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bd5e2fiftorgo"]
+[gd_scene load_steps=22 format=3 uid="uid://bd5e2fiftorgo"]
 
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/gui_root_script.gd" id="2_g6mr6"]
 [ext_resource type="Texture2D" uid="uid://bhvhlwa1y2ec" path="res://addons/FancyControls/GUI/scene/2d.res" id="3_2xky7"]
@@ -7,12 +7,59 @@
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/block/BlockList.gd" id="5_n5rgj"]
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/block/BlockUI.gd" id="6_bgwiu"]
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/CodeBox.gd" id="8_ii3ab"]
+[ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedRoundContainer/AnimatedRoundContainer.gd" id="9_3hbk3"]
 [ext_resource type="CodeHighlighter" uid="uid://g0qjjgb0nwf8" path="res://addons/FancyControls/GUI/codehighlight.tres" id="9_8spe6"]
+[ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedItem/FancyAnimatedItem/FancyAnimatedItem.gd" id="10_e6eqe"]
 [ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/GroupsBox.gd" id="10_p5gwx"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fbxee"]
 content_margin_left = 12.0
 content_margin_right = 12.0
+
+[sub_resource type="InputEventKey" id="InputEventKey_7g5hc"]
+device = -1
+pressed = true
+keycode = 87
+unicode = 119
+
+[sub_resource type="Shortcut" id="Shortcut_7wesj"]
+events = [SubResource("InputEventKey_7g5hc")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_n0sbx"]
+device = -1
+pressed = true
+keycode = 83
+unicode = 115
+
+[sub_resource type="Shortcut" id="Shortcut_2feun"]
+events = [SubResource("InputEventKey_n0sbx")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_no1se"]
+device = -1
+keycode = 68
+unicode = 100
+echo = true
+
+[sub_resource type="InputEventKey" id="InputEventKey_bv2mo"]
+device = -1
+shift_pressed = true
+keycode = 68
+physical_keycode = 68
+key_label = 68
+unicode = 68
+echo = true
+
+[sub_resource type="Shortcut" id="Shortcut_fw5qn"]
+events = [SubResource("InputEventKey_no1se"), SubResource("InputEventKey_bv2mo")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_mcxrh"]
+device = -1
+pressed = true
+keycode = 82
+unicode = 114
+
+[sub_resource type="Shortcut" id="Shortcut_ly3hp"]
+events = [SubResource("InputEventKey_mcxrh")]
 
 [node name="Control" type="Control"]
 custom_minimum_size = Vector2(768, 512)
@@ -92,7 +139,6 @@ layout_mode = 2
 text = "Load Chain"
 
 [node name="MainBox" type="HBoxContainer" parent="Box"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -104,48 +150,20 @@ size_flags_stretch_ratio = 0.25
 [node name="HBoxContainer" type="HBoxContainer" parent="Box/MainBox/VBoxContainer"]
 layout_mode = 2
 
-[node name="LineEdit" type="LineEdit" parent="Box/MainBox/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-expand_to_text_length = true
-
-[node name="OptionButton" type="OptionButton" parent="Box/MainBox/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-item_count = 4
-selected = 0
-popup/item_0/text = "Any"
-popup/item_0/id = 0
-popup/item_1/text = "Bool"
-popup/item_1/id = 1
-popup/item_2/text = "Float"
-popup/item_2/id = 2
-popup/item_3/text = "Vector2"
-popup/item_3/id = 3
-
-[node name="BlockList" type="ItemList" parent="Box/MainBox/VBoxContainer"]
+[node name="BlockList" type="Tree" parent="Box/MainBox/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
+theme_override_constants/draw_guides = 0
+theme_override_constants/scroll_border = 0
 allow_reselect = true
-max_text_lines = 3
-text_overrun_behavior = 0
-item_count = 11
-item_0/text = "Float"
-item_1/text = "DecomposeVector"
-item_2/text = "ComposeVector"
-item_3/text = "Add"
-item_4/text = "Sub"
-item_5/text = "Mul"
-item_6/text = "Div"
-item_7/text = "Rotate"
-item_8/text = "SetPosition"
-item_9/text = "SetRotation"
-item_10/text = "SetScale"
+hide_root = true
+scroll_horizontal_enabled = false
 script = ExtResource("5_n5rgj")
-block_count = 11
+block_count = 12
 block_0/name = &"Float"
-block_0/category = &"Float"
+block_0/category = &"Float,Variable"
 block_0/runnable = false
 block_0/type = "variable"
 block_0/properties_count = 2
@@ -161,77 +179,71 @@ block_0/property_1/editable = true
 block_0/property_1/connect_left = true
 block_0/property_1/connect_right = true
 block_0/property_1/default = 0
-block_1/name = &"DecomposeVector"
-block_1/category = &"Vector2,Float"
+block_1/name = &"Vector2"
+block_1/category = &"Vector2,Variable"
 block_1/runnable = false
-block_1/type = "function"
-block_1/properties_count = 3
-block_1/property_0/name = "Input"
-block_1/property_0/type = 5
+block_1/type = "variable"
+block_1/properties_count = 2
+block_1/property_0/name = "Name"
+block_1/property_0/type = 4
 block_1/property_0/editable = true
-block_1/property_0/connect_left = true
+block_1/property_0/connect_left = false
 block_1/property_0/connect_right = false
-block_1/property_0/default = "Default"
-block_1/property_1/name = "x"
-block_1/property_1/type = 3
-block_1/property_1/editable = false
-block_1/property_1/connect_left = false
+block_1/property_0/default = "VecName"
+block_1/property_1/name = "Value"
+block_1/property_1/type = 5
+block_1/property_1/editable = true
+block_1/property_1/connect_left = true
 block_1/property_1/connect_right = true
-block_1/property_1/default = 0
-block_1/property_2/name = "y"
-block_1/property_2/type = 3
-block_1/property_2/editable = false
-block_1/property_2/connect_left = false
-block_1/property_2/connect_right = true
-block_1/property_2/default = 0
-block_2/name = &"ComposeVector"
+block_1/property_1/default = Vector2(0, 0)
+block_2/name = &"DecomposeVector"
 block_2/category = &"Vector2,Float"
 block_2/runnable = false
-block_2/type = "variablefunction"
+block_2/type = "function"
 block_2/properties_count = 3
-block_2/property_0/name = "                     Out"
+block_2/property_0/name = "Input"
 block_2/property_0/type = 5
 block_2/property_0/editable = true
-block_2/property_0/connect_left = false
-block_2/property_0/connect_right = true
-block_2/property_0/default = 0
+block_2/property_0/connect_left = true
+block_2/property_0/connect_right = false
+block_2/property_0/default = Vector2(0, 0)
 block_2/property_1/name = "x"
 block_2/property_1/type = 3
-block_2/property_1/editable = true
-block_2/property_1/connect_left = true
-block_2/property_1/connect_right = false
+block_2/property_1/editable = false
+block_2/property_1/connect_left = false
+block_2/property_1/connect_right = true
 block_2/property_1/default = 0
 block_2/property_2/name = "y"
 block_2/property_2/type = 3
-block_2/property_2/editable = true
-block_2/property_2/connect_left = true
-block_2/property_2/connect_right = false
+block_2/property_2/editable = false
+block_2/property_2/connect_left = false
+block_2/property_2/connect_right = true
 block_2/property_2/default = 0
-block_3/name = &"Add"
-block_3/category = &"Float"
+block_3/name = &"ComposeVector"
+block_3/category = &"Vector2,Float"
 block_3/runnable = false
 block_3/type = "variablefunction"
 block_3/properties_count = 3
 block_3/property_0/name = "                     Out"
-block_3/property_0/type = 3
+block_3/property_0/type = 5
 block_3/property_0/editable = false
 block_3/property_0/connect_left = false
 block_3/property_0/connect_right = true
-block_3/property_0/default = 0
-block_3/property_1/name = "A"
+block_3/property_0/default = Vector2(0, 0)
+block_3/property_1/name = "x"
 block_3/property_1/type = 3
 block_3/property_1/editable = true
 block_3/property_1/connect_left = true
 block_3/property_1/connect_right = false
 block_3/property_1/default = 0
-block_3/property_2/name = "B"
+block_3/property_2/name = "y"
 block_3/property_2/type = 3
 block_3/property_2/editable = true
 block_3/property_2/connect_left = true
 block_3/property_2/connect_right = false
 block_3/property_2/default = 0
-block_4/name = &"Sub"
-block_4/category = &"Float"
+block_4/name = &"Add"
+block_4/category = &"Float,Vector2,Math"
 block_4/runnable = false
 block_4/type = "variablefunction"
 block_4/properties_count = 3
@@ -253,8 +265,8 @@ block_4/property_2/editable = true
 block_4/property_2/connect_left = true
 block_4/property_2/connect_right = false
 block_4/property_2/default = 0
-block_5/name = &"Mul"
-block_5/category = &"Float"
+block_5/name = &"Sub"
+block_5/category = &"Float,Vector2,Math"
 block_5/runnable = false
 block_5/type = "variablefunction"
 block_5/properties_count = 3
@@ -276,8 +288,8 @@ block_5/property_2/editable = true
 block_5/property_2/connect_left = true
 block_5/property_2/connect_right = false
 block_5/property_2/default = 0
-block_6/name = &"Div"
-block_6/category = &"Float"
+block_6/name = &"Mul"
+block_6/category = &"Float,Vector2,Math"
 block_6/runnable = false
 block_6/type = "variablefunction"
 block_6/properties_count = 3
@@ -299,82 +311,82 @@ block_6/property_2/editable = true
 block_6/property_2/connect_left = true
 block_6/property_2/connect_right = false
 block_6/property_2/default = 0
-block_7/name = &"Rotate"
-block_7/category = &"Vector2"
+block_7/name = &"Div"
+block_7/category = &"Float,Vector2,Math"
 block_7/runnable = false
 block_7/type = "variablefunction"
 block_7/properties_count = 3
 block_7/property_0/name = "                     Out"
-block_7/property_0/type = 5
+block_7/property_0/type = 3
 block_7/property_0/editable = false
 block_7/property_0/connect_left = false
 block_7/property_0/connect_right = true
 block_7/property_0/default = 0
-block_7/property_1/name = "Vector"
-block_7/property_1/type = 5
+block_7/property_1/name = "A"
+block_7/property_1/type = 3
 block_7/property_1/editable = true
 block_7/property_1/connect_left = true
 block_7/property_1/connect_right = false
 block_7/property_1/default = 0
-block_7/property_2/name = "Rotation"
+block_7/property_2/name = "B"
 block_7/property_2/type = 3
 block_7/property_2/editable = true
 block_7/property_2/connect_left = true
 block_7/property_2/connect_right = false
 block_7/property_2/default = 0
-block_8/name = &"SetPosition"
-block_8/category = &"Vector2,Goals,Tween,Int"
-block_8/runnable = true
-block_8/type = "function"
+block_8/name = &"Rotate"
+block_8/category = &"Vector2,Math"
+block_8/runnable = false
+block_8/type = "variablefunction"
 block_8/properties_count = 3
-block_8/property_0/name = "Goal"
+block_8/property_0/name = "                     Out"
 block_8/property_0/type = 5
-block_8/property_0/editable = true
-block_8/property_0/connect_left = true
-block_8/property_0/connect_right = false
-block_8/property_0/default = Vector2(0, 0)
-block_8/property_1/name = "Travel Time"
-block_8/property_1/type = 3
+block_8/property_0/editable = false
+block_8/property_0/connect_left = false
+block_8/property_0/connect_right = true
+block_8/property_0/default = 0
+block_8/property_1/name = "Vector"
+block_8/property_1/type = 5
 block_8/property_1/editable = true
-block_8/property_1/connect_left = false
+block_8/property_1/connect_left = true
 block_8/property_1/connect_right = false
-block_8/property_1/default = -1.0
-block_8/property_2/name = "Transition"
-block_8/property_2/type = 34
+block_8/property_1/default = Vector2(0, 0)
+block_8/property_2/name = "Rotation"
+block_8/property_2/type = 3
 block_8/property_2/editable = true
-block_8/property_2/connect_left = false
+block_8/property_2/connect_left = true
 block_8/property_2/connect_right = false
-block_8/property_2/default = PackedStringArray("TRANS_LINEAR", "TRANS_SINE", "TRANS_QUINT", "TRANS_QUART", "TRANS_QUAD", "TRANS_EXPO", "TRANS_ELASTIC", "TRANS_CUBIC", "TRANS_CIRC", "TRANS_BOUNCE", "TRANS_BACK", "TRANS_SPRING", "Tween.")
-block_9/name = &"SetRotation"
-block_9/category = &"Float,Goals,Tween,Int"
+block_8/property_2/default = 0
+block_9/name = &"SetPosition"
+block_9/category = &"Animated Goals"
 block_9/runnable = true
 block_9/type = "function"
 block_9/properties_count = 3
 block_9/property_0/name = "Goal"
-block_9/property_0/type = 3
+block_9/property_0/type = 5
 block_9/property_0/editable = true
 block_9/property_0/connect_left = true
 block_9/property_0/connect_right = false
-block_9/property_0/default = 0
+block_9/property_0/default = Vector2(0, 0)
 block_9/property_1/name = "Travel Time"
 block_9/property_1/type = 3
 block_9/property_1/editable = true
-block_9/property_1/connect_left = true
+block_9/property_1/connect_left = false
 block_9/property_1/connect_right = false
-block_9/property_1/default = -1.0
+block_9/property_1/default = -1
 block_9/property_2/name = "Transition"
 block_9/property_2/type = 34
 block_9/property_2/editable = true
 block_9/property_2/connect_left = false
 block_9/property_2/connect_right = false
-block_9/property_2/default = PackedStringArray("TRANS_LINEAR", "TRANS_SINE", "TRANS_QUINT", "TRANS_QUART", "TRANS_QUAD", "TRANS_EXPO", "TRANS_ELASTIC", "TRANS_CUBIC", "TRANS_CIRC", "TRANS_BOUNCE", "TRANS_BACK", "TRANS_SPRING", "Tween.")
-block_10/name = &"SetScale"
-block_10/category = &"Vector2,Goals,Tween,Int"
+block_9/property_2/default = ["TRANS_LINEAR", "TRANS_SINE", "TRANS_QUINT", "TRANS_QUART", "TRANS_QUAD", "TRANS_EXPO", "TRANS_ELASTIC", "TRANS_CUBIC", "TRANS_CIRC", "TRANS_BOUNCE", "TRANS_BACK", "TRANS_SPRING", "Tween."]
+block_10/name = &"SetRotation"
+block_10/category = &"Animated Goals"
 block_10/runnable = true
 block_10/type = "function"
 block_10/properties_count = 3
 block_10/property_0/name = "Goal"
-block_10/property_0/type = 5
+block_10/property_0/type = 3
 block_10/property_0/editable = true
 block_10/property_0/connect_left = true
 block_10/property_0/connect_right = false
@@ -384,19 +396,43 @@ block_10/property_1/type = 3
 block_10/property_1/editable = true
 block_10/property_1/connect_left = true
 block_10/property_1/connect_right = false
-block_10/property_1/default = -1.0
+block_10/property_1/default = -1
 block_10/property_2/name = "Transition"
 block_10/property_2/type = 34
 block_10/property_2/editable = true
 block_10/property_2/connect_left = false
 block_10/property_2/connect_right = false
-block_10/property_2/default = PackedStringArray("TRANS_LINEAR", "TRANS_SINE", "TRANS_QUINT", "TRANS_QUART", "TRANS_QUAD", "TRANS_EXPO", "TRANS_ELASTIC", "TRANS_CUBIC", "TRANS_CIRC", "TRANS_BOUNCE", "TRANS_BACK", "TRANS_SPRING", "Tween.")
+block_10/property_2/default = ["TRANS_LINEAR", "TRANS_SINE", "TRANS_QUINT", "TRANS_QUART", "TRANS_QUAD", "TRANS_EXPO", "TRANS_ELASTIC", "TRANS_CUBIC", "TRANS_CIRC", "TRANS_BOUNCE", "TRANS_BACK", "TRANS_SPRING", "Tween."]
+block_11/name = &"SetScale"
+block_11/category = &"Animated Goals"
+block_11/runnable = true
+block_11/type = "function"
+block_11/properties_count = 3
+block_11/property_0/name = "Goal"
+block_11/property_0/type = 5
+block_11/property_0/editable = true
+block_11/property_0/connect_left = true
+block_11/property_0/connect_right = false
+block_11/property_0/default = Vector2(0, 0)
+block_11/property_1/name = "Travel Time"
+block_11/property_1/type = 3
+block_11/property_1/editable = true
+block_11/property_1/connect_left = true
+block_11/property_1/connect_right = false
+block_11/property_1/default = -1
+block_11/property_2/name = "Transition"
+block_11/property_2/type = 34
+block_11/property_2/editable = true
+block_11/property_2/connect_left = false
+block_11/property_2/connect_right = false
+block_11/property_2/default = ["TRANS_LINEAR", "TRANS_SINE", "TRANS_QUINT", "TRANS_QUART", "TRANS_QUAD", "TRANS_EXPO", "TRANS_ELASTIC", "TRANS_CUBIC", "TRANS_CIRC", "TRANS_BOUNCE", "TRANS_BACK", "TRANS_SPRING", "Tween."]
 
 [node name="BlockUI" type="GraphEdit" parent="Box/MainBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 right_disconnects = true
+connection_lines_thickness = 1.0
 minimap_enabled = false
 show_menu = false
 show_zoom_buttons = false
@@ -567,6 +603,10 @@ metadata/value_1 = "container_info.global_position"
 metadata/value_2 = "container_info.item_origins[item_index]"
 metadata/value_3 = "container_info.rotation"
 metadata/value_count = 4
+metadata/type_0 = 5
+metadata/type_1 = 5
+metadata/type_2 = 5
+metadata/type_3 = 3
 
 [node name="Label3" type="Label" parent="Box/MainBox/BlockUI/StartContainerNode"]
 layout_mode = 2
@@ -597,6 +637,7 @@ script = ExtResource("8_ii3ab")
 [node name="CodeEdit" type="CodeEdit" parent="Box/CodeBox"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 1
 text = "var testing"
 editable = false
 selecting_enabled = false
@@ -609,7 +650,206 @@ syntax_highlighter = ExtResource("9_8spe6")
 draw_tabs = true
 gutters_draw_line_numbers = true
 
+[node name="VBoxContainer" type="VBoxContainer" parent="Box/CodeBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Box/CodeBox/VBoxContainer"]
+layout_mode = 2
+
+[node name="PlayAnim" type="Button" parent="Box/CodeBox/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+shortcut = SubResource("Shortcut_7wesj")
+text = "Play"
+
+[node name="PauseAnim" type="Button" parent="Box/CodeBox/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+shortcut = SubResource("Shortcut_2feun")
+text = "Pause"
+
+[node name="StepAnim" type="Button" parent="Box/CodeBox/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "D/SHIFT+D"
+mouse_filter = 1
+shortcut = SubResource("Shortcut_fw5qn")
+text = "Step"
+
+[node name="ResetAnim" type="Button" parent="Box/CodeBox/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+mouse_filter = 1
+shortcut = SubResource("Shortcut_ly3hp")
+text = "Reset"
+
+[node name="Container" type="PanelContainer" parent="Box/CodeBox/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+
+[node name="AnimatedRoundContainer" type="Control" parent="Box/CodeBox/VBoxContainer/Container"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("9_3hbk3")
+border_padding = Vector2(32, 32)
+_hovered = &""
+_unhovered = &""
+_focused = &""
+_unfocused = &""
+_input = &""
+
+[node name="FancyAnimatedItem" type="Control" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer"]
+anchors_preset = 0
+offset_left = -256.0
+offset_top = -224.0
+offset_right = -256.0
+offset_bottom = -224.0
+script = ExtResource("10_e6eqe")
+position_count = 0
+rotation_count = 0
+scale_count = 0
+
+[node name="Panel" type="Panel" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer/FancyAnimatedItem"]
+layout_mode = 0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="FancyAnimatedItem2" type="Control" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer"]
+anchors_preset = 0
+offset_left = -323.882
+offset_top = -195.882
+offset_right = -323.882
+offset_bottom = -195.882
+script = ExtResource("10_e6eqe")
+position_count = 0
+rotation_count = 0
+scale_count = 0
+
+[node name="Panel" type="Panel" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer/FancyAnimatedItem2"]
+layout_mode = 0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="FancyAnimatedItem3" type="Control" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer"]
+anchors_preset = 0
+offset_left = -352.0
+offset_top = -128.0
+offset_right = -352.0
+offset_bottom = -128.0
+script = ExtResource("10_e6eqe")
+position_count = 0
+rotation_count = 0
+scale_count = 0
+
+[node name="Panel" type="Panel" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer/FancyAnimatedItem3"]
+layout_mode = 0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="FancyAnimatedItem4" type="Control" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer"]
+anchors_preset = 0
+offset_left = -323.882
+offset_top = -60.1178
+offset_right = -323.882
+offset_bottom = -60.1178
+script = ExtResource("10_e6eqe")
+position_count = 0
+rotation_count = 0
+scale_count = 0
+
+[node name="Panel" type="Panel" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer/FancyAnimatedItem4"]
+layout_mode = 0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="FancyAnimatedItem5" type="Control" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer"]
+anchors_preset = 0
+offset_left = -256.0
+offset_top = -32.0
+offset_right = -256.0
+offset_bottom = -32.0
+script = ExtResource("10_e6eqe")
+position_count = 0
+rotation_count = 0
+scale_count = 0
+
+[node name="Panel" type="Panel" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer/FancyAnimatedItem5"]
+layout_mode = 0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="FancyAnimatedItem6" type="Control" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer"]
+anchors_preset = 0
+offset_left = -188.118
+offset_top = -60.1177
+offset_right = -188.118
+offset_bottom = -60.1177
+script = ExtResource("10_e6eqe")
+position_count = 0
+rotation_count = 0
+scale_count = 0
+
+[node name="Panel" type="Panel" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer/FancyAnimatedItem6"]
+layout_mode = 0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="FancyAnimatedItem7" type="Control" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer"]
+anchors_preset = 0
+offset_left = -160.0
+offset_top = -128.0
+offset_right = -160.0
+offset_bottom = -128.0
+script = ExtResource("10_e6eqe")
+position_count = 0
+rotation_count = 0
+scale_count = 0
+
+[node name="Panel" type="Panel" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer/FancyAnimatedItem7"]
+layout_mode = 0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="FancyAnimatedItem8" type="Control" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer"]
+anchors_preset = 0
+offset_left = -188.118
+offset_top = -195.882
+offset_right = -188.118
+offset_bottom = -195.882
+script = ExtResource("10_e6eqe")
+position_count = 0
+rotation_count = 0
+scale_count = 0
+
+[node name="Panel" type="Panel" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer/FancyAnimatedItem8"]
+layout_mode = 0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+
 [node name="GroupsBox" type="VBoxContainer" parent="Box"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("10_p5gwx")
@@ -674,8 +914,6 @@ filters = PackedStringArray("*.FACSVis", "*.gd")
 [connection signal="text_changed" from="Box/TopBar/Label" to="Box/MainBox/BlockUI" method="_on_func_name_text_changed"]
 [connection signal="pressed" from="Box/TopBar/HBoxContainer/Button" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="Box/TopBar/HBoxContainer/Button2" to="." method="_on_load_button_pressed"]
-[connection signal="text_changed" from="Box/MainBox/VBoxContainer/HBoxContainer/LineEdit" to="Box/MainBox/VBoxContainer/BlockList" method="_on_line_edit_text_changed"]
-[connection signal="item_selected" from="Box/MainBox/VBoxContainer/HBoxContainer/OptionButton" to="Box/MainBox/VBoxContainer/BlockList" method="_on_option_button_item_selected"]
 [connection signal="item_selected" from="Box/MainBox/VBoxContainer/BlockList" to="Box/MainBox/VBoxContainer/BlockList" method="_on_item_selected"]
 [connection signal="connection_request" from="Box/MainBox/BlockUI" to="Box/MainBox/BlockUI" method="_on_connection_request"]
 [connection signal="delete_nodes_request" from="Box/MainBox/BlockUI" to="Box/MainBox/BlockUI" method="_on_delete_nodes_request"]
@@ -683,6 +921,10 @@ filters = PackedStringArray("*.FACSVis", "*.gd")
 [connection signal="duplicate_nodes_request" from="Box/MainBox/BlockUI" to="Box/MainBox/BlockUI" method="_on_duplicate_nodes_request"]
 [connection signal="node_deselected" from="Box/MainBox/BlockUI" to="Box/MainBox/BlockUI" method="_on_node_deselected"]
 [connection signal="node_selected" from="Box/MainBox/BlockUI" to="Box/MainBox/BlockUI" method="_on_node_selected"]
+[connection signal="pressed" from="Box/CodeBox/VBoxContainer/HBoxContainer/PlayAnim" to="Box/CodeBox" method="_on_play_anim_pressed"]
+[connection signal="pressed" from="Box/CodeBox/VBoxContainer/HBoxContainer/PauseAnim" to="Box/CodeBox" method="_on_pause_anim_pressed"]
+[connection signal="pressed" from="Box/CodeBox/VBoxContainer/HBoxContainer/StepAnim" to="Box/CodeBox" method="_on_step_anim_pressed"]
+[connection signal="pressed" from="Box/CodeBox/VBoxContainer/HBoxContainer/ResetAnim" to="Box/CodeBox" method="_on_reset_anim_pressed"]
 [connection signal="button_clicked" from="Box/GroupsBox/Tree" to="Box/GroupsBox" method="_on_tree_button_clicked"]
 [connection signal="item_activated" from="Box/GroupsBox/Tree" to="Box/GroupsBox" method="_on_tree_item_activated"]
 [connection signal="item_collapsed" from="Box/GroupsBox/Tree" to="Box/GroupsBox" method="_on_tree_item_collapsed"]

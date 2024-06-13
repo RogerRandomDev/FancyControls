@@ -56,6 +56,7 @@ func _has_main_screen():
 func _make_visible(visible):
 	if main_panel_instance:
 		main_panel_instance.visible = visible
+		get_editor_interface().distraction_free_mode=visible
 
 
 

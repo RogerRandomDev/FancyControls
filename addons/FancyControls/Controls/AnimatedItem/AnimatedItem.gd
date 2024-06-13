@@ -17,24 +17,26 @@ var _pos_trans:int=0
 var _rot_trans:int=0
 var _scale_trans:int=0
 
+var manual_step:bool=false
+
 
 ## The position to animate the [AnimatedItem] to from the current position.
 ## Automatically animates when changed.
 var targeted_position:
 	set(v):
 		assert(v is Vector2)
-		if Engine.is_editor_hint():return
+		#if Engine.is_editor_hint():return
 		var travel_distance=(v-global_position).length()
 		targeted_position=v
 		if is_inside_tree():
+			var step_mode:bool=false
 			if _tween_position:_tween_position.kill()
 			_tween_position=create_tween()
 			_tween_position.set_trans(_pos_trans)
-			
 			_tween_position.tween_property(self,'global_position',targeted_position,_pos_travel_time if _pos_travel_time>=0 else sqrt(travel_distance/pixels_per_second))
 			_pos_travel_time=-1.0
 			_pos_trans=Tween.TRANS_LINEAR
-			
+			if manual_step:_tween_position.pause()
 		else:
 			global_position=targeted_position
 ## The rotation to animate the [AnimatedItem] to from the current rotation.
@@ -42,7 +44,7 @@ var targeted_position:
 var targeted_rotation:
 	set(v):
 		assert(v is float)
-		if Engine.is_editor_hint():return
+		#if Engine.is_editor_hint():return
 		var travel_distance=abs(angle_difference(v,rotation))
 		
 		targeted_rotation=v
@@ -57,7 +59,7 @@ var targeted_rotation:
 			_tween_rotation.tween_property(self,'rotation',targeted_rotation,_rot_travel_time if _rot_travel_time>=0 else sqrt(travel_distance/PI)*0.25)
 			_rot_travel_time=-1.0
 			_rot_trans=Tween.TRANS_LINEAR
-			
+			if manual_step:_tween_rotation.pause()
 			#_tween_rotation.tween_property(self,'rotation',targeted_rotation,0.25)
 		else:
 			rotation=targeted_rotation
@@ -67,7 +69,7 @@ var targeted_rotation:
 var targeted_scale=Vector2.ONE:
 	set(v):
 		assert(v is Vector2)
-		if Engine.is_editor_hint():return
+		#if Engine.is_editor_hint():return
 		var travel_distance=(scale-v).length()
 		targeted_scale=v
 		if is_inside_tree():
@@ -80,6 +82,7 @@ var targeted_scale=Vector2.ONE:
 			_tween_scale.tween_property(self,'scale',targeted_scale,_scale_travel_time if _scale_travel_time>=0 else sqrt(travel_distance/scale_rate_per_second))
 			_scale_travel_time=-1.0
 			_scale_trans=Tween.TRANS_LINEAR
+			if manual_step:_tween_scale.pause()
 		else:
 			scale=targeted_scale
 
