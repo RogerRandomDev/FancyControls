@@ -29,7 +29,9 @@ func create_group(group_name:String)->bool:
 	return true
 
 func remove_group(group_name:String):
-	if Groups.has(group_name):Groups.erase(group_name)
+	if not Groups.has(group_name):return
+	Groups.erase(group_name)
+	
 	resave.call_deferred()
 	
 
@@ -113,6 +115,7 @@ func rebind_path_on(group_name:String,on_resource,new_path:String)->void:
 
 
 func resave():
+	group_data={}
 	for group in Groups:
 		group_data[group]=[]
 		for res in Groups[group]:
