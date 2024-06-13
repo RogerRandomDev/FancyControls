@@ -1,0 +1,26 @@
+[gd_resource type="CodeHighlighter" format=3 uid="uid://g0qjjgb0nwf8"]
+
+[resource]
+number_color = Color(0.388235, 1, 0.388235, 1)
+symbol_color = Color(0.65, 0.760833, 1, 1)
+function_color = Color(0.690196, 0.788235, 1, 1)
+member_variable_color = Color(0.439216, 0.627451, 1, 1)
+keyword_colors = {
+"AnimatedItem": Color(0, 1, 0.7, 1),
+"Array": Color(0.388235, 1, 0.388235, 1),
+"Dictionary": Color(0.388235, 1, 0.388235, 1),
+"Vector2": Color(0, 1, 0.698039, 1),
+"container_info": Color(0.4, 1, 0.819608, 1),
+"float": Color(0, 1, 0.698039, 1),
+"func": Color(1, 0.278431, 0.278431, 1),
+"int": Color(0, 1, 0.698039, 1),
+"item_index": Color(0.4, 1, 0.819608, 1),
+"item_node": Color(0.4, 1, 0.819608, 1),
+"output_data": Color(0.4, 1, 0.819608, 1),
+"return": Color(1, 0.278431, 0.278431, 1),
+"total_items": Color(0.4, 1, 0.819608, 1),
+"var": Color(1, 0.278431, 0.278431, 1)
+}
+color_regions = {
+"' '": Color(1, 0.968627, 0.360784, 1)
+}

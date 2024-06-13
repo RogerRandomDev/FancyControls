@@ -9,51 +9,80 @@ var attached_item:Node
 ## The node that contains this [AnimatedItem].
 ## This node has to be a [AnimatedContainer] or one of its subtypes.
 var connected_control:Node
+
+var _pos_travel_time:float=-1.0
+var _rot_travel_time:float=-1.0
+var _scale_travel_time:float=-1.0
+var _pos_trans:int=0
+var _rot_trans:int=0
+var _scale_trans:int=0
+
+var manual_step:bool=false
+
+
 ## The position to animate the [AnimatedItem] to from the current position.
 ## Automatically animates when changed.
-var targeted_position:Vector2:
+var targeted_position:
 	set(v):
-		if Engine.is_editor_hint():return
+		assert(v is Vector2)
+		#if Engine.is_editor_hint():return
 		var travel_distance=(v-global_position).length()
 		targeted_position=v
 		if is_inside_tree():
+			var step_mode:bool=false
 			if _tween_position:_tween_position.kill()
 			_tween_position=create_tween()
-			_tween_position.tween_property(self,'global_position',targeted_position,sqrt(travel_distance/pixels_per_second))
+			_tween_position.set_trans(_pos_trans)
+			_tween_position.tween_property(self,'global_position',targeted_position,_pos_travel_time if _pos_travel_time>=0 else sqrt(travel_distance/pixels_per_second))
+			_pos_travel_time=-1.0
+			_pos_trans=Tween.TRANS_LINEAR
+			if manual_step:_tween_position.pause()
 		else:
 			global_position=targeted_position
 ## The rotation to animate the [AnimatedItem] to from the current rotation.
 ## Automatically animates when changed.
-var targeted_rotation:float:
+var targeted_rotation:
 	set(v):
-		if Engine.is_editor_hint():return
+		assert(v is float)
+		#if Engine.is_editor_hint():return
 		var travel_distance=abs(angle_difference(v,rotation))
 		
 		targeted_rotation=v
 		if is_inside_tree():
 			if _tween_rotation:_tween_rotation.kill()
 			_tween_rotation=create_tween()
+			_tween_rotation.set_trans(_rot_trans)
 			#this is to make sure it takes the shortest path it can
-			targeted_rotation=lerp_angle(rotation,targeted_rotation,1.0)
+			if abs(targeted_rotation)<PI*2:
+				targeted_rotation=lerp_angle(rotation,targeted_rotation,1.0)
 			
-			_tween_rotation.tween_property(self,'rotation',targeted_rotation,sqrt(travel_distance/PI)*0.25)
+			_tween_rotation.tween_property(self,'rotation',targeted_rotation,_rot_travel_time if _rot_travel_time>=0 else sqrt(travel_distance/PI)*0.25)
+			_rot_travel_time=-1.0
+			_rot_trans=Tween.TRANS_LINEAR
+			if manual_step:_tween_rotation.pause()
 			#_tween_rotation.tween_property(self,'rotation',targeted_rotation,0.25)
 		else:
 			rotation=targeted_rotation
 		
 ## The scale to animate the [AnimatedItem] to from the current scale.
 ## Automatically animates when changed.
-var targeted_scale:Vector2=Vector2.ONE:
+var targeted_scale=Vector2.ONE:
 	set(v):
-		if Engine.is_editor_hint():return
+		assert(v is Vector2)
+		#if Engine.is_editor_hint():return
 		var travel_distance=(scale-v).length()
 		targeted_scale=v
 		if is_inside_tree():
 			if _tween_scale:_tween_scale.kill()
 			_tween_scale=create_tween()
+			_tween_scale.set_trans(_scale_trans)
 			#this is to make sure it takes the shortest path it can
 				#targeted_rotation=-(targeted_rotation-PI)
-			_tween_scale.tween_property(self,'scale',targeted_scale,sqrt(travel_distance/scale_rate_per_second))
+				
+			_tween_scale.tween_property(self,'scale',targeted_scale,_scale_travel_time if _scale_travel_time>=0 else sqrt(travel_distance/scale_rate_per_second))
+			_scale_travel_time=-1.0
+			_scale_trans=Tween.TRANS_LINEAR
+			if manual_step:_tween_scale.pause()
 		else:
 			scale=targeted_scale
 
@@ -92,9 +121,9 @@ func _init(connected_to:Node=null,attached_to:Node=null):
 	position.y=connected_to.size.y*0.5
 	
 	child_exiting_tree.connect(check_if_needed)
-	
-	
 	bind_interaction_signals()
+
+
 
 ## binds the signals from the [member attached_item] to emit from self to allow the [member connected_control]
 ## to recieve them and process them accordingly based on its [member AnimatedContainer.item_actions]

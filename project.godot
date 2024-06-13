@@ -13,7 +13,7 @@ config_version=5
 config/name="FancyControls"
 run/main_scene="res://addons/FancyControls/Example/testing.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
-config/icon="res://icon.svg"
+config/icon="res://FACS/icon.svg"
 
 [display]
 
@@ -22,7 +22,3 @@ window/stretch/mode="viewport"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/FancyControls/plugin.cfg")
-
-[rendering]
-
-renderer/rendering_method="mobile"

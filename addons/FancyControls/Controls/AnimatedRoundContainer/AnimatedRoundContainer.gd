@@ -8,13 +8,17 @@ class_name AnimatedRoundContainer
 @export var do_rotation:bool=true
 @export var initial_rotation_degrees:float=0.0
 
+
+
 func _ready():
 	super._ready()
 	if Engine.is_editor_hint():return
 	initial_rotation_degrees=deg_to_rad(initial_rotation_degrees)
+	
+	
 
 func _update_spacings(animated:bool=true)->void:
-	
+	_update_start_positions()
 	animated = animated and not Engine.is_editor_hint()
 	if get_child_count()==0:return
 	
