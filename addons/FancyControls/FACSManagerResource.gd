@@ -36,7 +36,7 @@ func remove_group(group_name:String):
 
 
 func change_group_name(old_name:String,new_name:String)->bool:
-	print(get_meta_list())
+	
 	if !Groups.has(old_name):return false
 	if RegEx.create_from_string("[^A-Za-z0-9]").search(new_name)!=null:return false
 	if new_name.contains(" "):return false
@@ -55,7 +55,13 @@ func change_group_binding_name(group_name:String,on_resource:FACSGroupBinding,ne
 	if RegEx.create_from_string("[^A-Za-z0-9]").search(new_name)!=null:return false
 	if new_name.contains(" "):return false
 	if Groups[group_name].any(func(v):return v.binding_name==new_name):return false
-	on_resource.binding_name=new_name
+	
+	var option=Groups[group_name].filter(func(v):return v.binding_name==on_resource.binding_name and v.binding_link_path==on_resource.binding_link_path)
+	if len(option)==0:return false
+	option[0].binding_name=new_name
+	
+	
+	
 	resave.call_deferred()
 	
 	return true
@@ -96,6 +102,15 @@ func bind_facs_to_group(group_name:String,bind_name:String,bind_path:String)->vo
 	var bind=FACSGroupBinding.new(bind_name,bind_path)
 	Groups[group_name].push_back(bind)
 	resave.call_deferred()
+
+func rebind_path_on(group_name:String,on_resource,new_path:String)->void:
+	if !Groups.has(group_name):return
+	var option=Groups[group_name].filter(func(v):return v.binding_name==on_resource.binding_name and v.binding_link_path==on_resource.binding_link_path)
+	if len(option)==0:return
+	option[0].binding_link_path=new_path
+	
+	
+
 
 func resave():
 	for group in Groups:

@@ -4,7 +4,10 @@ extends VBoxContainer
 
 @onready var manager=load("res://FACS/FACSManager.res")
 
+var base_graph
+
 func _ready():
+	
 	($"../../ChainChooseForGroup" as FileDialog).current_dir="res://FACS/Editor"
 	group_tree.set_column_title(0,"Name")
 	group_tree.set_column_title(1,"Method(Optional)")
@@ -20,6 +23,11 @@ func _ready():
 	manager.load_from_data()
 	
 	load_from_manager.call_deferred()
+	
+	(func():
+		base_graph=$"../MainBox/BlockUI".duplicate(DUPLICATE_GROUPS|DUPLICATE_SCRIPTS|DUPLICATE_SIGNALS|DUPLICATE_USE_INSTANTIATION)
+		).call_deferred()
+	
 
 func load_from_manager()->void:
 	group_tree.clear()
@@ -113,6 +121,7 @@ func _on_tree_item_activated():
 func _on_chain_choose_dialog_file_selected(path):
 	var linked_res=prev_selected.get_meta(&"linked_resource")
 	linked_res.binding_link_path=path
+	manager.rebind_path_on(prev_selected.get_parent().get_text(0),linked_res,path)
 	prev_selected.set_text(2,path)
 	if linked_res.is_binding_valid():
 		prev_selected.set_text(3,"")
@@ -143,7 +152,8 @@ func _on_tree_button_clicked(item, column, id, mouse_button_index):
 			pass
 		1:
 			#compile grouping
-			FACSGroupCompiler.compile_group(item,$"../MainBox/BlockUI",$"../MainBox/VBoxContainer/BlockList")
+			#FACSGroupCompiler.compile_group(item,base_graph,$"../MainBox/VBoxContainer/BlockList")
+			FACSGroupCompiler.compile_group(item,base_graph,$"../MainBox/VBoxContainer/BlockList")
 	
 
 

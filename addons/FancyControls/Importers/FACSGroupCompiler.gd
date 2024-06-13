@@ -22,13 +22,14 @@ static func _get_method_file_as_json(path):
 static func compile_group(group_root:TreeItem,graph_base:GraphEdit,blocklist)->void:
 	var script_contents="@tool\nextends RefCounted\n#WARNING\n#ANY CHANGES MADE TO FUNCTIONS BEING RE-COMPILED WILL BE OVERWRITTEN\n\n"
 	
-	var temp_graph=graph_base.duplicate(Node.DUPLICATE_SCRIPTS|Node.DUPLICATE_SIGNALS|Node.DUPLICATE_USE_INSTANTIATION)
+	
 	
 	
 	for method_item in group_root.get_children():
+		var temp_graph=graph_base.duplicate(Node.DUPLICATE_SCRIPTS|Node.DUPLICATE_SIGNALS|Node.DUPLICATE_USE_INSTANTIATION)
 		var from_file=_get_method_file_as_json(method_item.get_text(2))
 		FACSJson.convert_json(from_file,temp_graph,blocklist)
-		await graph_base.get_tree().process_frame
+		await blocklist.get_tree().process_frame
 		var compiled_vis_data=FACSVISCompiler.convert_visual(temp_graph)
 		script_contents+=compiled_vis_data.code.replace("%METHOD_NAME%",method_item.get_text(0))+"\n\n\n"
 	

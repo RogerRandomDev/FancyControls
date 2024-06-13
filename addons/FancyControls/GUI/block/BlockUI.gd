@@ -43,6 +43,10 @@ func _ready():
 	add_valid_connection_type(0,0)
 	add_valid_connection_type(TYPE_FLOAT,TYPE_VECTOR2)
 	add_valid_connection_type(TYPE_VECTOR2,TYPE_FLOAT)
+	
+	
+	
+	
 
 
 
