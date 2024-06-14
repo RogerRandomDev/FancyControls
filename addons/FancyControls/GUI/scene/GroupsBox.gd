@@ -50,7 +50,7 @@ func load_from_manager()->void:
 			bound_item.set_meta(&"group_name",group_name)
 			bound_item.set_meta(&"is_group",false)
 			bound_item.set_meta(&"name",bind.binding_name)
-			
+			bound_item.add_button(3,load("res://addons/FancyControls/GUI/scene/Remove.svg"),2)
 			bind.insert_data_in_treeitem(bound_item)
 			
 		#if invalid_bindings.find(true)<0:
@@ -158,8 +158,10 @@ func _on_tree_button_clicked(item, column, id, mouse_button_index):
 			#compile grouping
 			#FACSGroupCompiler.compile_group(item,base_graph,$"../MainBox/VBoxContainer/BlockList")
 			FACSGroupCompiler.compile_group(item,base_graph,$"../MainBox/VBoxContainer/BlockList")
-	
-
+		2:
+			#remove item button
+			group_tree.set_selected(item,3)
+			$"../../ConfirmationDialog2".visible=true
 
 func _on_chain_choose_for_group_file_selected(path):
 	var group_name=prev_selected.get_meta(&"group_name")
@@ -174,3 +176,10 @@ func _on_chain_choose_for_group_file_selected(path):
 	)
 	load_from_manager()
 
+
+
+func _on_confirmation_remove_group_func_confirmed():
+	manager.remove_chain_from_group(prev_selected.get_meta(&"group_name"),prev_selected.get_text(0))
+	prev_selected.free()
+	
+	

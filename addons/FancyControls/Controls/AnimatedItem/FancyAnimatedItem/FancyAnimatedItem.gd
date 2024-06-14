@@ -3,6 +3,7 @@ extends AnimatedItem
 class_name FancyAnimatedItem
 ## Fancy version of [AnimatedItem]. Uses arrays and specified times and (optionally) tween type for each value to move towards
 
+
 var target_chains:Dictionary={
 	"position":[],
 	"rotation":[],
@@ -28,7 +29,8 @@ func chain_action(on_type:AnimatableTypes,target:Variant,duration:float=-1,tween
 			if _tween_position==null||not _tween_position.is_valid():_target_chains_updated("position")
 			
 		AnimatableTypes.ROTATION:
-			assert(target is float)
+			assert(target is float or target is int)
+			target=float(target)
 			target_chains.rotation.push_back({
 				"goal":target,
 				"duration":duration,
@@ -57,6 +59,12 @@ func _target_chains_updated(updated_set:String)->void:
 		"position":
 			var front_index=target_chains["position"].pop_front()
 			if front_index==null:return
+			#represents syncing
+			if front_index.tween==-9:
+				await tweens_synced
+				_target_chains_updated("position")
+				return
+			
 			_pos_trans=front_index.tween
 			_pos_travel_time=front_index.duration
 			targeted_position=front_index.goal
@@ -66,6 +74,11 @@ func _target_chains_updated(updated_set:String)->void:
 		"rotation":
 			var front_index=target_chains["rotation"].pop_front()
 			if front_index==null:return
+			#represents syncing
+			if front_index.tween==-9:
+				await tweens_synced
+				_target_chains_updated("rotation")
+				return
 			_rot_trans=front_index.tween
 			_rot_travel_time=front_index.duration
 			targeted_rotation=front_index.goal
@@ -79,6 +92,12 @@ func _target_chains_updated(updated_set:String)->void:
 		"scale":
 			var front_index=target_chains["scale"].pop_front()
 			if front_index==null:return
+			#represents syncing
+			if front_index.tween==-9:
+				await tweens_synced
+				_target_chains_updated("scale")
+				return
+
 			_scale_trans=front_index.tween
 			_scale_travel_time=front_index.duration
 			targeted_scale=front_index.goal

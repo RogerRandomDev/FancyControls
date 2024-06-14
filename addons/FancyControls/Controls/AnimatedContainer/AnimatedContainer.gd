@@ -38,6 +38,7 @@ func get_animation_list():
 	return animations.get_script().get_script_method_list().map(func(v):return v.name)
 
 func play_animation(animation_name:String)->void:
+	clear_animations()
 	animate_items_with_chain(animation_name)
 
 func clear_animations()->void:
@@ -176,9 +177,9 @@ func animate_items_with_chain(chain_name:String)->void:
 		#var response=bound_call.call(chain_name,child,i)
 		var response=scr.call(chain_name,child,i,get_child_count(),container_data)
 		if response == null:continue
-		for p in response.Positions:child.chain_action(0,p.goal,p.duration,p.tween_type)
-		for p in response.Rotations:child.chain_action(1,p.goal,p.duration,p.tween_type)
-		for p in response.Scales:child.chain_action(2,p.goal,p.duration,p.tween_type)
+		for p in response.Positions:child.chain_action(0,p.get("goal"),p.get("duration"),p.get("tween_type"))
+		for p in response.Rotations:child.chain_action(1,p.get("goal"),p.get("duration"),p.get("tween_type"))
+		for p in response.Scales:child.chain_action(2,p.get("goal"),p.get("duration"),p.get("tween_type"))
 	
 
 

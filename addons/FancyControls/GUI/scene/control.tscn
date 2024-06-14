@@ -85,13 +85,14 @@ theme_override_constants/separation = 2
 
 [node name="TopBar" type="PanelContainer" parent="Box"]
 layout_mode = 2
-size_flags_vertical = 3
 size_flags_stretch_ratio = 0.06
 mouse_filter = 1
 
 [node name="TabBar" type="TabBar" parent="Box/TopBar"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "(F1-F3)
+Change Tab"
 mouse_filter = 1
 theme_override_colors/font_selected_color = Color(0.4, 0.701961, 1, 1)
 theme_override_styles/tab_selected = SubResource("StyleBoxEmpty_fbxee")
@@ -161,7 +162,7 @@ allow_reselect = true
 hide_root = true
 scroll_horizontal_enabled = false
 script = ExtResource("5_n5rgj")
-block_count = 12
+block_count = 13
 block_0/name = &"Float"
 block_0/category = &"Float,Variable"
 block_0/runnable = false
@@ -426,6 +427,11 @@ block_11/property_2/editable = true
 block_11/property_2/connect_left = false
 block_11/property_2/connect_right = false
 block_11/property_2/default = ["TRANS_LINEAR", "TRANS_SINE", "TRANS_QUINT", "TRANS_QUART", "TRANS_QUAD", "TRANS_EXPO", "TRANS_ELASTIC", "TRANS_CUBIC", "TRANS_CIRC", "TRANS_BOUNCE", "TRANS_BACK", "TRANS_SPRING", "Tween."]
+block_12/name = &"SyncParameters"
+block_12/category = &"Animated Goals"
+block_12/runnable = true
+block_12/type = "function"
+block_12/properties_count = 0
 
 [node name="BlockUI" type="GraphEdit" parent="Box/MainBox"]
 layout_mode = 2
@@ -884,6 +890,10 @@ initial_position = 4
 dialog_text = "This name is already being used by an animation.
 Are you sure you want to overwrite it?"
 
+[node name="ConfirmationDialog2" type="ConfirmationDialog" parent="."]
+initial_position = 4
+dialog_text = "Are you sure you want to remove this Animation Function?"
+
 [node name="ChainLoadDialog" type="FileDialog" parent="."]
 title = "Open a File"
 initial_position = 4
@@ -917,6 +927,7 @@ show_hidden_files = true
 [connection signal="text_changed" from="Box/TopBar/Label" to="Box/MainBox/BlockUI" method="_on_func_name_text_changed"]
 [connection signal="pressed" from="Box/TopBar/HBoxContainer/Button" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="Box/TopBar/HBoxContainer/Button2" to="." method="_on_load_button_pressed"]
+[connection signal="item_activated" from="Box/MainBox/VBoxContainer/BlockList" to="Box/MainBox/VBoxContainer/BlockList" method="_on_item_activated"]
 [connection signal="item_selected" from="Box/MainBox/VBoxContainer/BlockList" to="Box/MainBox/VBoxContainer/BlockList" method="_on_item_selected"]
 [connection signal="begin_node_move" from="Box/MainBox/BlockUI" to="Box/MainBox/BlockUI" method="_on_begin_node_move"]
 [connection signal="connection_request" from="Box/MainBox/BlockUI" to="Box/MainBox/BlockUI" method="_on_connection_request"]
@@ -938,6 +949,7 @@ show_hidden_files = true
 [connection signal="pressed" from="Box/GroupsBox/HBoxContainer/Button" to="Box/GroupsBox" method="_on_create_group_button_pressed"]
 [connection signal="pressed" from="Box/GroupsBox/HBoxContainer/Button2" to="Box/GroupsBox" method="_on_remove_group_button_pressed"]
 [connection signal="confirmed" from="ConfirmationDialog" to="." method="_save_confirmed"]
+[connection signal="confirmed" from="ConfirmationDialog2" to="Box/GroupsBox" method="_on_confirmation_remove_group_func_confirmed"]
 [connection signal="file_selected" from="ChainLoadDialog" to="." method="_on_chain_load_dialog_file_selected"]
 [connection signal="file_selected" from="ChainChooseDialog" to="Box/GroupsBox" method="_on_chain_choose_dialog_file_selected"]
 [connection signal="file_selected" from="ChainChooseForGroup" to="Box/GroupsBox" method="_on_chain_choose_for_group_file_selected"]

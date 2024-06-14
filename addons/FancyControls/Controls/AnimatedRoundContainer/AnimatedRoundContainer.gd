@@ -46,6 +46,7 @@ func _editor_fit_contents()->void:
 	for id in node_count:
 		var target_position=get_target_position_for_item(id)-nodes_to_space[id].size*0.5
 		nodes_to_space[id].global_position=target_position
+		nodes_to_space[id].scale=Vector2.ONE
 		
 
 func get_target_position_for_item(id:int)->Vector2:

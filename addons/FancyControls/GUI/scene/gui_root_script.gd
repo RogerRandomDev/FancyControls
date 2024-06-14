@@ -6,6 +6,7 @@ extends Control
 
 
 
+
 func reset_editor_container_previews()->void:
 	for animated_cont in $Box/CodeBox/VBoxContainer/Container.get_children():
 		if animated_cont is AnimatedContainer:
@@ -20,6 +21,16 @@ func reset_editor_container_previews()->void:
 func _input(event):
 	if visible and event is InputEventKey and event.is_pressed() and event.ctrl_pressed:
 		accept_event()
+	if visible and event is InputEventKey:
+		if event.keycode >= KEY_F1 and event.keycode <= KEY_F19:
+			accept_event()
+			if not event.is_pressed():return
+			var tab_open=event.keycode-KEY_F1
+			if tab_open<0 or tab_open > 2:return
+			($Box/TopBar/TabBar as TabBar).current_tab=tab_open
+			
+			
+			
 
 func _on_tab_bar_tab_selected(tab):
 	$Box/MainBox.visible=tab==0

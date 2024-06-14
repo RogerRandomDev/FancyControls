@@ -33,7 +33,8 @@ func remove_group(group_name:String):
 	Groups.erase(group_name)
 	
 	resave.call_deferred()
-	
+
+
 
 
 
@@ -111,9 +112,14 @@ func rebind_path_on(group_name:String,on_resource,new_path:String)->void:
 	var option=Groups[group_name].filter(func(v):return v.binding_name==on_resource.binding_name and v.binding_link_path==on_resource.binding_link_path)
 	if len(option)==0:return
 	option[0].binding_link_path=new_path
-	
-	
 
+
+func remove_chain_from_group(group_name:String,chain_name:String)->void:
+	if !Groups.has(group_name):return
+	var option=Groups[group_name].filter(func(v):return v.binding_name==chain_name)
+	if len(option)==0:return
+	Groups[group_name].erase(option[0])
+	resave.call_deferred()
 
 func resave():
 	group_data={}

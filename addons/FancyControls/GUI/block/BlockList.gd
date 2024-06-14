@@ -183,8 +183,10 @@ func build_block_node(block):
 				built_block.set_meta(&"value_%s"%str(val),block_property.default[len(block_property.default)-1]+block_property.default[0])
 				edit.set_meta(&"link",['item_selected',block_property.default[0],func(v,link_block):
 					if v is int:v=block_property.default[len(block_property.default)-1]+edit.get_item_text(v)
+					
 					link_block.set_meta(&"value_%s"%str(val),v)
 					])
+				
 				edit.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 				edit.owner=built_block
 		i+=1;val+=1
@@ -408,6 +410,8 @@ func _on_item_selected():
 	#
 	#for item in root_item.get_children():
 		#item.collapsed=item!=get_selected()
+	
+	
 	if get_selected().get_parent()==root_item:return
 	
 	var name_of_block=get_selected().get_text(0)
@@ -426,8 +430,10 @@ func create_item_block(name_of_block,select:bool=true,attach_to:Node=null):
 				item_block_func.call_deferred(options,link_info,added_block,child)
 				options.remove_meta(&"link")
 	added_block.disconnected_port.connect(func(id,node):
-		added_block.set_meta(&"value_%s"%str(id),added_block.get_meta(&"default_%s"%str(id)))
-		added_block.set_meta(&"type_%s"%str(id),added_block.get_meta(&"reset_type_%s"%str(id)))
+		if added_block.has_meta(&"default_%s"%str(id)):
+			added_block.set_meta(&"value_%s"%str(id),added_block.get_meta(&"default_%s"%str(id)))
+		if added_block.has_meta(&"reset_type_%s"%str(id)):
+			added_block.set_meta(&"type_%s"%str(id),added_block.get_meta(&"reset_type_%s"%str(id)))
 	)
 	if attach_to==null:attach_to=$"../../BlockUI"
 	attach_to.attach_node(added_block)
@@ -454,6 +460,10 @@ func item_block_func(options,link_info,added_block,child):
 		if options is SpinBox and val is Vector2:
 			
 			options.value=val[int(options.get_parent().get_children().find(options))-1]
+		if options is OptionButton:
+			for item in options.item_count:
+				if val.ends_with(options.get_item_text(item)):
+					options.select(item);break
 		
 		if options is SpinBox and val is float:
 			options.value=val
@@ -474,3 +484,9 @@ func _on_option_button_item_selected(index):
 
 func _on_line_edit_text_changed(new_text):
 	search_items($"../HBoxContainer/LineEdit".text,$"../HBoxContainer/OptionButton".get_item_text($"../HBoxContainer/OptionButton".get_selected_id()))
+
+#used to manage double  clicking to expand and shrink the block type list
+func _on_item_activated():
+	if get_selected().get_parent()!=root_item:return
+	get_selected().collapsed=!get_selected().collapsed
+	

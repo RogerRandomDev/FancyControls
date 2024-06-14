@@ -97,6 +97,7 @@ func connection_request_logic(from_node,from_port,to_node,to_port):
 
 
 func _on_disconnection_request(from_node, from_port, to_node, to_port):
+	
 	undo.create_action("UndoDisconnection")
 	undo.add_do_method(disconnection_request_logic.bind(from_node,from_port,to_node,to_port))
 	undo.add_undo_method(connection_request_logic.bind(from_node,from_port,to_node,to_port))
@@ -110,10 +111,12 @@ func disconnection_request_logic(from_node,from_port,to_node,to_port):
 	#hide the editable section when it is set externally
 	var node_port=get_node(String(to_node)).get_child(get_node(String(to_node)).get_input_port_slot(to_port))
 	get_node(String(to_node)).emit_signal("disconnected_port",get_node(String(to_node)).get_input_port_slot(to_port),node_port)
+	
 	if node_port.get_child_count()>1:
 		for child in range(1,node_port.get_child_count()):
 			node_port.get_child(child).show()
 	disconnect_node(from_node,from_port,to_node,to_port)
+	
 	
 	var node=get_node(String(from_node))
 	if code_funcs.has_method(str(node.get_meta(&"action"))+"_disconnected"):
@@ -137,13 +140,16 @@ func _on_delete_nodes_request(nodes):
 	
 	for node in nodes:
 		var grabbed = get_node(String(node))
-		get_connection_list().map(func(v):if v.from_node==node||v.to_node==node:
-			disconnection_request_logic(v.from_node,v.from_port,v.to_node,v.to_port)
-			)
 		undo.add_undo_reference(grabbed)
-		undo.add_do_method(remove_child.bind(grabbed))
+		
 		undo.add_undo_method(add_child.bind(grabbed))
-	undo.commit_action()
+		get_connection_list().map(func(v):if v.from_node==node||v.to_node==node:
+			undo.add_do_method(disconnection_request_logic.bind(v.from_node,v.from_port,v.to_node,v.to_port))
+			undo.add_undo_method(connection_request_logic.bind(v.from_node,v.from_port,v.to_node,v.to_port))
+			)
+		undo.add_do_method(remove_child.bind(grabbed))
+		
+	undo.commit_action.call_deferred()
 
 
 
