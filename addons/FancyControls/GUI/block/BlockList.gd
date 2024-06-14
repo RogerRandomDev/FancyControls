@@ -430,7 +430,7 @@ func create_item_block(name_of_block,select:bool=true,attach_to:Node=null):
 		added_block.set_meta(&"type_%s"%str(id),added_block.get_meta(&"reset_type_%s"%str(id)))
 	)
 	if attach_to==null:attach_to=$"../../BlockUI"
-	attach_to.add_child(added_block)
+	attach_to.attach_node(added_block)
 	if !select:return added_block
 	await get_tree().process_frame
 	if attach_to==$"../../BlockUI":

@@ -94,5 +94,5 @@ func _on_chain_load_dialog_file_selected(path):
 		reset_editor_container_previews()
 		
 		$Box/CodeBox.reload_codeview.call_deferred()
-	
+	$Box/MainBox/BlockUI.undo.clear_history.call_deferred()
 	
