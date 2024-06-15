@@ -129,11 +129,11 @@ func build_block_node(block):
 						if not edit.visible:return
 						if v is Vector2:v=v.x
 						if v is float:edit.value=v
-						var link_val=link_block.get_meta(&"value_%s"%str(val))
+						var link_val=link_block.get_meta(&"value_%s"%str(val),Vector2.ZERO)
 						if link_val is String:
 							pass
 						else:
-							link_block.set_meta(&"value_%s"%str(val),Vector2(v,link_block.get_meta(&"value_%s"%str(val)).y))
+							link_block.set_meta(&"value_%s"%str(val),Vector2(v,link_block.get_meta(&"value_%s"%str(val),Vector2.ZERO).y))
 							edit.value=v
 							])
 							
@@ -152,10 +152,10 @@ func build_block_node(block):
 						
 						if v is float:edit.value=v
 						
-						if link_block.get_meta(&"value_%s"%str(val)) is String:
+						if link_block.get_meta(&"value_%s"%str(val),Vector2.ZERO) is String:
 							pass
 						else:
-							link_block.set_meta(&"value_%s"%str(val),Vector2(link_block.get_meta(&"value_%s"%str(val)).x,v))
+							link_block.set_meta(&"value_%s"%str(val),Vector2(link_block.get_meta(&"value_%s"%str(val),Vector2.ZERO).x,v))
 							edit.value=v
 							])
 							
@@ -430,6 +430,7 @@ func create_item_block(name_of_block,select:bool=true,attach_to:Node=null):
 				item_block_func.call_deferred(options,link_info,added_block,child)
 				options.remove_meta(&"link")
 	added_block.disconnected_port.connect(func(id,node):
+		id-=int(node.get_parent().get_meta(&"runnable",false))
 		if added_block.has_meta(&"default_%s"%str(id)):
 			added_block.set_meta(&"value_%s"%str(id),added_block.get_meta(&"default_%s"%str(id)))
 		if added_block.has_meta(&"reset_type_%s"%str(id)):

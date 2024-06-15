@@ -14,7 +14,7 @@ const default_value_types={
 func get_value_type(on_node:GraphNode,val:int=0):
 	#loops until it hits the primary reference it is linked to
 	var on_graph=on_node.get_parent()
-	var out=on_node.get_meta("value%s"%(("_"+str(val)) if val>-1 else ""))
+	var out=on_node.get_meta("value%s"%(("_"+str(val)) if val>-1 else ""),0)
 	var node=null
 	var last_out=out
 	var out_type=on_node.get_meta("type_%s"%str(val))
@@ -131,4 +131,23 @@ func Div_connected(from_node,to_node,from_port,to_port,graph):
 
 func Div_disconnected(from_node,to_node,from_port,to_port,graph):
 	disconnect_float_can_be_vector("Div",from_node,to_node,from_port,to_port,graph)
+
+func Abs_connected(from_node,to_node,from_port,to_port,graph):
+	connect_float_can_be_vector("Abs",from_node,to_node,from_port,to_port,graph)
+
+func Abs_disconnected(from_node,to_node,from_port,to_port,graph):
+	disconnect_float_can_be_vector("Abs",from_node,to_node,from_port,to_port,graph)
+
+func Floor_connected(from_node,to_node,from_port,to_port,graph):
+	connect_float_can_be_vector("Floor",from_node,to_node,from_port,to_port,graph)
+
+func Floor_disconnected(from_node,to_node,from_port,to_port,graph):
+	disconnect_float_can_be_vector("Floor",from_node,to_node,from_port,to_port,graph)
+
+func Ceil_connected(from_node,to_node,from_port,to_port,graph):
+	connect_float_can_be_vector("Ceil",from_node,to_node,from_port,to_port,graph)
+
+func Ceil_disconnected(from_node,to_node,from_port,to_port,graph):
+	disconnect_float_can_be_vector("Ceil",from_node,to_node,from_port,to_port,graph)
+
 #endregion

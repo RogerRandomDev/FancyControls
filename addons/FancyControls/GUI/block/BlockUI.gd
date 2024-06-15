@@ -67,6 +67,7 @@ func _on_connection_request(from_node, from_port, to_node, to_port):
 	undo.commit_action()
 func connection_request_logic(from_node,from_port,to_node,to_port):
 	if code_funcs==null:code_funcs=code_block_funcs.new()
+	
 	#hide the editable section when it is set externally
 	var node_port=get_node(String(to_node)).get_child(get_node(String(to_node)).get_input_port_slot(to_port))
 	#actions can only chain
@@ -147,7 +148,7 @@ func _on_delete_nodes_request(nodes):
 			undo.add_do_method(disconnection_request_logic.bind(v.from_node,v.from_port,v.to_node,v.to_port))
 			undo.add_undo_method(connection_request_logic.bind(v.from_node,v.from_port,v.to_node,v.to_port))
 			)
-		undo.add_do_method(remove_child.bind(grabbed))
+		undo.add_do_method(call_deferred.bind("remove_child",grabbed))
 		
 	undo.commit_action.call_deferred()
 

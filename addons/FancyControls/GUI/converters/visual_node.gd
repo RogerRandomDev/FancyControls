@@ -112,6 +112,18 @@ func get_function_content()->String:
 			return "var %s = %s*%s\n\t"%[data.value,get_value(1,data['type_1']),get_value(2,data['type_2'])]
 		"Div":
 			return "var %s = %s/%s\n\t"%[data.value,get_value(1,data['type_1']),get_value(2,data['type_2'])]
+		"Min":
+			return "var %s = min(%s,%s)\n\t"%[data.value,get_value(1,TYPE_FLOAT),get_value(2,TYPE_FLOAT)]
+		"Max":
+			return "var %s = max(%s,%s)\n\t"%[data.value,get_value(1,TYPE_FLOAT),get_value(2,TYPE_FLOAT)]
+		"Floor":
+			return "var %s = %s\n\t"%[data.value,"floor(%s)"%get_value(1,data['type_1']) if data['type_1']==TYPE_FLOAT else "%s.floor()"%get_value(1,data['type_1'])]
+		"Ceil":
+			return "var %s = %s\n\t"%[data.value,"ceil(%s)"%get_value(1,data['type_1']) if data['type_1']==TYPE_FLOAT else "%s.ceil()"%get_value(1,data['type_1'])]
+		"Abs":
+			return "var %s = %s\n\t"%[data.value,"abs(%s)"%get_value(1,data['type_1']) if data['type_1']==TYPE_FLOAT else "%s.abs()"%get_value(1,data['type_1'])]
+		"Rotate":
+			return "var %s = %s.rotated(%s)\n\t"%[data.value,get_value(1,TYPE_VECTOR2),get_value(2,TYPE_FLOAT)]
 		"DecomposeVector":
 			return ""
 		"ComposeVector":
@@ -122,8 +134,6 @@ func get_function_content()->String:
 			return "output_data.Rotations.push_back({'goal':%s,'duration':%s,'tween_type':%s})\n\t"%[get_value(0,TYPE_FLOAT),get_value(1,TYPE_FLOAT),get_value(2,TYPE_INT)]
 		"SetScale":
 			return "output_data.Scales.push_back({'goal':%s,'duration':%s,'tween_type':%s})\n\t"%[get_value(0,TYPE_VECTOR2),get_value(1,TYPE_FLOAT),get_value(2,TYPE_INT)]
-		"Rotate":
-			return "var %s = %s.rotated(%s)\n\t"%[data.value,get_value(1,TYPE_VECTOR2),get_value(2,TYPE_FLOAT)]
 		"SyncParameters":
 			return "output_data.Positions.push_back({'goal':Vector2.ZERO,'duration':0,'tween_type':-9});output_data.Rotations.push_back({'goal':0,'duration':0,'tween_type':-9});output_data.Scales.push_back({'goal':Vector2.ZERO,'duration':0,'tween_type':-9})\n\t"
 			#return "output_data.Positions.push_back({'tween_type':-9});output_data.Rotations.push_back({'tween_type':-9});output_data.Scales.push_back({'tween_type':-9})\n\t"
