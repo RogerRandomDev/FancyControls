@@ -86,3 +86,42 @@ func _on_reset_anim_pressed():
 		if not container is AnimatedContainer:continue
 		container.clear_animations()
 		container.play_animation.call_deferred(container.get_animation_list()[0])
+
+
+func _on_option_button_item_selected(index):
+	var new_container:AnimatedContainer
+	match index:
+		0:
+			new_container=AnimatedRoundContainer.new()
+			new_container.border_padding=Vector2(32,32)
+			new_container.custom_minimum_size=Vector2(256,256)
+			new_container.size_flags_vertical=Control.SIZE_SHRINK_CENTER
+			new_container.size_flags_horizontal=Control.SIZE_SHRINK_CENTER
+		1:
+			new_container=AnimatedBoxContainer.new()
+			new_container.box_direction=1
+			new_container.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+			new_container.size_flags_vertical=Control.SIZE_SHRINK_CENTER
+		2:
+			new_container=AnimatedBoxContainer.new()
+			new_container.box_direction=0
+			new_container.size_flags_vertical=Control.SIZE_EXPAND_FILL
+			new_container.size_flags_horizontal=Control.SIZE_SHRINK_CENTER
+	for i in 8:
+		var item=Panel.new()
+		item.custom_minimum_size=Vector2(40,40)
+		item.size=Vector2(40,40)
+		var item_holder=FancyAnimatedItem.new(new_container,item)
+		new_container.add_child(item_holder)
+	new_container.animations=$VBoxContainer/Container/AnimatedRoundContainer.animations
+	
+	$VBoxContainer/Container/AnimatedRoundContainer.free()
+	$VBoxContainer/Container.add_child(new_container)
+	new_container.name="AnimatedRoundContainer"
+	await get_tree().process_frame
+	await get_tree().process_frame
+	new_container._editor_fit_contents()
+	new_container._update_start_positions(false)
+	
+	
+	

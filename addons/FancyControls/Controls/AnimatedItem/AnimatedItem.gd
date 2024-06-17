@@ -23,6 +23,23 @@ var manual_step:bool=false
 
 
 
+var manual_scale:Vector2=Vector2.ONE:
+	set(v):
+		if attached_item:
+			attached_item.scale=(attached_item.scale/manual_scale)*v
+		manual_scale=v
+var manual_move:Vector2=Vector2.ZERO:
+	set(v):
+		if attached_item:attached_item.position=(attached_item.position-manual_move)+v
+		manual_move=v
+var manual_rotate:float=0.0:
+	set(v):
+		if attached_item:attached_item.rotation=(attached_item.rotation-manual_rotate)+v
+		manual_rotate=v
+
+
+
+
 
 
 ## The position to animate the [AnimatedItem] to from the current position.
@@ -48,7 +65,7 @@ var targeted_position:
 			global_position=targeted_position
 ## The rotation to animate the [AnimatedItem] to from the current rotation.
 ## Automatically animates when changed.
-var targeted_rotation:
+var targeted_rotation=0.0:
 	set(v):
 		assert(v is float)
 		#if Engine.is_editor_hint():return
@@ -100,9 +117,15 @@ var scale_rate_per_second:float=16.0
 ##change this value to adjust how fast the item moves to the chosen location when it is changed
 var pixels_per_second:float=4608.0
 
+
 var _tween_position:Tween
 var _tween_rotation:Tween
 var _tween_scale:Tween
+
+var _tween_manual_position:Tween
+var _tween_manual_rotation:Tween
+var _tween_manual_scale:Tween
+
 
 
 func get_pos_travel(to)->float:
@@ -110,7 +133,7 @@ func get_pos_travel(to)->float:
 	return sqrt(travel_distance/pixels_per_second)
 func get_rot_travel(to)->float:
 	var travel_distance=abs(angle_difference(to,rotation))
-	if abs(targeted_rotation)<PI*2:
+	if abs(targeted_rotation)<PI*2 and sign(targeted_rotation)!=sign(to):
 		targeted_rotation=lerp_angle(rotation,targeted_rotation,1.0)
 	return sqrt(travel_distance/PI)*0.25
 func get_scale_travel(to)->float:
@@ -195,6 +218,7 @@ func check_if_needed(value)->void:
 func attached_item_size_changed()->void:
 	if attached_item==null:return
 	attached_item.position=-attached_item.size*0.5
+	attached_item.pivot_offset=attached_item.size*0.5
 
 
 

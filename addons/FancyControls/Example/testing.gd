@@ -4,10 +4,7 @@ extends Control
 
 
 func _ready():
-	await get_tree().process_frame
-	await get_tree().process_frame
-	$VBoxContainer/AnimatedBoxContainer.animate_items_with_chain("unset_name")
-	
+	pass
 
 func _on_button_pressed():
 	if $VBoxContainer/AnimatedBoxContainer.get_child_count()<=0:return

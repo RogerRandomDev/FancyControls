@@ -69,6 +69,7 @@ func _ready():
 		_attach_signal_links()
 		_update_spacings.call_deferred(false)
 	_update_start_positions(false)
+	
 
 func _update_start_positions(recalculate:bool=true)->void:
 	item_origin_positions.resize(get_child_count())
