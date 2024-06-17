@@ -16,7 +16,8 @@ enum AnimatableTypes{
 	SCALE
 }
 
-
+##utterly rediculous how this works.
+##not that it's bad just could be better.
 func chain_action(on_type:AnimatableTypes,target:Variant,duration:float=-1,tween_type:Tween.TransitionType=Tween.TRANS_LINEAR)->void:
 	match on_type:
 		AnimatableTypes.POSITION:
@@ -83,6 +84,7 @@ func _target_chains_updated(updated_set:String)->void:
 			_rot_travel_time=front_index.duration
 			targeted_rotation=front_index.goal
 			await get_tree().process_frame
+			#i actually dont remember what this comment was for, i was sleep deprived making this work.
 			#so if the animator isnt creating a tween it just 
 			if _tween_rotation!=null:
 				#_tween_rotation.set_trans(front_index.tween)
@@ -114,6 +116,8 @@ func _target_chains_updated(updated_set:String)->void:
 
 #region editor help and misc for managing it outside/inside the game
 #an absolute mess
+#do not touch this please it is very sensitive and will cry.
+
 func _set(property, value):
 	if property.contains("count"):
 		target_chains[property.trim_suffix("_count")].resize(value)

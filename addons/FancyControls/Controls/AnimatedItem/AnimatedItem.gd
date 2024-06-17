@@ -12,6 +12,9 @@ var attached_item:Node
 ## This node has to be a [AnimatedContainer] or one of its subtypes.
 var connected_control:Node
 
+var manual_transformations:Control=Control.new()
+
+
 var _pos_travel_time:float=-1.0
 var _rot_travel_time:float=-1.0
 var _scale_travel_time:float=-1.0
@@ -20,22 +23,6 @@ var _rot_trans:int=0
 var _scale_trans:int=0
 
 var manual_step:bool=false
-
-
-
-var manual_scale:Vector2=Vector2.ONE:
-	set(v):
-		if attached_item:
-			attached_item.scale=(attached_item.scale/manual_scale)*v
-		manual_scale=v
-var manual_move:Vector2=Vector2.ZERO:
-	set(v):
-		if attached_item:attached_item.position=(attached_item.position-manual_move)+v
-		manual_move=v
-var manual_rotate:float=0.0:
-	set(v):
-		if attached_item:attached_item.rotation=(attached_item.rotation-manual_rotate)+v
-		manual_rotate=v
 
 
 
@@ -126,6 +113,34 @@ var _tween_manual_position:Tween
 var _tween_manual_rotation:Tween
 var _tween_manual_scale:Tween
 
+func set_stacked_scale(new_scale:Vector2,over_duration:float=0.0,tween_type:Tween.TransitionType=Tween.TRANS_LINEAR)->void:
+	if _tween_manual_scale!=null:
+		_tween_manual_scale.kill()
+	_tween_manual_scale=manual_transformations.create_tween()
+	_tween_manual_scale.tween_property(manual_transformations,"scale",new_scale,over_duration).set_trans(tween_type)
+func set_stacked_position(new_position:Vector2,over_duration:float=0.0,tween_type:Tween.TransitionType=Tween.TRANS_LINEAR)->void:
+	if _tween_manual_position!=null:
+		_tween_manual_position.kill()
+	_tween_manual_position=manual_transformations.create_tween()
+	_tween_manual_position.tween_property(manual_transformations,"position",new_position,over_duration).set_trans(tween_type)
+func set_stacked_rotation(new_rotation:float,over_duration:float=0.0,tween_type:Tween.TransitionType=Tween.TRANS_LINEAR)->void:
+	if _tween_manual_rotation!=null:
+		_tween_manual_rotation.kill()
+	_tween_manual_rotation=manual_transformations.create_tween()
+	_tween_manual_rotation.tween_property(manual_transformations,"rotation",new_rotation,over_duration).set_trans(tween_type)
+
+func _get(property):
+	if property.begins_with("stacked"):
+		return manual_transformations.get(property.trim_prefix('stacked_'))
+
+func _set(property, value):
+	if property.begins_with("stacked"):
+		call("set_%s"%property,value)
+		return true
+	return false
+
+
+
 
 
 func get_pos_travel(to)->float:
@@ -141,21 +156,25 @@ func get_scale_travel(to)->float:
 	return sqrt(travel_distance/scale_rate_per_second)
 
 func _init(connected_to:Node=null,attached_to:Node=null):
+	#cause yes
+	add_child(manual_transformations)
+	for child in get_children():if not child==manual_transformations:child.reparent(manual_transformations,false)
+	
 	#this line is so pre-build ones don't break when loading
 	if connected_to==null and attached_to==null:
 		return
-	
 	assert(attached_to is Control,"Node Attached to an Animated Container Item is not a Control")
 	
 	connected_control=connected_control
 	attached_item=attached_to
 	
-	#attaches item to self as a child
+	
+	#attaches item to manual_transformations as a child
 	if attached_item!=null:
 		if attached_item.get_parent():
-			attached_item.reparent(self,false)
+			attached_item.reparent(manual_transformations,false)
 		else:
-			add_child(attached_item)
+			manual_transformations.add_child(attached_item)
 		(attached_item as Control).resized.connect(attached_item_size_changed)
 		attached_item_size_changed()
 	
@@ -167,6 +186,7 @@ func _init(connected_to:Node=null,attached_to:Node=null):
 	
 	child_exiting_tree.connect(check_if_needed)
 	bind_interaction_signals()
+
 
 
 ##used to allow syncing up the animations

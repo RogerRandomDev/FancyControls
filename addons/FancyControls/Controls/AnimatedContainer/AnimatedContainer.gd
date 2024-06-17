@@ -33,14 +33,16 @@ var animations:RefCounted
 func set_animation_group(animation_group:GDScript):
 	if animations==null:animations=RefCounted.new()
 	animations.set_script(animation_group)
-
+## honestly this is just here for the one person who inevitably asks for it.
+## also because the editor uses it to know what the function name is in the preview.
 func get_animation_list():
 	return animations.get_script().get_script_method_list().map(func(v):return v.name)
-
+##because yes
 func play_animation(animation_name:String)->void:
 	clear_animations()
 	animate_items_with_chain(animation_name)
 
+##hmmm i love overwriting data
 func clear_animations()->void:
 	for child in get_children():
 		if not child is FancyAnimatedItem:continue
@@ -70,7 +72,7 @@ func _ready():
 		_update_spacings.call_deferred(false)
 	_update_start_positions(false)
 	
-
+##not sure how to optimize this but hopefully it comes eventually
 func _update_start_positions(recalculate:bool=true)->void:
 	item_origin_positions.resize(get_child_count())
 	for i in get_child_count():
@@ -178,6 +180,10 @@ func animate_items_with_chain(chain_name:String)->void:
 		#var response=bound_call.call(chain_name,child,i)
 		var response=scr.call(chain_name,child,i,get_child_count(),container_data)
 		if response == null:continue
+		#this code is bad.
+		#this is not high in my list of priorities yet.
+		#probably going to update the editor itself to compile the calls to chain directly.
+		#would save on everything.
 		for p in response.Positions:child.chain_action(0,p.get("goal"),p.get("duration"),p.get("tween_type"))
 		for p in response.Rotations:child.chain_action(1,p.get("goal"),p.get("duration"),p.get("tween_type"))
 		for p in response.Scales:child.chain_action(2,p.get("goal"),p.get("duration"),p.get("tween_type"))
