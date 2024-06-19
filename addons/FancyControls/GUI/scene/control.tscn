@@ -830,12 +830,6 @@ script = ExtResource("10_e6eqe")
 position_count = 0
 rotation_count = 0
 scale_count = 0
-_tween_position = null
-_tween_rotation = null
-_tween_scale = null
-_tween_manual_position = null
-_tween_manual_rotation = null
-_tween_manual_scale = null
 
 [node name="Panel" type="Panel" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer/FancyAnimatedItem"]
 layout_mode = 0
@@ -855,12 +849,6 @@ script = ExtResource("10_e6eqe")
 position_count = 0
 rotation_count = 0
 scale_count = 0
-_tween_position = null
-_tween_rotation = null
-_tween_scale = null
-_tween_manual_position = null
-_tween_manual_rotation = null
-_tween_manual_scale = null
 
 [node name="Panel" type="Panel" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer/FancyAnimatedItem2"]
 layout_mode = 0
@@ -880,12 +868,6 @@ script = ExtResource("10_e6eqe")
 position_count = 0
 rotation_count = 0
 scale_count = 0
-_tween_position = null
-_tween_rotation = null
-_tween_scale = null
-_tween_manual_position = null
-_tween_manual_rotation = null
-_tween_manual_scale = null
 
 [node name="Panel" type="Panel" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer/FancyAnimatedItem3"]
 layout_mode = 0
@@ -905,12 +887,6 @@ script = ExtResource("10_e6eqe")
 position_count = 0
 rotation_count = 0
 scale_count = 0
-_tween_position = null
-_tween_rotation = null
-_tween_scale = null
-_tween_manual_position = null
-_tween_manual_rotation = null
-_tween_manual_scale = null
 
 [node name="Panel" type="Panel" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer/FancyAnimatedItem4"]
 layout_mode = 0
@@ -930,12 +906,6 @@ script = ExtResource("10_e6eqe")
 position_count = 0
 rotation_count = 0
 scale_count = 0
-_tween_position = null
-_tween_rotation = null
-_tween_scale = null
-_tween_manual_position = null
-_tween_manual_rotation = null
-_tween_manual_scale = null
 
 [node name="Panel" type="Panel" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer/FancyAnimatedItem5"]
 layout_mode = 0
@@ -955,12 +925,6 @@ script = ExtResource("10_e6eqe")
 position_count = 0
 rotation_count = 0
 scale_count = 0
-_tween_position = null
-_tween_rotation = null
-_tween_scale = null
-_tween_manual_position = null
-_tween_manual_rotation = null
-_tween_manual_scale = null
 
 [node name="Panel" type="Panel" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer/FancyAnimatedItem6"]
 layout_mode = 0
@@ -980,12 +944,6 @@ script = ExtResource("10_e6eqe")
 position_count = 0
 rotation_count = 0
 scale_count = 0
-_tween_position = null
-_tween_rotation = null
-_tween_scale = null
-_tween_manual_position = null
-_tween_manual_rotation = null
-_tween_manual_scale = null
 
 [node name="Panel" type="Panel" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer/FancyAnimatedItem7"]
 layout_mode = 0
@@ -1005,12 +963,6 @@ script = ExtResource("10_e6eqe")
 position_count = 0
 rotation_count = 0
 scale_count = 0
-_tween_position = null
-_tween_rotation = null
-_tween_scale = null
-_tween_manual_position = null
-_tween_manual_rotation = null
-_tween_manual_scale = null
 
 [node name="Panel" type="Panel" parent="Box/CodeBox/VBoxContainer/Container/AnimatedRoundContainer/FancyAnimatedItem8"]
 layout_mode = 0

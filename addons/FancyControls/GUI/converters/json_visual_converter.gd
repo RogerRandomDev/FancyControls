@@ -36,6 +36,11 @@ static func correct_variable_typing(value):
 
 
 static func convert_json(json_data,graph:GraphEdit,blockList):
+	for node in graph.get_children():
+		if node.get_meta("action","").begins_with("INITIALIZE"):continue
+		node.free()
+	graph.clear_connections()
+	
 	
 	for node_data in json_data.nodes:
 		var node=blockList.create_item_block(node_data.name if not node_data.has("var_type") else node_data.var_type,false,graph)

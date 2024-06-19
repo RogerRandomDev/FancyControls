@@ -70,6 +70,9 @@ func connection_request_logic(from_node,from_port,to_node,to_port):
 	
 	#hide the editable section when it is set externally
 	var node_port=get_node(String(to_node)).get_child(get_node(String(to_node)).get_input_port_slot(to_port))
+	
+	
+	
 	#actions can only chain
 	if get_node(String(from_node)).get_meta(&"runnable") and from_port==0 and get_connection_list().filter(func(v):return v.from_node==from_node and v.from_port==0).size()!=0:return
 	if get_connection_list().filter(func(v):return v.to_node==to_node and v.to_port==to_port).size()!=0:return
@@ -120,6 +123,7 @@ func disconnection_request_logic(from_node,from_port,to_node,to_port):
 	
 	
 	var node=get_node(String(from_node))
+	
 	if code_funcs.has_method(str(node.get_meta(&"action"))+"_disconnected"):
 		code_funcs.call_deferred(node.get_meta(&"action")+"_disconnected",from_node,to_node,from_port,to_port,self)
 	node=get_node(String(to_node))
@@ -146,12 +150,17 @@ func _on_delete_nodes_request(nodes):
 		undo.add_undo_method(add_child.bind(grabbed))
 		get_connection_list().map(func(v):if v.from_node==node||v.to_node==node:
 			undo.add_do_method(disconnection_request_logic.bind(v.from_node,v.from_port,v.to_node,v.to_port))
-			undo.add_undo_method(connection_request_logic.bind(v.from_node,v.from_port,v.to_node,v.to_port))
+			undo.add_undo_method(call_deferred.bind('connection_request_logic',v.from_node,v.from_port,v.to_node,v.to_port))
 			)
-		undo.add_do_method(call_deferred.bind("remove_child",grabbed))
+		undo.add_do_method(
+			undo_delete_method.bind(grabbed)
+			)
 		
 	undo.commit_action.call_deferred()
 
+func undo_delete_method(grabbed):
+	await get_tree().process_frame
+	call_deferred("remove_child",grabbed)
 
 
 
