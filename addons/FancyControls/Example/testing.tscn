@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dyd671fyvenq3"]
+[gd_scene load_steps=8 format=3 uid="uid://dyd671fyvenq3"]
 
 [ext_resource type="Script" path="res://addons/FancyControls/Example/testing.gd" id="1_4dv0c"]
 [ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedBoxContainer/AnimatedBoxContainer.gd" id="1_hssgr"]
 [ext_resource type="Script" path="res://addons/FancyControls/Example/AnimatedFuncs.gd" id="3_5r14o"]
 [ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedRoundContainer/AnimatedRoundContainer.gd" id="3_j83mo"]
+[ext_resource type="Script" path="res://addons/FancyControls/Example/chickensandwich.gd" id="5_0n7fx"]
 [ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedFromCenterRoundContainer/AnimatedFromCenterRoundContainer.gd" id="5_4vyu1"]
 [ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedGridSlideInContainer/AnimatedGridSlideInContainer.gd" id="5_lwohf"]
 
@@ -122,8 +123,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 mouse_filter = 1
 script = ExtResource("3_j83mo")
-box_direction = 1
+do_rotation = false
 border_padding = Vector2(24, 24)
+animation_group = ExtResource("5_0n7fx")
 item_function_script = ExtResource("3_5r14o")
 _hovered = &"item_hovered_example"
 _unhovered = &"item_unhovered_example"
@@ -140,23 +142,23 @@ offset_bottom = 44.0
 
 [node name="Panel2" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer"]
 layout_mode = 0
-offset_left = 144.836
+offset_left = 28.1637
 offset_top = 28.3101
-offset_right = 184.836
+offset_right = 68.1637
 offset_bottom = 68.3101
 
 [node name="Panel3" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer"]
 layout_mode = 0
-offset_left = 169.0
+offset_left = 4.0
 offset_top = 87.0
-offset_right = 209.0
+offset_right = 44.0
 offset_bottom = 127.0
 
 [node name="Panel4" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer"]
 layout_mode = 0
-offset_left = 144.836
+offset_left = 28.1637
 offset_top = 145.69
-offset_right = 184.836
+offset_right = 68.1637
 offset_bottom = 185.69
 
 [node name="Panel5" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer"]
@@ -168,23 +170,23 @@ offset_bottom = 210.0
 
 [node name="Panel6" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer"]
 layout_mode = 0
-offset_left = 28.1637
+offset_left = 144.836
 offset_top = 145.69
-offset_right = 68.1637
+offset_right = 184.836
 offset_bottom = 185.69
 
 [node name="Panel7" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer"]
 layout_mode = 0
-offset_left = 4.0
+offset_left = 169.0
 offset_top = 87.0
-offset_right = 44.0
+offset_right = 209.0
 offset_bottom = 127.0
 
 [node name="Panel8" type="Panel" parent="VBoxContainer/HBoxContainer/AnimatedRoundContainer"]
 layout_mode = 0
-offset_left = 28.1637
+offset_left = 144.836
 offset_top = 28.3101
-offset_right = 68.1637
+offset_right = 184.836
 offset_bottom = 68.3102
 
 [node name="Buttons" type="Control" parent="VBoxContainer/HBoxContainer"]
@@ -668,7 +670,9 @@ offset_top = 142.0
 offset_right = 184.0
 offset_bottom = 191.0
 text = "Has hover/unhover
-linked to a function"
+linked to a function,
+has animation group set
+"
 
 [node name="Label2" type="Label" parent="."]
 layout_mode = 0
@@ -759,6 +763,14 @@ offset_bottom = 166.0
 text = "Cycle Container
 Back"
 
+[node name="Button7" type="Button" parent="."]
+layout_mode = 0
+offset_left = 233.0
+offset_top = 175.0
+offset_right = 362.0
+offset_bottom = 229.0
+text = "Test animation"
+
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Buttons/Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Buttons/Button3" to="." method="_on_button_3_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Buttons/Button" to="." method="_on_button_pressed"]
@@ -769,3 +781,4 @@ Back"
 [connection signal="pressed" from="Button6" to="." method="_on_cycle_right_bacck_pressed"]
 [connection signal="pressed" from="Button4" to="." method="_on_cycle_left_pressed"]
 [connection signal="pressed" from="Button5" to="." method="_on_cycle_left_back_pressed"]
+[connection signal="pressed" from="Button7" to="." method="_on_button_7_pressed"]

@@ -101,7 +101,7 @@ func get_value(val:int=0,val_type:int=TYPE_NIL):
 func get_function_content()->String:
 	match data.name:
 		"INITIALIZE":
-			return "var output_data:Dictionary={'Positions':[],'Rotations':[],'Scales':[]}\n\t"
+			return "";
 		"INITIALIZE_CONTAINER":
 			return ""
 		"Add":
@@ -129,13 +129,13 @@ func get_function_content()->String:
 		"ComposeVector":
 			return "var %s = Vector2(%s,%s)\n\t"%[data.value,get_value(1,TYPE_FLOAT),get_value(2,TYPE_FLOAT)]
 		"SetPosition":
-			return "output_data.Positions.push_back({'goal':%s,'duration':%s,'tween_type':%s})\n\t"%[get_value(0,TYPE_VECTOR2),get_value(1,TYPE_FLOAT),get_value(2,TYPE_INT)]
+			return "item_node.chain_action(0,%s,%s,%s) #Position\n\t"%[get_value(0,TYPE_VECTOR2),get_value(1,TYPE_FLOAT),get_value(2,TYPE_INT)]
 		"SetRotation":
-			return "output_data.Rotations.push_back({'goal':%s,'duration':%s,'tween_type':%s})\n\t"%[get_value(0,TYPE_FLOAT),get_value(1,TYPE_FLOAT),get_value(2,TYPE_INT)]
+			return "item_node.chain_action(1,%s,%s,%s) #Rotation\n\t"%[get_value(0,TYPE_FLOAT),get_value(1,TYPE_FLOAT),get_value(2,TYPE_INT)]
 		"SetScale":
-			return "output_data.Scales.push_back({'goal':%s,'duration':%s,'tween_type':%s})\n\t"%[get_value(0,TYPE_VECTOR2),get_value(1,TYPE_FLOAT),get_value(2,TYPE_INT)]
+			return "item_node.chain_action(2,%s,%s,%s) #Scale\n\t"%[get_value(0,TYPE_VECTOR2),get_value(1,TYPE_FLOAT),get_value(2,TYPE_INT)]
 		"SyncParameters":
-			return "output_data.Positions.push_back({'goal':Vector2.ZERO,'duration':0,'tween_type':-9});output_data.Rotations.push_back({'goal':0,'duration':0,'tween_type':-9});output_data.Scales.push_back({'goal':Vector2.ZERO,'duration':0,'tween_type':-9})\n\t"
+			return "item_node.chain_action(0,Vector2.ZERO,0.0,-9);item_node.chain_action(1,0.0,0.0,-9);item_node.chain_action(2,Vector2.ZERO,0.0,-9)\n\t"
 			#return "output_data.Positions.push_back({'tween_type':-9});output_data.Rotations.push_back({'tween_type':-9});output_data.Scales.push_back({'tween_type':-9})\n\t"
 	return ""
 

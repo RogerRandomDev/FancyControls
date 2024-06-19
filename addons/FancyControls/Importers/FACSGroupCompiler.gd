@@ -38,5 +38,7 @@ static func compile_group(group_root:TreeItem,graph_base:GraphEdit,blocklist)->v
 	var compiled_group=GDScript.new()
 	compiled_group.source_code=script_contents
 	
+	if FileAccess.file_exists("res://FACS/Compiled/%s.gd"%group_name):DirAccess.remove_absolute("res://FACS/Compiled/%s.gd"%group_name)
+	
 	ResourceSaver.save(compiled_group,"res://FACS/Compiled/%s.gd"%group_name)
 	

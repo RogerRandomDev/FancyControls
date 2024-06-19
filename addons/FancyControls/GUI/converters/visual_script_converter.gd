@@ -26,7 +26,7 @@ static func convert_chain_to_code(chain:Array,graph,method_name:String=graph.get
 		if vis_node.is_variable():variable_list.push_back(vis_node.data.var_name)
 			
 		code_out+=vis_node.get_content()
-	code_out+="\n\treturn output_data"
+	code_out+="pass\n"
 	return {"code":code_out,"variables":variable_list}
 
 

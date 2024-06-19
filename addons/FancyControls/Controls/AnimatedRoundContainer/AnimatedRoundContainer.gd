@@ -14,8 +14,7 @@ func _ready():
 	super._ready()
 	if Engine.is_editor_hint():return
 	initial_rotation_degrees=deg_to_rad(initial_rotation_degrees)
-	
-	
+
 
 func _update_spacings(animated:bool=true)->void:
 	_update_start_positions()
@@ -35,7 +34,7 @@ func _update_spacings(animated:bool=true)->void:
 			if do_rotation:nodes_to_space[id].rotation=target_rotation
 		if do_rotation:nodes_to_space[id].targeted_rotation=target_rotation
 		nodes_to_space[id].targeted_position=target_position
-		
+		nodes_to_space[id].targeted_scale=Vector2.ONE
 	#prevent an error from no tweened values
 
 

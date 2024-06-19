@@ -19,6 +19,10 @@ class_name AnimatedContainer
 		_notification(NOTIFICATION_RESIZED)
 
 @export_group("item functionality")
+## the animation group script, can be done by hand as long as functions match the required inputs
+@export var animation_group:GDScript:
+	set=set_animation_group
+
 ##the script that contains the functions that will be used by the contained [AnimatedItem] nodes
 @export var item_function_script:Script:
 	set(v):
@@ -30,9 +34,15 @@ var item_origin_positions:Array=[]
 
 var animations:RefCounted
 
-func set_animation_group(animation_group:GDScript):
+
+
+
+func set_animation_group(animation_group_new:GDScript):
 	if animations==null:animations=RefCounted.new()
-	animations.set_script(animation_group)
+	animations.set_script(animation_group_new)
+	if animation_group_new==animation_group:return
+	animation_group=animation_group_new
+
 ## honestly this is just here for the one person who inevitably asks for it.
 ## also because the editor uses it to know what the function name is in the preview.
 func get_animation_list():
@@ -178,15 +188,16 @@ func animate_items_with_chain(chain_name:String)->void:
 	for i in get_child_count():
 		var child=get_child(i)
 		#var response=bound_call.call(chain_name,child,i)
-		var response=scr.call(chain_name,child,i,get_child_count(),container_data)
-		if response == null:continue
+		#var response=scr.call(chain_name,child,i,get_child_count(),container_data)
+		scr.call(chain_name,child,i,get_child_count(),container_data)
+		#if response == null:continue
 		#this code is bad.
 		#this is not high in my list of priorities yet.
 		#probably going to update the editor itself to compile the calls to chain directly.
 		#would save on everything.
-		for p in response.Positions:child.chain_action(0,p.get("goal"),p.get("duration"),p.get("tween_type"))
-		for p in response.Rotations:child.chain_action(1,p.get("goal"),p.get("duration"),p.get("tween_type"))
-		for p in response.Scales:child.chain_action(2,p.get("goal"),p.get("duration"),p.get("tween_type"))
+		#for p in response.Positions:child.chain_action(0,p.get("goal"),p.get("duration"),p.get("tween_type"))
+		#for p in response.Rotations:child.chain_action(1,p.get("goal"),p.get("duration"),p.get("tween_type"))
+		#for p in response.Scales:child.chain_action(2,p.get("goal"),p.get("duration"),p.get("tween_type"))
 	
 
 
