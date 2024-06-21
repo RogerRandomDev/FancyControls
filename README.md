@@ -1,7 +1,48 @@
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+# FACS (Fancy Animated Controls System)
 
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Addon For Godot 4.X that gives you a GUI to work with to create custom Control node animations based in a custom node container and item system. it is made to be easy to learn with a lot of capabilities for how it can be used.
 
-Join Us
+
+## Features
+
+- GUI interface for creating Animations
+- GUI interface for creating/updating groups of animations to compile together
+- High quantity of custom Container nodes
+- Easy to learn code-based control of the plugin features
+
+
+## Usage/Examples
+
+The project contains an example folder with a simple example of the usage cases for it.
+More complex usages include chaining multiple animations together to create multiple path animations, or, since the code itself is called as a function, can be directly called upon items to animate them.
+## Documentation
+
+### Animation System
+This is the primary reason you are here, so I'll have it explained first.
+The Animations are compiled, if done in the gui, down to functions that call the **`chain_action`** function on the item they are currently iterating over, and the function itself is called from the container holding the item using the function name as reference.
+These functions contain the following data:
+- item_node item being iterated
+- current_item item node index
+- total_items total number of items in container
+- container_data data of the container itself
+---
+#### Creating an animation script yourself
+If you wish to, you can create a function yourself and tell the group system to use it by giving it the file and telling it the method name to grab and use.
+If you intend to also create a group file yourself, they have to be **`RefCounted`** script files as that is what it uses to store the script and run them.
+
+
+
+## Contributing
+
+Contributions are always welcome!
+
+See `contributing.md` for ways to get started.
+
+Please adhere to this project's `code of conduct`.
+
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
