@@ -12,7 +12,10 @@ func load_from_data():
 	for group in group_data:
 		Groups[group]=[]
 		group_data[group].map(func(v):
-			Groups[group].push_back(FACSGroupBinding.new(v[0],v[1]))
+			if len(v)>2:
+				Groups[group].push_back(FACSGroupBinding.new(v[0],v[1],v[2]))
+			else:
+				Groups[group].push_back(FACSGroupBinding.new(v[0],v[1]))
 			)
 
 
@@ -41,7 +44,7 @@ func remove_group(group_name:String):
 func change_group_name(old_name:String,new_name:String)->bool:
 	
 	if !Groups.has(old_name):return false
-	if RegEx.create_from_string("[^A-Za-z0-9]").search(new_name)!=null:return false
+	if RegEx.create_from_string("[^A-Za-z0-9_]").search(new_name)!=null:return false
 	if new_name.contains(" "):return false
 	if Groups.has(new_name):return false
 	var new_group={new_name:Groups[old_name]}
@@ -56,11 +59,11 @@ func change_group_name(old_name:String,new_name:String)->bool:
 func change_group_binding_name(group_name:String,on_resource:FACSGroupBinding,new_name:String)->bool:
 	
 	if !Groups.has(group_name):return false
-	if RegEx.create_from_string("[^A-Za-z0-9]").search(new_name)!=null:return false
+	if RegEx.create_from_string("[^A-Za-z0-9_]").search(new_name)!=null:return false
 	if new_name.contains(" "):return false
 	if Groups[group_name].any(func(v):return v.binding_name==new_name):return false
-	
 	var option=Groups[group_name].filter(func(v):return v.binding_name==on_resource.binding_name and v.binding_link_path==on_resource.binding_link_path)
+	
 	if len(option)==0:return false
 	option[0].binding_name=new_name
 	
@@ -70,6 +73,19 @@ func change_group_binding_name(group_name:String,on_resource:FACSGroupBinding,ne
 	
 	return true
 
+
+func change_group_binding_script_method(group_name:String,on_resource:FACSGroupBinding,new_method:String)->bool:
+	if !Groups.has(group_name):return false
+	var option=Groups[group_name].filter(func(v):return v.binding_name==on_resource.binding_name and v.binding_link_path==on_resource.binding_link_path)
+	
+	if len(option)==0:return false
+	option[0].binding_special_data=new_method
+	
+	
+	
+	resave.call_deferred()
+	
+	return true
 
 ##returns a [PackedStringArray] of the names of all groups
 func get_group_list()->Array:

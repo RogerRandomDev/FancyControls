@@ -81,14 +81,14 @@ func _on_tree_item_selected():
 	
 	if prev_selected!=null and not prev_selected==group_tree.get_selected():
 		prev_selected.set_editable(0,false)
-		prev_selected.set_editable(1,false)
+		#prev_selected.set_editable(1,false)
 		prev_selected.set_editable(2,false)
 	prev_selected=group_tree.get_selected()
 	
 	#path or name of a group function
 	if [0,1].has(selected_column) and not (selected_column>0 and group_tree.get_selected().get_parent()==group_tree.get_root()):
 		group_tree.get_selected().set_editable(selected_column,true)
-
+	
 ##when pressed it should attempt to compile the group into a script file of the functions
 func _on_tree1_button_clicked(item, column, id, mouse_button_index):
 	pass # Replace with function body.
@@ -108,18 +108,20 @@ func _on_tree_item_edited():
 				child.set_meta(&"group_name",prev_selected.get_text(0))
 			
 	else:
+		if prev_selected.get_cell_mode(1)==TreeItem.CELL_MODE_RANGE:
+			var changed_script_method=manager.change_group_binding_script_method(prev_selected.get_meta(&"group_name"),prev_selected.get_meta(&"linked_resource"),prev_selected.get_text(1).split(",")[prev_selected.get_range(1)])
 		#now when you are changing an items contents within the groupings
 		var name_changed_successfully:bool=manager.change_group_binding_name(prev_selected.get_meta(&"group_name"),prev_selected.get_meta(&"linked_resource"),prev_selected.get_text(0))
 		if not name_changed_successfully:
 			prev_selected.set_text(0,prev_selected.get_meta(&"name"))
 		else:prev_selected.set_meta(&"name",prev_selected.get_text(0))
-
 func _on_tree_item_activated():
 	#checks when something is double-clicked
 	#row 2 is for items that are paths.
 	#it should pull out a dialog to select a file to use instead
 	if group_tree.get_selected_column()==2 and not prev_selected.get_meta(&"is_group"):
 		$"../../ChainChooseDialog".visible=true
+	
 
 
 func _on_chain_choose_dialog_file_selected(path):
@@ -131,7 +133,17 @@ func _on_chain_choose_dialog_file_selected(path):
 		prev_selected.set_text(3,"")
 		prev_selected.set_custom_color(3,Color.WHITE)
 		prev_selected.set_custom_color(2,Color.WHITE)
-	
+	if path.ends_with(".gd"):
+		#why do they not document that you can do this?
+		prev_selected.set_cell_mode(1,TreeItem.CELL_MODE_RANGE)
+		var end_of_function_regex=RegEx.create_from_string("\\nfunc [0-z]+")
+		var loading_script_contents=FileAccess.get_file_as_string(path)
+		var outputs=end_of_function_regex.search_all(loading_script_contents)
+		prev_selected.set_text(1,
+			",".join(Array(outputs).map(func(v):return v.strings[0].trim_prefix("\nfunc ")))
+		)
+	else:
+		prev_selected.set_cell_mode(1,TreeItem.CELL_MODE_STRING)
 	
 
 

@@ -22,16 +22,34 @@ static func _get_method_file_as_json(path):
 static func compile_group(group_root:TreeItem,graph_base:GraphEdit,blocklist)->void:
 	var script_contents="@tool\nextends RefCounted\n#WARNING\n#ANY CHANGES MADE TO FUNCTIONS BEING RE-COMPILED WILL BE OVERWRITTEN\n\n"
 	
-	
-	
+	var end_of_function_regex=RegEx.create_from_string("\\nfunc [0-z]+")
+	var end_of=RegEx.create_from_string("\\n[^\\t]+")
 	
 	for method_item in group_root.get_children():
-		var temp_graph=graph_base.duplicate(Node.DUPLICATE_SCRIPTS|Node.DUPLICATE_SIGNALS|Node.DUPLICATE_USE_INSTANTIATION)
-		var from_file=_get_method_file_as_json(method_item.get_text(2))
-		FACSJson.convert_json(from_file,temp_graph,blocklist)
-		await blocklist.get_tree().process_frame
-		var compiled_vis_data=FACSVISCompiler.convert_visual(temp_graph)
-		script_contents+=compiled_vis_data.code.replace("%METHOD_NAME%",method_item.get_text(0))+"\n\n\n"
+		var file_path=method_item.get_text(2)
+		#facsvis custom files
+		if file_path.ends_with("FACSVIS"):
+			var temp_graph=graph_base.duplicate(Node.DUPLICATE_SCRIPTS|Node.DUPLICATE_SIGNALS|Node.DUPLICATE_USE_INSTANTIATION)
+			var from_file=_get_method_file_as_json(file_path)
+			FACSJson.convert_json(from_file,temp_graph,blocklist)
+			await blocklist.get_tree().process_frame
+			var compiled_vis_data=FACSVISCompiler.convert_visual(temp_graph)
+			script_contents+=compiled_vis_data.code.replace("%METHOD_NAME%",method_item.get_text(0))+"\n\n\n"
+		else:
+			#normal gdscript function being used instead
+			var loading_script_contents=FileAccess.get_file_as_string(file_path)
+			var outputs=end_of_function_regex.search_all(loading_script_contents)
+			var my_methods=method_item.get_text(1).split(",")
+			for output in outputs:
+				#chops the script to pull out only the wanted function code as text to use
+				if output.strings[0].trim_prefix("\nfunc ")!=my_methods[method_item.get_range(1)]:continue
+				var start_at=loading_script_contents.find(output.strings[0])
+				var string_for=loading_script_contents.right(-start_at)
+				var end_of_search=end_of.search_all(string_for)
+				if len(end_of_search)>1:
+					var end_at=string_for.find(end_of_search[1].strings[0])
+					string_for=string_for.left(end_at)
+				script_contents+=string_for+"\n\n\n"
 	
 	var group_name=group_root.get_text(0)
 	
