@@ -135,7 +135,7 @@ func get_function_content()->String:
 		"SetScale":
 			return "item_node.chain_action(2,%s,%s,%s) #Scale\n\t"%[get_value(0,TYPE_VECTOR2),get_value(1,TYPE_FLOAT),get_value(2,TYPE_INT)]
 		"SyncParameters":
-			return "item_node.chain_action(0,Vector2.ZERO,0.0,-9);item_node.chain_action(1,0.0,0.0,-9);item_node.chain_action(2,Vector2.ZERO,0.0,-9)\n\t"
+			return "item_node.sync_chains()\n\t"
 			#return "output_data.Positions.push_back({'tween_type':-9});output_data.Rotations.push_back({'tween_type':-9});output_data.Scales.push_back({'tween_type':-9})\n\t"
 	return ""
 

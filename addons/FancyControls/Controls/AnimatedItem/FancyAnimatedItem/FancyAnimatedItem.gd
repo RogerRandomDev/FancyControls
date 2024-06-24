@@ -16,6 +16,12 @@ enum AnimatableTypes{
 	SCALE
 }
 
+##fills the duty of syncing all action chains
+func sync_chains()->void:
+	chain_action(0,Vector2.ZERO,0,-9)
+	chain_action(1,0.0,0,-9)
+	chain_action(2,Vector2.ZERO,0,-9)
+
 ##utterly rediculous how this works.
 ##not that it's bad just could be better.
 func chain_action(on_type:AnimatableTypes,target:Variant,duration:float=-1,tween_type:Tween.TransitionType=Tween.TRANS_LINEAR)->void:

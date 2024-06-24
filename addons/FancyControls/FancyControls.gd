@@ -23,6 +23,12 @@ func _enter_tree():
 	EditorInterface.get_editor_main_screen().add_child(main_panel_instance)
 	# Hide the main panel. Very much required.
 	_make_visible(false)
+	
+	#this fixed nothing and i dont know why.
+	#EditorInterface.get_editor_settings().set_setting("text_editor/behavior/files/auto_reload_scripts_on_external_change", true)
+	#push_warning("(FACS ADDON): Force set the script editor to auto reload when changed to deal with compiler causing the \"newer on disk\" popup.")
+	
+	
 
 func initialize_resources()->void:
 	if !DirAccess.dir_exists_absolute("res://FACS"):

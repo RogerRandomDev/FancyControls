@@ -28,7 +28,7 @@ static func compile_group(group_root:TreeItem,graph_base:GraphEdit,blocklist)->v
 	for method_item in group_root.get_children():
 		var file_path=method_item.get_text(2)
 		#facsvis custom files
-		if file_path.ends_with("FACSVIS"):
+		if file_path.to_upper().ends_with("FACSVIS"):
 			var temp_graph=graph_base.duplicate(Node.DUPLICATE_SCRIPTS|Node.DUPLICATE_SIGNALS|Node.DUPLICATE_USE_INSTANTIATION)
 			var from_file=_get_method_file_as_json(file_path)
 			FACSJson.convert_json(from_file,temp_graph,blocklist)
@@ -49,14 +49,27 @@ static func compile_group(group_root:TreeItem,graph_base:GraphEdit,blocklist)->v
 				if len(end_of_search)>1:
 					var end_at=string_for.find(end_of_search[1].strings[0])
 					string_for=string_for.left(end_at)
+				#to replace with the chosen name to use for this method
+				string_for=string_for.replace(output.strings[0],"func %s"%method_item.get_text(0))
 				script_contents+=string_for+"\n\n\n"
-	
 	var group_name=group_root.get_text(0)
 	
 	var compiled_group=GDScript.new()
 	compiled_group.source_code=script_contents
 	
-	if FileAccess.file_exists("res://FACS/Compiled/%s.gd"%group_name):DirAccess.remove_absolute("res://FACS/Compiled/%s.gd"%group_name)
+	var path_used="res://FACS/Compiled/%s.gd"%group_name
 	
-	ResourceSaver.save(compiled_group,"res://FACS/Compiled/%s.gd"%group_name)
+	if FileAccess.file_exists(path_used):DirAccess.remove_absolute(path_used)
+	
+	ResourceSaver.save(compiled_group,path_used)
+	
+	#force update the editor for them
+	#var script_editor=EditorInterface.get_script_editor()
+	EditorInterface.get_resource_filesystem().update_file(path_used)
+
+static func check_for(node):
+	if node is ItemList:return node
+	for child in node.get_children(true):
+		var val=check_for(child)
+		if val:return val
 	

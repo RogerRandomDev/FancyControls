@@ -25,7 +25,7 @@ func _on_button_4_pressed():
 
 func _on_toggle_slidein_pressed():
 	$VBoxContainer/AnimatedGridSlideInContainer.active=!$VBoxContainer/AnimatedGridSlideInContainer.active
-
+	
 
 func _on_toggle_fromcenter_round_pressed():
 	$VBoxContainer/HBoxContainer/AnimatedRoundContainer2.active=!$VBoxContainer/HBoxContainer/AnimatedRoundContainer2.active
