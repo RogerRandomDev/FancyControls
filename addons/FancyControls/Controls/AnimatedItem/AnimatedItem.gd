@@ -14,7 +14,7 @@ var connected_control:Node
 
 var manual_transformations:Control=Control.new()
 
-
+var _pos_relative:bool=false
 var _pos_travel_time:float=-1.0
 var _rot_travel_time:float=-1.0
 var _scale_travel_time:float=-1.0
@@ -23,10 +23,12 @@ var _rot_trans:int=0
 var _scale_trans:int=0
 
 var manual_step:bool=false
-
-
-
-
+## setting it moves it based on the size of the container 0-1 being from container corner to container size
+## also returns the 0-1 variation of position
+var relative_position:Vector2:
+	set(v):
+		position=v*get_parent_control().size
+	get:return position/get_parent_control().size
 
 
 ## The position to animate the [AnimatedItem] to from the current position.
@@ -43,7 +45,9 @@ var targeted_position:
 			if _tween_position:_tween_position.kill()
 			_tween_position=create_tween()
 			_tween_position.set_trans(_pos_trans)
-			_tween_position.tween_property(self,'global_position',targeted_position,_pos_travel_time)
+			var pos_type='relative_position' if _pos_relative else 'global_position'
+			
+			_tween_position.tween_property(self,pos_type,targeted_position,_pos_travel_time)
 			_tween_position.finished.connect(_param_tween_finished.bind("Pos"))
 			_pos_travel_time=-1.0
 			_pos_trans=Tween.TRANS_LINEAR
@@ -137,7 +141,7 @@ func _set(property, value):
 	if property.begins_with("stacked"):
 		call("set_%s"%property,value)
 		return true
-	return false
+	return false 
 
 
 
@@ -240,7 +244,9 @@ func attached_item_size_changed()->void:
 	attached_item.position=-attached_item.size*0.5
 	attached_item.pivot_offset=attached_item.size*0.5
 
-
+func get_content_meta(meta_name:String,default)->Variant:
+	if has_meta(meta_name):return get_meta(meta_name,default)
+	return connected_control.get_meta(meta_name,default)
 
 
 

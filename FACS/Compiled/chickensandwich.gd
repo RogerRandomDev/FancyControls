@@ -5,15 +5,6 @@ extends RefCounted
 
 func chicken(item_node:AnimatedItem,item_index:float=0,total_items:float=1,container_info={}):
 	
-	var Sub3 = total_items-item_index
-	var Div4 = Sub3/total_items
-	var Mul5 = Div4*6.28
-	var Rotate2 = Vector2(0, -64).rotated(Mul5)
-	var Add8 = Rotate2+container_info.item_origins[item_index]
-	var Sub10 = container_info.item_origins[item_index]-Rotate2
-	item_node.chain_action(0,Sub10,0.13,Tween.TRANS_QUAD) #Position
-	item_node.chain_action(2,Vector2(2, 2),0.38,Tween.TRANS_BACK) #Scale
-	item_node.chain_action(0,Add8,0.13,Tween.TRANS_BOUNCE) #Position
 	pass
 
 

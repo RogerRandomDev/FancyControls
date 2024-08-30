@@ -27,7 +27,7 @@ func _update_spacings(animated:bool=true)->void:
 	
 	for id in node_count:
 		var target_position=get_target_position_for_item(id)
-		var target_rotation=(id/float(node_count))*PI*2*(box_direction*2-1)+initial_rotation_degrees
+		var target_rotation=lerp_angle(nodes_to_space[id].targeted_rotation,(id/float(node_count))*PI*2*(box_direction*2-1)+initial_rotation_degrees,1.0)
 		
 		if not (animate_spacing and animated):
 			nodes_to_space[id].global_position=target_position

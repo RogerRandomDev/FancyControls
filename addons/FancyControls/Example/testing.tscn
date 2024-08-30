@@ -2,11 +2,63 @@
 
 [ext_resource type="Script" path="res://addons/FancyControls/Example/testing.gd" id="1_4dv0c"]
 [ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedBoxContainer/AnimatedBoxContainer.gd" id="1_hssgr"]
-[ext_resource type="Script" path="res://addons/FancyControls/Example/AnimatedFuncs.gd" id="3_5r14o"]
 [ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedRoundContainer/AnimatedRoundContainer.gd" id="3_j83mo"]
-[ext_resource type="Script" path="res://addons/FancyControls/Example/chickensandwich.gd" id="5_0n7fx"]
 [ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedFromCenterRoundContainer/AnimatedFromCenterRoundContainer.gd" id="5_4vyu1"]
 [ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedGridSlideInContainer/AnimatedGridSlideInContainer.gd" id="5_lwohf"]
+
+[sub_resource type="GDScript" id="GDScript_3xug0"]
+script/source = "extends Node
+class_name AnimatedFuncs
+
+
+func item_hovered_example(item:AnimatedItem)->void:
+	item.set_stacked_position(Vector2(0,-8),0.0625,Tween.TRANS_CIRC)
+	item.set_stacked_scale(Vector2(1.25,1.25),0.125,Tween.TRANS_BACK)
+func item_unhovered_example(item:AnimatedItem)->void:
+	item.set_stacked_position(Vector2(0,0),0.0625,Tween.TRANS_CIRC)
+	item.set_stacked_scale(Vector2.ONE,0.0625,Tween.TRANS_BACK)
+
+
+
+
+"
+
+[sub_resource type="GDScript" id="GDScript_3cbfj"]
+script/source = "@tool
+extends RefCounted
+#WARNING
+#ANY CHANGES MADE TO FUNCTIONS BEING RE-COMPILED WILL BE OVERWRITTEN
+
+func chicken(item_node:AnimatedItem,item_index:float=0,total_items:float=1,container_info={}):
+	
+	var Sub3 = total_items-item_index
+	var Div4 = Sub3/total_items
+	var Mul5 = Div4*6.28
+	var Rotate2 = Vector2(0, -64).rotated(Mul5)
+	var Add8 = Rotate2+container_info.item_origins[item_index]
+	var Sub10 = container_info.item_origins[item_index]-Rotate2
+	item_node.chain_action(0,Sub10,0.13,Tween.TRANS_QUAD) #Position
+	item_node.chain_action(2,Vector2(2, 2),0.38,Tween.TRANS_BACK) #Scale
+	item_node.chain_action(0,Add8,0.13,Tween.TRANS_BOUNCE) #Position
+	pass
+
+
+
+func sandwich(item_node:AnimatedItem,item_index:float=0,total_items:float=1,container_info={}):
+	
+	var Div5 = item_index/total_items
+	var Mul8 = container_info.size.x*2.0
+	var Mul3 = Div5*Mul8
+	var Mul6 = Mul8*0.25
+	var Sub7 = Mul3-Mul6
+	var Add9 = Sub7+container_info.global_position.x
+	var ComposeVector10 = Vector2(Add9,container_info.global_position.y)
+	item_node.chain_action(0,ComposeVector10,0.5,Tween.TRANS_QUART) #Position
+	pass
+
+
+
+"
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -32,7 +84,7 @@ custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 script = ExtResource("1_hssgr")
 box_direction = 1
-item_function_script = ExtResource("3_5r14o")
+item_function_script = SubResource("GDScript_3xug0")
 _hovered = &""
 _unhovered = &""
 _focused = &""
@@ -125,8 +177,8 @@ mouse_filter = 1
 script = ExtResource("3_j83mo")
 do_rotation = false
 border_padding = Vector2(24, 24)
-animation_group = ExtResource("5_0n7fx")
-item_function_script = ExtResource("3_5r14o")
+animation_group = SubResource("GDScript_3cbfj")
+item_function_script = SubResource("GDScript_3xug0")
 _hovered = &"item_hovered_example"
 _unhovered = &"item_unhovered_example"
 _focused = &""
@@ -326,7 +378,7 @@ script = ExtResource("5_lwohf")
 slide_from_direction = Vector2(0, 1)
 expand_direction = 1
 item_spacing = Vector2(42, 42)
-item_function_script = ExtResource("3_5r14o")
+item_function_script = SubResource("GDScript_3xug0")
 _hovered = &"item_hovered_example"
 _unhovered = &"item_unhovered_example"
 _focused = &""

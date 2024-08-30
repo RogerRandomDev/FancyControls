@@ -129,7 +129,7 @@ func get_function_content()->String:
 		"ComposeVector":
 			return "var %s = Vector2(%s,%s)\n\t"%[data.value,get_value(1,TYPE_FLOAT),get_value(2,TYPE_FLOAT)]
 		"SetPosition":
-			return "item_node.chain_action(0,%s,%s,%s) #Position\n\t"%[get_value(0,TYPE_VECTOR2),get_value(1,TYPE_FLOAT),get_value(2,TYPE_INT)]
+			return "item_node.chain_action(0,%s,%s,%s,%s) #Position\n\t"%[get_value(0,TYPE_VECTOR2),get_value(1,TYPE_FLOAT),get_value(2,TYPE_INT),get_value(3,TYPE_BOOL)]
 		"SetRotation":
 			return "item_node.chain_action(1,%s,%s,%s) #Rotation\n\t"%[get_value(0,TYPE_FLOAT),get_value(1,TYPE_FLOAT),get_value(2,TYPE_INT)]
 		"SetScale":

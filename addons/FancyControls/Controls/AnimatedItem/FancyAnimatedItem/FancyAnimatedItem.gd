@@ -24,14 +24,15 @@ func sync_chains()->void:
 
 ##utterly rediculous how this works.
 ##not that it's bad just could be better.
-func chain_action(on_type:AnimatableTypes,target:Variant,duration:float=-1,tween_type:Tween.TransitionType=Tween.TRANS_LINEAR)->void:
+func chain_action(on_type:AnimatableTypes,target:Variant,duration:float=-1,tween_type:Tween.TransitionType=Tween.TRANS_LINEAR,relative:bool=false)->void:
 	match on_type:
 		AnimatableTypes.POSITION:
 			assert(target is Vector2)
 			target_chains.position.push_back({
 				"goal":target,
 				"duration":duration,
-				"tween":tween_type
+				"tween":tween_type,
+				"relative":relative
 			})
 			if _tween_position==null||not _tween_position.is_valid():_target_chains_updated("position")
 			
@@ -74,6 +75,7 @@ func _target_chains_updated(updated_set:String)->void:
 			
 			_pos_trans=front_index.tween
 			_pos_travel_time=front_index.duration
+			_pos_relative=front_index.relative
 			targeted_position=front_index.goal
 			#so if the animator isnt creating a tween it just 
 			if _tween_position!=null:_tween_position.finished.connect(_target_chains_updated.bind("position"))

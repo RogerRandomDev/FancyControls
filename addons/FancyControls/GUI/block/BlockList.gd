@@ -49,7 +49,8 @@ func build_block_node(block):
 			block_categories[category].collapsed=true
 		var child=block_categories[category].create_child()
 		child.set_text(0,block.name)
-	
+		(child as TreeItem).set_tooltip_text(0,block.description)
+		
 	
 	var built_block=GraphNode.new()
 	built_block.set_script(load("res://addons/FancyControls/GUI/block/block_script.gd"))
@@ -78,6 +79,7 @@ func build_block_node(block):
 		var added_item=HBoxContainer.new()
 		
 		var lbl=Label.new()
+		if block_property.name=="Out":lbl.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT
 		lbl.text=block_property.name
 		added_item.add_child(lbl)
 		built_block.add_child(added_item)
@@ -111,8 +113,6 @@ func build_block_node(block):
 				int(block_property.connect_left)+int(block_property.connect_right)*2,
 				TYPE_FLOAT
 				)
-			TYPE_BOOL:
-				pass
 			TYPE_VECTOR2:
 				BlockColoring.ChangePortType(built_block,i,
 				int(block_property.connect_left)+int(block_property.connect_right)*2,
@@ -189,6 +189,15 @@ func build_block_node(block):
 				
 				edit.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 				edit.owner=built_block
+			TYPE_BOOL:
+				var edit=CheckBox.new()
+				added_item.add_child(edit)
+				edit.set_meta(&"link",['toggled',block_property.default,func(v,link_block):
+					if not (v is bool):v=block_property.default
+					link_block.set_meta(&"value_%s"%str(val),v)
+					])
+				edit.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+				edit.owner=built_block
 		i+=1;val+=1
 	built_block.set_meta(&"value_count",block.properties.size())
 	var packed_block=PackedScene.new()
@@ -210,6 +219,7 @@ func _set(property, value):
 					"category":"",
 					"runnable":true,
 					"type":'variable',
+					"description":"",
 					"properties":[]
 					}
 				return v
@@ -343,6 +353,11 @@ func _get_property_list():
 			&"type": TYPE_STRING,
 			&"hint":PROPERTY_HINT_ENUM,
 			&"hint_string":",".join(["variable","function","variablefunction"])
+			},
+			{
+			&"name": "block_%s/description"%str(block),
+			&"type": TYPE_STRING,
+			&"hint":PROPERTY_HINT_MULTILINE_TEXT
 			},
 			{
 			&"name": "block_%s/properties_count"%str(block),
