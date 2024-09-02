@@ -12,9 +12,8 @@ func reload_codeview()->void:
 		$CodeEdit.syntax_highlighter.add_member_keyword_color(variable,Color("66ffd1"))
 	
 	var scr=GDScript.new()
-	scr.source_code="@tool\nextends RefCounted\n"+converted_view.code.replace("%METHOD_NAME%",$"../MainBox/BlockUI".get_meta(&"func_name"))
+	scr.source_code="@tool\nextends RefCounted\n"+converted_view.code.replace("%METHOD_NAME%","PLACEHOLDER_NAME")
 	scr.reload()
-	
 	$VBoxContainer/Container/AnimatedRoundContainer.set_animation_group(scr)
 
 
@@ -85,7 +84,7 @@ func _on_reset_anim_pressed():
 	for container in animations_container.get_children():
 		if not container is AnimatedContainer:continue
 		container.clear_animations()
-		container.play_animation.call_deferred(container.get_animation_list()[0])
+		container.play_animation.call_deferred("PLACEHOLDER_NAME")
 
 
 func _on_option_button_item_selected(index):
@@ -102,17 +101,20 @@ func _on_option_button_item_selected(index):
 			new_container.box_direction=1
 			new_container.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 			new_container.size_flags_vertical=Control.SIZE_SHRINK_CENTER
+			new_container.custom_minimum_size=Vector2.ONE
 		2:
 			new_container=AnimatedBoxContainer.new()
 			new_container.box_direction=0
 			new_container.size_flags_vertical=Control.SIZE_EXPAND_FILL
 			new_container.size_flags_horizontal=Control.SIZE_SHRINK_CENTER
+			new_container.custom_minimum_size=Vector2.ONE
 	for i in 8:
 		var item=Panel.new()
 		item.custom_minimum_size=Vector2(40,40)
 		item.size=Vector2(40,40)
 		var item_holder=FancyAnimatedItem.new(new_container,item)
 		new_container.add_child(item_holder)
+	
 	new_container.animations=$VBoxContainer/Container/AnimatedRoundContainer.animations
 	
 	$VBoxContainer/Container/AnimatedRoundContainer.free()

@@ -177,7 +177,6 @@ func get_target_position_for_item(id:int)->Vector2:return Vector2.ZERO
 
 func animate_items_with_chain(chain_name:String)->void:
 	var scr=animations
-	
 	var container_data={
 		"size":size,
 		"global_position":global_position,
@@ -187,9 +186,8 @@ func animate_items_with_chain(chain_name:String)->void:
 	#var bound_call:Callable=
 	for i in get_child_count():
 		var child=get_child(i)
-		#var response=bound_call.call(chain_name,child,i)
-		#var response=scr.call(chain_name,child,i,get_child_count(),container_data)
 		scr.call(chain_name,child,i,get_child_count(),container_data)
+		
 		#if response == null:continue
 		#this code is bad.
 		#this is not high in my list of priorities yet.

@@ -59,7 +59,7 @@ static func compile_group(group_root:TreeItem,graph_base:GraphEdit,blocklist)->v
 	
 	var path_used="res://FACS/Compiled/%s.gd"%group_name
 	
-	if FileAccess.file_exists(path_used):DirAccess.remove_absolute(path_used)
+	if FileAccess.file_exists(path_used):DirAccess.remove_absolute(ProjectSettings.globalize_path(path_used))
 	
 	ResourceSaver.save(compiled_group,path_used)
 	

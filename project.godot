@@ -11,14 +11,9 @@ config_version=5
 [application]
 
 config/name="FancyControls"
-config/tags=PackedStringArray("addon")
-run/main_scene="res://addons/FancyControls/Example/testing.tscn"
-config/features=PackedStringArray("4.2", "Mobile")
+run/main_scene="res://scene.tscn"
+config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
-
-[display]
-
-window/stretch/mode="viewport"
 
 [editor_plugins]
 
