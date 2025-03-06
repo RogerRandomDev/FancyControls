@@ -3,7 +3,10 @@
 extends AnimatedContainer
 class_name AnimatedBoxContainer
 
-@export_enum("Vertical","Horizontal") var box_direction:int=0
+@export_enum("Vertical","Horizontal") var box_direction:int=0:
+	set(v):
+		box_direction=v
+		_notification(NOTIFICATION_RESIZED)
 
 
 

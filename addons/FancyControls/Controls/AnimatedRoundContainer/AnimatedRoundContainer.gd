@@ -4,9 +4,16 @@ extends AnimatedContainer
 class_name AnimatedRoundContainer
 
 
-@export_enum("Clockwise","CounterClockwise") var box_direction:int=0
+@export_enum("Clockwise","CounterClockwise") var box_direction:int=0:
+	set(v):
+		box_direction=v
+		_notification(NOTIFICATION_RESIZED)
+
 @export var do_rotation:bool=true
-@export var initial_rotation_degrees:float=0.0
+@export var initial_rotation_degrees:float=0.0:
+	set(v):
+		initial_rotation_degrees=v
+		_notification(NOTIFICATION_RESIZED)
 
 
 
