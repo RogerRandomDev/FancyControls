@@ -137,6 +137,12 @@ func get_function_content()->String:
 		"SyncParameters":
 			return "item_node.sync_chains()\n\t"
 			#return "output_data.Positions.push_back({'tween_type':-9});output_data.Rotations.push_back({'tween_type':-9});output_data.Scales.push_back({'tween_type':-9})\n\t"
+		"RandomFloat":
+			return "var %s = randf_range(%s,%s)\n\t"%[data.value,get_value(1,TYPE_FLOAT),get_value(2,TYPE_FLOAT)]
+		"RandomVector2":
+			return "var %s = Vector2(randf_range(%s,%s),randf_range(%s,%s))\n\t"%[data.value,get_value(1,TYPE_FLOAT),get_value(3,TYPE_FLOAT),get_value(2,TYPE_FLOAT),get_value(4,TYPE_FLOAT)]
+		"ExternalFloat":
+			return "var %s = _external_variables[%s]\n\t"%[data.value,data.get("value_1","invalid")]
 	return ""
 
 

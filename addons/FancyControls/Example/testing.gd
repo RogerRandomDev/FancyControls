@@ -50,4 +50,4 @@ func _on_cycle_right_bacck_pressed():
 
 func _on_button_7_pressed():
 	$VBoxContainer/HBoxContainer/AnimatedRoundContainer._editor_fit_contents()
-	$VBoxContainer/HBoxContainer/AnimatedRoundContainer.play_animation("chicken")
+	$VBoxContainer/HBoxContainer/AnimatedRoundContainer.play_animation("Example")

@@ -1,0 +1,14 @@
+[remap]
+
+importer="FACS.Visual"
+type="Resource"
+uid="uid://bhnem44vn24a4"
+path="res://.godot/imported/Example.FACSVis-da3627dd90769ec1f3205f238f602902.res"
+
+[deps]
+
+source_file="res://addons/FancyControls/Example/Example.FACSVis"
+dest_files=["res://.godot/imported/Example.FACSVis-da3627dd90769ec1f3205f238f602902.res"]
+
+[params]
+

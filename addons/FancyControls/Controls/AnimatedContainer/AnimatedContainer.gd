@@ -48,9 +48,9 @@ func set_animation_group(animation_group_new:GDScript):
 func get_animation_list():
 	return animations.get_script().get_script_method_list().map(func(v):return v.name)
 ##because yes
-func play_animation(animation_name:String)->void:
+func play_animation(animation_name:String,_external_variables:Dictionary={})->void:
 	clear_animations()
-	animate_items_with_chain(animation_name)
+	animate_items_with_chain(animation_name,_external_variables)
 
 ##hmmm i love overwriting data
 func clear_animations()->void:
@@ -175,7 +175,7 @@ func animate_item_from_position(item:AnimatedItem,from_position:Vector2,to_posit
 func get_target_position_for_item(id:int)->Vector2:return Vector2.ZERO
 
 
-func animate_items_with_chain(chain_name:String)->void:
+func animate_items_with_chain(chain_name:String,_external_variables:Dictionary={})->void:
 	var scr=animations
 	var container_data={
 		"size":size,
@@ -186,7 +186,7 @@ func animate_items_with_chain(chain_name:String)->void:
 	#var bound_call:Callable=
 	for i in get_child_count():
 		var child=get_child(i)
-		scr.call(chain_name,child,i,get_child_count(),container_data)
+		scr.call(chain_name,child,i,get_child_count(),container_data,_external_variables)
 		
 		#if response == null:continue
 		#this code is bad.

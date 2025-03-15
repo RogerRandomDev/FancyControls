@@ -15,7 +15,7 @@ static func convert_node(node:GraphNode,graph:GraphEdit):
 	return chain
 
 static func convert_chain_to_code(chain:Array,graph,method_name:String=graph.get_meta(&"func_name"))->Dictionary:
-	var code_out="func %METHOD_NAME%(item_node:AnimatedItem,item_index:float=0,total_items:float=1,container_info={}):\n\t\n\t"
+	var code_out="func %METHOD_NAME%(item_node:AnimatedItem,item_index:float=0,total_items:float=1,container_info={},_external_variables={}):\n\t\n\t"
 	var final_chain=[]
 	chain.map(func(v):if !final_chain.has(v):final_chain.push_back(v))
 	chain=final_chain
