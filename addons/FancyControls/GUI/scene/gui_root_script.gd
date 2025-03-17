@@ -82,6 +82,7 @@ func _on_chain_load_dialog_file_selected(path):
 	for child in $Box/MainBox/BlockUI.get_children():
 		if child.name=="StartNode":continue
 		if child.name=="StartContainerNode":continue
+		if child.name=="_connection_layer":continue
 		$Box/MainBox/BlockUI.remove_child(child)
 		child.free()
 	$Box/MainBox/BlockUI.clear_connections()

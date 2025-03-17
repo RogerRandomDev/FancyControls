@@ -160,6 +160,7 @@ func get_content()->String:
 ##gets the json that is used to rebuild a node structure when loading from the json
 func get_json():
 	var out=data.duplicate()
+	
 	out.position=link_node.position_offset
 	return out
 

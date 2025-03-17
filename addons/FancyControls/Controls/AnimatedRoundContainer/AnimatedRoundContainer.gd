@@ -21,6 +21,7 @@ func _ready():
 	super._ready()
 	if Engine.is_editor_hint():return
 	initial_rotation_degrees=deg_to_rad(initial_rotation_degrees)
+	
 
 
 func _update_spacings(animated:bool=true)->void:
@@ -53,7 +54,6 @@ func _editor_fit_contents()->void:
 		var target_position=get_target_position_for_item(id)-nodes_to_space[id].size*0.5
 		nodes_to_space[id].global_position=target_position
 		nodes_to_space[id].scale=Vector2.ONE
-		
 
 func get_target_position_for_item(id:int)->Vector2:
 	var node_count=get_child_count()

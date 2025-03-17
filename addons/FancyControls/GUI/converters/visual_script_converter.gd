@@ -33,7 +33,7 @@ static func convert_chain_to_code(chain:Array,graph,method_name:String=graph.get
 static func convert_visual(graph:GraphEdit)->Dictionary:
 	var connection_list:=graph.get_connection_list()
 	var chains_to_start:Array=[]
-	var runnable_nodes = graph.get_children().filter(func(v):return v.get_meta(&"runnable"))
+	var runnable_nodes = graph.get_children().filter(func(v):return v.get_meta(&"runnable",false))
 	for connection in connection_list:
 		chains_to_start.push_back(connection.to_node)
 	var node_used=String(runnable_nodes[0].name)
@@ -55,4 +55,3 @@ static func convert_visual(graph:GraphEdit)->Dictionary:
 	
 	
 	return output
-

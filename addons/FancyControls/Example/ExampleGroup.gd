@@ -14,6 +14,3 @@ func Example(item_node:AnimatedItem,item_index:float=0,total_items:float=1,conta
 	item_node.chain_action(0,Sub3,RandomFloat9,Tween.TRANS_SINE,false) #Position
 	item_node.chain_action(0,Add8,1.0,Tween.TRANS_ELASTIC,false) #Position
 	pass
-
-
-

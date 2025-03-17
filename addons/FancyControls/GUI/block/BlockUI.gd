@@ -47,6 +47,7 @@ func _ready():
 	add_valid_connection_type(TYPE_FLOAT,TYPE_VECTOR2)
 	add_valid_connection_type(TYPE_VECTOR2,TYPE_FLOAT)
 	
+	
 
 func _input(event):
 	if event is InputEventKey and event.as_text()=="Ctrl+Z" and event.is_pressed() and not event.is_echo():
@@ -65,12 +66,12 @@ func _on_connection_request(from_node, from_port, to_node, to_port):
 	undo.add_do_method(connection_request_logic.bind(from_node,from_port,to_node,to_port))
 	undo.add_undo_method(disconnection_request_logic.bind(from_node,from_port,to_node,to_port))
 	undo.commit_action()
+	
 func connection_request_logic(from_node,from_port,to_node,to_port):
 	if code_funcs==null:code_funcs=code_block_funcs.new()
 	
 	#hide the editable section when it is set externally
 	var node_port=get_node(String(to_node)).get_child(get_node(String(to_node)).get_input_port_slot(to_port))
-	
 	
 	
 	#actions can only chain
@@ -211,9 +212,3 @@ func attach_node(child)->void:
 	undo.add_undo_method(remove_child.bind(child))
 	undo.add_undo_method(_on_node_deselected.bind(child))
 	undo.commit_action()
-
-
-
-
-
-

@@ -269,5 +269,3 @@ func attach_signals_to_item(item:AnimatedItem)->void:
 	if _focused!=&"":item.focus_entered.connect(_item_function_holder.call.bind(_focused,item))
 	if _unfocused!=&"":item.focus_exited.connect(_item_function_holder.call.bind(_unfocused,item))
 	if _input!=&"":item.gui_input.connect(_item_function_holder.call.bind(_input,item))
-
-
