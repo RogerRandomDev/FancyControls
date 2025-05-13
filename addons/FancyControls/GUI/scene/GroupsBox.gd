@@ -26,8 +26,8 @@ func _ready():
 	
 	(func():
 		base_graph=$"../MainBox/BlockUI".duplicate(DUPLICATE_GROUPS|DUPLICATE_SCRIPTS|DUPLICATE_SIGNALS|DUPLICATE_USE_INSTANTIATION)
-		).call_deferred()
-	
+		
+		).call()
 
 func load_from_manager()->void:
 	group_tree.clear()

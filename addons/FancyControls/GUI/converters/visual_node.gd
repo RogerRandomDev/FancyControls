@@ -143,8 +143,13 @@ func get_function_content()->String:
 			return "var %s = Vector2(randf_range(%s,%s),randf_range(%s,%s))\n\t"%[data.value,get_value(1,TYPE_FLOAT),get_value(3,TYPE_FLOAT),get_value(2,TYPE_FLOAT),get_value(4,TYPE_FLOAT)]
 		"ExternalFloat":
 			return "var %s = _external_variables[%s]\n\t"%[data.value,data.get("value_1","invalid")]
+		"Sin":
+			return "var %s = sin(%s)\n\t"%[data.value,data.get("value_1",TYPE_FLOAT)]
+		"Cos":
+			return "var %s = cos(%s)\n\t"%[data.value,data.get("value_1",TYPE_FLOAT)]
+		"Tan":
+			return "var %s = tan(%s)\n\t"%[data.value,data.get("value_1",TYPE_FLOAT)]
 	return ""
-
 
 func get_content()->String:
 	if not data.has("type"):return ""
@@ -160,6 +165,7 @@ func get_content()->String:
 ##gets the json that is used to rebuild a node structure when loading from the json
 func get_json():
 	var out=data.duplicate()
+	
 	out.position=link_node.position_offset
 	return out
 

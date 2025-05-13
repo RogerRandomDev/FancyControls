@@ -23,7 +23,6 @@ func _ready():
 		build_block_node(block)
 
 
-
 func search_items(search_string:String="",search_category:String="")->void:
 	
 	search_string=search_string.to_lower()
@@ -50,7 +49,6 @@ func build_block_node(block):
 		var child=block_categories[category].create_child()
 		child.set_text(0,block.name)
 		(child as TreeItem).set_tooltip_text(0,block.description)
-		
 	
 	var built_block=GraphNode.new()
 	built_block.set_script(load("res://addons/FancyControls/GUI/block/block_script.gd"))
@@ -436,6 +434,7 @@ func _on_item_selected():
 
 func create_item_block(name_of_block,select:bool=true,attach_to:Node=null):
 	var added_block=built_nodes[name_of_block].instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
+	
 	#compiles info as needed to re-link cause it hates me
 	for child in added_block.get_children():
 		for options in child.get_children():

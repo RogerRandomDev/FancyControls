@@ -7,12 +7,12 @@ class_name FACSJson
 
 static func convert_tree(graph:GraphEdit)->Dictionary:
 	var node_list=graph.get_children()
-	node_list.erase(graph.get_child(0))
-	node_list.erase(graph.get_child(1))
+	node_list=node_list.filter(func(a):return not ["StartNode","StartContainerNode","_connection_layer"].has(a.name))
 	var converted_list=[]
 	var compiled_list=[]
 	var converted_connections=[]
 	for node in node_list:
+		if not node is GraphNode:continue
 		var n=visual_node.new(node,graph)
 		converted_list.push_back(n.get_json())
 		compiled_list.push_back(n.get_compile_format_json(graph))
@@ -37,7 +37,7 @@ static func correct_variable_typing(value):
 
 static func convert_json(json_data,graph:GraphEdit,blockList):
 	for node in graph.get_children():
-		if node.get_meta("action","").begins_with("INITIALIZE"):continue
+		if node.get_meta("action","").begins_with("INITIALIZE") or node.name=="_connection_layer":continue
 		node.free()
 	graph.clear_connections()
 	

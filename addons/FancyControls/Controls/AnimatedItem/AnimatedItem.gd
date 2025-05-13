@@ -247,9 +247,3 @@ func attached_item_size_changed()->void:
 func get_content_meta(meta_name:String,default)->Variant:
 	if has_meta(meta_name):return get_meta(meta_name,default)
 	return connected_control.get_meta(meta_name,default)
-
-
-
-
-
-

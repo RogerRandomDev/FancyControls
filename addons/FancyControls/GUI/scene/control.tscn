@@ -1,16 +1,16 @@
 [gd_scene load_steps=22 format=3 uid="uid://bd5e2fiftorgo"]
 
-[ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/gui_root_script.gd" id="2_g6mr6"]
+[ext_resource type="Script" uid="uid://daeebx5wiamen" path="res://addons/FancyControls/GUI/scene/gui_root_script.gd" id="2_g6mr6"]
 [ext_resource type="Texture2D" uid="uid://bhvhlwa1y2ec" path="res://addons/FancyControls/GUI/scene/2d.res" id="3_2xky7"]
 [ext_resource type="Texture2D" uid="uid://crddlvxtjq48j" path="res://addons/FancyControls/GUI/scene/ClassList.svg" id="4_cm06k"]
 [ext_resource type="Texture2D" uid="uid://b5vkq3256l43k" path="res://addons/FancyControls/GUI/scene/script.res" id="4_dh5u7"]
-[ext_resource type="Script" path="res://addons/FancyControls/GUI/block/BlockList.gd" id="5_n5rgj"]
-[ext_resource type="Script" path="res://addons/FancyControls/GUI/block/BlockUI.gd" id="6_bgwiu"]
-[ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/CodeBox.gd" id="8_ii3ab"]
-[ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedRoundContainer/AnimatedRoundContainer.gd" id="9_3hbk3"]
+[ext_resource type="Script" uid="uid://cng7ur0r6o73l" path="res://addons/FancyControls/GUI/block/BlockList.gd" id="5_n5rgj"]
+[ext_resource type="Script" uid="uid://tmyfvw68lblc" path="res://addons/FancyControls/GUI/block/BlockUI.gd" id="6_bgwiu"]
+[ext_resource type="Script" uid="uid://bj73su5l5ruh0" path="res://addons/FancyControls/GUI/scene/CodeBox.gd" id="8_ii3ab"]
+[ext_resource type="Script" uid="uid://w1rwmh4hb4qn" path="res://addons/FancyControls/Controls/AnimatedRoundContainer/AnimatedRoundContainer.gd" id="9_3hbk3"]
 [ext_resource type="CodeHighlighter" uid="uid://g0qjjgb0nwf8" path="res://addons/FancyControls/GUI/codehighlight.tres" id="9_8spe6"]
-[ext_resource type="Script" path="res://addons/FancyControls/Controls/AnimatedItem/FancyAnimatedItem/FancyAnimatedItem.gd" id="10_e6eqe"]
-[ext_resource type="Script" path="res://addons/FancyControls/GUI/scene/GroupsBox.gd" id="10_p5gwx"]
+[ext_resource type="Script" uid="uid://gjs8jrwt2vyj" path="res://addons/FancyControls/Controls/AnimatedItem/FancyAnimatedItem/FancyAnimatedItem.gd" id="10_e6eqe"]
+[ext_resource type="Script" uid="uid://da2qpubt2cmkw" path="res://addons/FancyControls/GUI/scene/GroupsBox.gd" id="10_p5gwx"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fbxee"]
 content_margin_left = 12.0
@@ -95,17 +95,18 @@ tooltip_text = "(F1-F3)
 Change Tab"
 mouse_filter = 1
 theme_override_colors/font_selected_color = Color(0.4, 0.701961, 1, 1)
-theme_override_styles/tab_selected = SubResource("StyleBoxEmpty_fbxee")
-theme_override_styles/tab_hovered = SubResource("StyleBoxEmpty_fbxee")
+theme_override_styles/button_highlight = SubResource("StyleBoxEmpty_fbxee")
+theme_override_styles/button_pressed = SubResource("StyleBoxEmpty_fbxee")
 theme_override_styles/tab_unselected = SubResource("StyleBoxEmpty_fbxee")
+theme_override_styles/tab_hovered = SubResource("StyleBoxEmpty_fbxee")
+theme_override_styles/tab_selected = SubResource("StyleBoxEmpty_fbxee")
 theme_override_styles/tab_disabled = SubResource("StyleBoxEmpty_fbxee")
 theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_fbxee")
-theme_override_styles/button_pressed = SubResource("StyleBoxEmpty_fbxee")
-theme_override_styles/button_highlight = SubResource("StyleBoxEmpty_fbxee")
-tab_count = 3
+current_tab = 0
 tab_alignment = 1
 clip_tabs = false
 scrolling_enabled = false
+tab_count = 3
 tab_0/title = "GUI"
 tab_0/icon = ExtResource("3_2xky7")
 tab_1/title = "Code View"
@@ -162,7 +163,7 @@ allow_reselect = true
 hide_root = true
 scroll_horizontal_enabled = false
 script = ExtResource("5_n5rgj")
-block_count = 23
+block_count = 26
 block_0/name = &"Float"
 block_0/category = &"Float,Variable"
 block_0/runnable = false
@@ -677,6 +678,60 @@ block_22/property_1/editable = true
 block_22/property_1/connect_left = false
 block_22/property_1/connect_right = false
 block_22/property_1/default = "VarName"
+block_23/name = &"Sin"
+block_23/category = &"Math,Float"
+block_23/runnable = false
+block_23/type = "variablefunction"
+block_23/description = "Gets the sine of the passed in float"
+block_23/properties_count = 2
+block_23/property_0/name = "Out"
+block_23/property_0/type = 3
+block_23/property_0/editable = false
+block_23/property_0/connect_left = false
+block_23/property_0/connect_right = true
+block_23/property_0/default = 0
+block_23/property_1/name = "Input"
+block_23/property_1/type = 3
+block_23/property_1/editable = true
+block_23/property_1/connect_left = true
+block_23/property_1/connect_right = false
+block_23/property_1/default = 0
+block_24/name = &"Cos"
+block_24/category = &"Math,Float"
+block_24/runnable = false
+block_24/type = "variablefunction"
+block_24/description = "Gets the cosine of the passed in float"
+block_24/properties_count = 2
+block_24/property_0/name = "Out"
+block_24/property_0/type = 3
+block_24/property_0/editable = false
+block_24/property_0/connect_left = false
+block_24/property_0/connect_right = true
+block_24/property_0/default = 0
+block_24/property_1/name = "Input"
+block_24/property_1/type = 3
+block_24/property_1/editable = true
+block_24/property_1/connect_left = true
+block_24/property_1/connect_right = false
+block_24/property_1/default = 0
+block_25/name = &"Tan"
+block_25/category = &"Math,Float"
+block_25/runnable = false
+block_25/type = "variablefunction"
+block_25/description = "Gets the tangent of the passed in float"
+block_25/properties_count = 2
+block_25/property_0/name = "Out"
+block_25/property_0/type = 3
+block_25/property_0/editable = false
+block_25/property_0/connect_left = false
+block_25/property_0/connect_right = true
+block_25/property_0/default = 0
+block_25/property_1/name = "Input"
+block_25/property_1/type = 3
+block_25/property_1/editable = true
+block_25/property_1/connect_left = true
+block_25/property_1/connect_right = false
+block_25/property_1/default = 0
 
 [node name="BlockUI" type="GraphEdit" parent="Box/MainBox"]
 layout_mode = 2
@@ -931,8 +986,8 @@ text = "Step"
 [node name="OptionButton" type="OptionButton" parent="Box/CodeBox/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 10
-item_count = 3
 selected = 0
+item_count = 3
 popup/item_0/text = "Round"
 popup/item_0/id = 0
 popup/item_1/text = "Horizontal"
@@ -1160,6 +1215,7 @@ initial_position = 4
 dialog_text = "Are you sure you want to remove this Animation Function?"
 
 [node name="ChainLoadDialog" type="FileDialog" parent="."]
+handle_input_locally = false
 title = "Open a File"
 initial_position = 4
 size = Vector2i(384, 256)

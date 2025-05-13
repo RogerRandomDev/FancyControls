@@ -8,7 +8,3 @@ func item_hovered_example(item:AnimatedItem)->void:
 func item_unhovered_example(item:AnimatedItem)->void:
 	item.set_stacked_position(Vector2(0,0),0.0625,Tween.TRANS_CIRC)
 	item.set_stacked_scale(Vector2.ONE,0.0625,Tween.TRANS_BACK)
-
-
-
-

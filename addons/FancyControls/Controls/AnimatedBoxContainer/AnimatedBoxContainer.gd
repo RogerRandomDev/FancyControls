@@ -52,4 +52,3 @@ func get_target_position_for_item(id:int)->Vector2:
 	else:
 		target_position.y+=spaced_position
 	return target_position
-
