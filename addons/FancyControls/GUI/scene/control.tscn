@@ -684,6 +684,7 @@ show_hidden_files = true
 
 [node name="RightClickMenu" type="PanelContainer" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_right = 224.0
 offset_bottom = 288.0
@@ -700,6 +701,28 @@ placeholder_text = "Node Name"
 [node name="NewNodeList" type="ItemList" parent="RightClickMenu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+item_count = 21
+item_0/text = "MovePosition"
+item_1/text = "MoveRotation"
+item_2/text = "MoveScale"
+item_3/text = "SyncParameters"
+item_4/text = "Add"
+item_5/text = "Subtract"
+item_6/text = "Multiply"
+item_7/text = "Divide"
+item_8/text = "Min"
+item_9/text = "Max"
+item_10/text = "Floor"
+item_11/text = "Ceil"
+item_12/text = "DecomposeVector"
+item_13/text = "ComposeVector"
+item_14/text = "Rotate"
+item_15/text = "ExternalFloat"
+item_16/text = "Sin"
+item_17/text = "Cos"
+item_18/text = "Tan"
+item_19/text = "RandomFloat"
+item_20/text = "RandomVector2"
 
 [connection signal="tab_selected" from="Box/TopBar/TabBar" to="." method="_on_tab_bar_tab_selected"]
 [connection signal="text_changed" from="Box/TopBar/Label" to="Box/MainBox/BlockUI" method="_on_func_name_text_changed"]
