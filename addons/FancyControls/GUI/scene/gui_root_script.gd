@@ -94,7 +94,6 @@ func _on_chain_load_dialog_file_selected(path):
 	buffer=buffer.decompress(buffer_size,FileAccess.COMPRESSION_GZIP)
 	var file_text=buffer.get_string_from_utf8()
 	
-	
 	json_converted.convert_json(
 		JSON.parse_string(file_text),
 		$Box/MainBox/BlockUI,

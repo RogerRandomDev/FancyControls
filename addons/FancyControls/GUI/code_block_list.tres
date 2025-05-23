@@ -1,0 +1,829 @@
+[gd_resource type="Resource" script_class="CodeBlockListResource" load_steps=80 format=3 uid="uid://d1u2lmga6v4ss"]
+
+[ext_resource type="Script" uid="uid://bqahd4r2sue7t" path="res://addons/FancyControls/GUI/block/BlockListResource.gd" id="1_n4i8i"]
+[ext_resource type="Script" uid="uid://b6n6yaklegapt" path="res://addons/FancyControls/GUI/block/code_block_resource.gd" id="1_pgjxc"]
+[ext_resource type="Script" uid="uid://bjpuyvh056a74" path="res://addons/FancyControls/GUI/block/CodeBlockParameters.gd" id="2_e0gxd"]
+
+[sub_resource type="Resource" id="Resource_ykoyj"]
+script = ExtResource("2_e0gxd")
+ParameterName = "MoveTo"
+ParameterType = 5
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = Vector2(0, 0)
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_ych0x"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Duration"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_mgr4f"]
+script = ExtResource("2_e0gxd")
+ParameterName = "TRANS"
+ParameterType = 34
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = PackedStringArray("TRANS_LINEAR", "TRANS_SINE", "TRANS_QUINT", "TRANS_QUART", "TRANS_QUAD", "TRANS_EXPO", "TRANS_ELASTIC", "TRANS_CUBIC", "TRANS_CIRC", "TRANS_BOUNCE", "TRANS_SPRING")
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_1jl71"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Relative"
+ParameterType = 1
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = false
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_brqpj"]
+script = ExtResource("1_pgjxc")
+BlockName = "MovePosition"
+BlockCategories = PackedStringArray("runnable")
+CodeLine = "item_node.chain_action(0,%PARAM_1_VECTOR2%,%PARAM_2_FLOAT%,Tween.%PARAM_3_KEEP%,%PARAM_4_BOOL%) #Position"
+SwappableCodeLines = {}
+RunnableNode = true
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_ykoyj"), SubResource("Resource_ych0x"), SubResource("Resource_mgr4f"), SubResource("Resource_1jl71")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_gy2wq"]
+script = ExtResource("2_e0gxd")
+ParameterName = "RotateTo"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_ntqgm"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Duration"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 1.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_b80gu"]
+script = ExtResource("2_e0gxd")
+ParameterName = "TRANS"
+ParameterType = 34
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = PackedStringArray("TRANS_LINEAR", "TRANS_SINE", "TRANS_QUINT", "TRANS_QUART", "TRANS_QUAD", "TRANS_EXPO", "TRANS_ELASTIC", "TRANS_CUBIC", "TRANS_CIRC", "TRANS_BOUNCE", "TRANS_SPRING")
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_pgjxc"]
+script = ExtResource("1_pgjxc")
+BlockName = "MoveRotation"
+BlockCategories = PackedStringArray("runnable")
+CodeLine = "item_node.chain_action(1,%PARAM_1%,%PARAM_2_FLOAT%,Tween.%PARAM_3_KEEP%) #Position"
+SwappableCodeLines = {}
+RunnableNode = true
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_gy2wq"), SubResource("Resource_ntqgm"), SubResource("Resource_b80gu")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_njbho"]
+script = ExtResource("2_e0gxd")
+ParameterName = "ScaleTo"
+ParameterType = 5
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = Vector2(0, 0)
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_24u61"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Duration"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_hd0cq"]
+script = ExtResource("2_e0gxd")
+ParameterName = "TRANS"
+ParameterType = 34
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = PackedStringArray("TRANS_LINEAR", "TRANS_SINE", "TRANS_QUINT", "TRANS_QUART", "TRANS_QUAD", "TRANS_EXPO", "TRANS_ELASTIC", "TRANS_CUBIC", "TRANS_CIRC", "TRANS_BOUNCE", "TRANS_SPRING")
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_e0gxd"]
+script = ExtResource("1_pgjxc")
+BlockName = "MoveScale"
+BlockCategories = PackedStringArray("runnable")
+CodeLine = "item_node.chain_action(2,%PARAM_1%,%PARAM_2_FLOAT%,Tween.%PARAM_3_KEEP%) #Position"
+SwappableCodeLines = {}
+RunnableNode = true
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_njbho"), SubResource("Resource_24u61"), SubResource("Resource_hd0cq")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_w6n7v"]
+script = ExtResource("1_pgjxc")
+BlockName = "SyncParameters"
+BlockCategories = PackedStringArray("runnable")
+CodeLine = "item_node.sync_chains()"
+SwappableCodeLines = {}
+RunnableNode = true
+Parameters = Array[ExtResource("2_e0gxd")]([])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_tteyr"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Out"
+ParameterType = 3
+Editable = false
+PartOnSide = 1
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_o2tui"]
+script = ExtResource("2_e0gxd")
+ParameterName = "A"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = null
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_o7oss"]
+script = ExtResource("2_e0gxd")
+ParameterName = "B"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_wo10u"]
+script = ExtResource("1_pgjxc")
+BlockName = "Add"
+BlockCategories = PackedStringArray("math", "float", "vector2")
+CodeLine = "var %VARNAME% = %PARAM_1% + %PARAM_2%"
+SwappableCodeLines = {}
+RunnableNode = false
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_tteyr"), SubResource("Resource_o2tui"), SubResource("Resource_o7oss")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_072qu"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Out"
+ParameterType = 3
+Editable = false
+PartOnSide = 1
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_o2npt"]
+script = ExtResource("2_e0gxd")
+ParameterName = "A"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = null
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_dwoh7"]
+script = ExtResource("2_e0gxd")
+ParameterName = "B"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_qo2n8"]
+script = ExtResource("1_pgjxc")
+BlockName = "Subtract"
+BlockCategories = PackedStringArray("math", "float", "vector2")
+CodeLine = "var %VARNAME% = %PARAM_1% - %PARAM_2%"
+SwappableCodeLines = {}
+RunnableNode = false
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_072qu"), SubResource("Resource_o2npt"), SubResource("Resource_dwoh7")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_jf0eh"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Out"
+ParameterType = 3
+Editable = false
+PartOnSide = 1
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_8uclc"]
+script = ExtResource("2_e0gxd")
+ParameterName = "A"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = null
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_bch65"]
+script = ExtResource("2_e0gxd")
+ParameterName = "B"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_l8ppj"]
+script = ExtResource("1_pgjxc")
+BlockName = "Multiply"
+BlockCategories = PackedStringArray("math", "float", "vector2")
+CodeLine = "var %VARNAME% = %PARAM_1% * %PARAM_2%"
+SwappableCodeLines = {}
+RunnableNode = false
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_jf0eh"), SubResource("Resource_8uclc"), SubResource("Resource_bch65")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_4u37b"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Out"
+ParameterType = 3
+Editable = false
+PartOnSide = 1
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_2jawy"]
+script = ExtResource("2_e0gxd")
+ParameterName = "A"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = null
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_5pm31"]
+script = ExtResource("2_e0gxd")
+ParameterName = "B"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_016tm"]
+script = ExtResource("1_pgjxc")
+BlockName = "Divide"
+BlockCategories = PackedStringArray("math", "float", "vector2")
+CodeLine = "var %VARNAME% = %PARAM_1% / %PARAM_2%"
+SwappableCodeLines = {}
+RunnableNode = false
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_4u37b"), SubResource("Resource_2jawy"), SubResource("Resource_5pm31")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_sba60"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Out"
+ParameterType = 3
+Editable = false
+PartOnSide = 1
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_ymsgg"]
+script = ExtResource("2_e0gxd")
+ParameterName = "A"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = null
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_sy27o"]
+script = ExtResource("2_e0gxd")
+ParameterName = "B"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_apinc"]
+script = ExtResource("1_pgjxc")
+BlockName = "Min"
+BlockCategories = PackedStringArray("math", "float", "vector2")
+CodeLine = "var %VARNAME% = min(%PARAM_1% , %PARAM_2%)"
+SwappableCodeLines = {}
+RunnableNode = false
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_sba60"), SubResource("Resource_ymsgg"), SubResource("Resource_sy27o")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_k2pks"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Out"
+ParameterType = 3
+Editable = false
+PartOnSide = 1
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_bllkd"]
+script = ExtResource("2_e0gxd")
+ParameterName = "A"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = null
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_q4s7p"]
+script = ExtResource("2_e0gxd")
+ParameterName = "B"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_jl1ga"]
+script = ExtResource("1_pgjxc")
+BlockName = "Max"
+BlockCategories = PackedStringArray("math", "float", "vector2")
+CodeLine = "var %VARNAME% = max(%PARAM_1% , %PARAM_2%)"
+SwappableCodeLines = {}
+RunnableNode = false
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_k2pks"), SubResource("Resource_bllkd"), SubResource("Resource_q4s7p")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_ol6bh"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Out"
+ParameterType = 3
+Editable = false
+PartOnSide = 1
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_v1hse"]
+script = ExtResource("2_e0gxd")
+ParameterName = "A"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = null
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_waeh1"]
+script = ExtResource("1_pgjxc")
+BlockName = "Floor"
+BlockCategories = PackedStringArray("math", "float", "vector2")
+CodeLine = "var %VARNAME% = floor(%PARAM_1%)"
+SwappableCodeLines = {
+5: "var %VARNAME% = %PARAM_1%.floor()"
+}
+RunnableNode = false
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_ol6bh"), SubResource("Resource_v1hse")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_loug7"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Out"
+ParameterType = 3
+Editable = false
+PartOnSide = 1
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_i0k6y"]
+script = ExtResource("2_e0gxd")
+ParameterName = "A"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = null
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_5ow5d"]
+script = ExtResource("1_pgjxc")
+BlockName = "Ceil"
+BlockCategories = PackedStringArray("math", "float", "vector2")
+CodeLine = "var %VARNAME% = ceil(%PARAM_1%)"
+SwappableCodeLines = {
+5: "var %VARNAME% = %PARAM_1%.ceil()"
+}
+RunnableNode = false
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_loug7"), SubResource("Resource_i0k6y")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_w3t6r"]
+script = ExtResource("2_e0gxd")
+ParameterName = "x"
+ParameterType = 3
+Editable = false
+PartOnSide = 1
+specialDefault = "%PARAM_2_:x%"
+extra_resets = PackedInt32Array()
+DefaultValue = null
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_ara3q"]
+script = ExtResource("2_e0gxd")
+ParameterName = "y"
+ParameterType = 3
+Editable = false
+PartOnSide = 1
+specialDefault = "%PARAM_2_:y%"
+extra_resets = PackedInt32Array()
+DefaultValue = null
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_g27k5"]
+script = ExtResource("2_e0gxd")
+ParameterName = "input"
+ParameterType = 5
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array(0, 1)
+DefaultValue = Vector2(0, 0)
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_dyhnh"]
+script = ExtResource("1_pgjxc")
+BlockName = "DecomposeVector"
+BlockCategories = PackedStringArray("vector2", "float")
+CodeLine = ""
+SwappableCodeLines = {}
+RunnableNode = false
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_w3t6r"), SubResource("Resource_ara3q"), SubResource("Resource_g27k5")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_36aba"]
+script = ExtResource("2_e0gxd")
+ParameterName = "out"
+ParameterType = 5
+Editable = false
+PartOnSide = 1
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = Vector2(0, 0)
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_5ctfx"]
+script = ExtResource("2_e0gxd")
+ParameterName = "x"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_5q3dg"]
+script = ExtResource("2_e0gxd")
+ParameterName = "y"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_oasbd"]
+script = ExtResource("1_pgjxc")
+BlockName = "ComposeVector"
+BlockCategories = PackedStringArray("vector2", "float")
+CodeLine = "var %VARNAME% = Vector2(%PARAM_1% , %PARAM_2%)"
+SwappableCodeLines = {}
+RunnableNode = false
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_36aba"), SubResource("Resource_5ctfx"), SubResource("Resource_5q3dg")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_2b3t1"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Out"
+ParameterType = 5
+Editable = false
+PartOnSide = 1
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = Vector2(0, 0)
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_1pwg1"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Vector"
+ParameterType = 5
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = Vector2(0, 0)
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_8337q"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Angle"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_0rq46"]
+script = ExtResource("1_pgjxc")
+BlockName = "Rotate"
+BlockCategories = PackedStringArray("vector2", "float")
+CodeLine = "var %VARNAME% = %PARAM_1%.rotated(%PARAM_2%)"
+SwappableCodeLines = {}
+RunnableNode = false
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_2b3t1"), SubResource("Resource_1pwg1"), SubResource("Resource_8337q")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_4tvlq"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Name"
+ParameterType = 4
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = "Placeholder"
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_wbgu0"]
+script = ExtResource("2_e0gxd")
+ParameterName = "out"
+ParameterType = 3
+Editable = false
+PartOnSide = 1
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_hspdk"]
+script = ExtResource("1_pgjxc")
+BlockName = "ExternalFloat"
+BlockCategories = PackedStringArray("external", "float")
+CodeLine = "var %VARNAME% = _external_variables[%PARAM_0%]"
+SwappableCodeLines = {}
+RunnableNode = false
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_4tvlq"), SubResource("Resource_wbgu0")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_e1npr"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Out"
+ParameterType = 3
+Editable = false
+PartOnSide = 1
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_t8uf4"]
+script = ExtResource("2_e0gxd")
+ParameterName = "In"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_q0byp"]
+script = ExtResource("1_pgjxc")
+BlockName = "Sin"
+BlockCategories = PackedStringArray("math", "float")
+CodeLine = "var %VARNAME% = sin(%PARAM_1%)"
+SwappableCodeLines = {}
+RunnableNode = false
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_e1npr"), SubResource("Resource_t8uf4")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_0jk6u"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Out"
+ParameterType = 3
+Editable = false
+PartOnSide = 1
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_an1td"]
+script = ExtResource("2_e0gxd")
+ParameterName = "In"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_h40e3"]
+script = ExtResource("1_pgjxc")
+BlockName = "Cos"
+BlockCategories = PackedStringArray("math", "float")
+CodeLine = "var %VARNAME% = cos(%PARAM_1%)"
+SwappableCodeLines = {}
+RunnableNode = false
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_0jk6u"), SubResource("Resource_an1td")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_vil3f"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Out"
+ParameterType = 3
+Editable = false
+PartOnSide = 1
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_srobf"]
+script = ExtResource("2_e0gxd")
+ParameterName = "In"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_wc0ii"]
+script = ExtResource("1_pgjxc")
+BlockName = "Tan"
+BlockCategories = PackedStringArray("math", "float")
+CodeLine = "var %VARNAME% = tan(%PARAM_1%)"
+SwappableCodeLines = {}
+RunnableNode = false
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_vil3f"), SubResource("Resource_srobf")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_by0vo"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Out"
+ParameterType = 3
+Editable = false
+PartOnSide = 1
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_3r0us"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Min"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_xmman"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Max"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_gulyl"]
+script = ExtResource("1_pgjxc")
+BlockName = "RandomFloat"
+BlockCategories = PackedStringArray("math", "float", "random")
+CodeLine = "var %VARNAME% = randf_range(%PARAM_1%,%PARAM_2%)"
+SwappableCodeLines = {}
+RunnableNode = false
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_by0vo"), SubResource("Resource_3r0us"), SubResource("Resource_xmman")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[sub_resource type="Resource" id="Resource_5o4qq"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Out"
+ParameterType = 3
+Editable = false
+PartOnSide = 1
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_we5a6"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Min"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_b2cs7"]
+script = ExtResource("2_e0gxd")
+ParameterName = "Max"
+ParameterType = 3
+Editable = true
+PartOnSide = 0
+specialDefault = ""
+extra_resets = PackedInt32Array()
+DefaultValue = 0.0
+metadata/_custom_type_script = "uid://bjpuyvh056a74"
+
+[sub_resource type="Resource" id="Resource_ysj6j"]
+script = ExtResource("1_pgjxc")
+BlockName = "RandomVector2"
+BlockCategories = PackedStringArray("math", "vector2", "random")
+CodeLine = "var %VARNAME% = Vector2(randf_range(%PARAM_1%,%PARAM_2%),randf_range(%PARAM_1%,%PARAM_2%))"
+SwappableCodeLines = {}
+RunnableNode = false
+Parameters = Array[ExtResource("2_e0gxd")]([SubResource("Resource_5o4qq"), SubResource("Resource_we5a6"), SubResource("Resource_b2cs7")])
+metadata/_custom_type_script = "uid://b6n6yaklegapt"
+
+[resource]
+script = ExtResource("1_n4i8i")
+block_list = Array[ExtResource("1_pgjxc")]([SubResource("Resource_brqpj"), SubResource("Resource_pgjxc"), SubResource("Resource_e0gxd"), SubResource("Resource_w6n7v"), SubResource("Resource_wo10u"), SubResource("Resource_qo2n8"), SubResource("Resource_l8ppj"), SubResource("Resource_016tm"), SubResource("Resource_apinc"), SubResource("Resource_jl1ga"), SubResource("Resource_waeh1"), SubResource("Resource_5ow5d"), SubResource("Resource_dyhnh"), SubResource("Resource_oasbd"), SubResource("Resource_0rq46"), SubResource("Resource_hspdk"), SubResource("Resource_q0byp"), SubResource("Resource_h40e3"), SubResource("Resource_wc0ii"), SubResource("Resource_gulyl"), SubResource("Resource_ysj6j")])
+metadata/_custom_type_script = "uid://bqahd4r2sue7t"
