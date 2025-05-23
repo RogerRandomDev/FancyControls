@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bd5e2fiftorgo"]
+[gd_scene load_steps=24 format=3 uid="uid://bd5e2fiftorgo"]
 
 [ext_resource type="Script" uid="uid://daeebx5wiamen" path="res://addons/FancyControls/GUI/scene/gui_root_script.gd" id="2_g6mr6"]
 [ext_resource type="Texture2D" uid="uid://bhvhlwa1y2ec" path="res://addons/FancyControls/GUI/scene/2d.res" id="3_2xky7"]
@@ -12,6 +12,7 @@
 [ext_resource type="CodeHighlighter" uid="uid://g0qjjgb0nwf8" path="res://addons/FancyControls/GUI/codehighlight.tres" id="9_8spe6"]
 [ext_resource type="Script" uid="uid://gjs8jrwt2vyj" path="res://addons/FancyControls/Controls/AnimatedItem/FancyAnimatedItem/FancyAnimatedItem.gd" id="10_e6eqe"]
 [ext_resource type="Script" uid="uid://da2qpubt2cmkw" path="res://addons/FancyControls/GUI/scene/GroupsBox.gd" id="10_p5gwx"]
+[ext_resource type="Script" uid="uid://4m8p4m5lxv4t" path="res://addons/FancyControls/GUI/scene/right_click_menu.gd" id="13_3wsnl"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fbxee"]
 content_margin_left = 12.0
@@ -63,6 +64,7 @@ unicode = 114
 events = [SubResource("InputEventKey_mcxrh")]
 
 [node name="Control" type="Control"]
+visible = false
 custom_minimum_size = Vector2(768, 512)
 layout_mode = 3
 anchors_preset = 15
@@ -679,6 +681,25 @@ file_mode = 0
 root_subfolder = "res://"
 filters = PackedStringArray("*.FACSVis", "*.gd")
 show_hidden_files = true
+
+[node name="RightClickMenu" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 224.0
+offset_bottom = 288.0
+script = ExtResource("13_3wsnl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RightClickMenu"]
+layout_mode = 2
+
+[node name="NewNodeSearch" type="LineEdit" parent="RightClickMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+placeholder_text = "Node Name"
+
+[node name="NewNodeList" type="ItemList" parent="RightClickMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 
 [connection signal="tab_selected" from="Box/TopBar/TabBar" to="." method="_on_tab_bar_tab_selected"]
 [connection signal="text_changed" from="Box/TopBar/Label" to="Box/MainBox/BlockUI" method="_on_func_name_text_changed"]

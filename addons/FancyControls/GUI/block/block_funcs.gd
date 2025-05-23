@@ -18,7 +18,7 @@ func get_value_type(on_node:GraphNode,val:int=0):
 	var node=null
 	var last_out=out
 	var out_type=on_node.get_meta("type_%s"%str(val))
-	#print(out_type)
+	
 	while out is String and out.contains("|"):
 		last_out=out
 		var split_out=out.split("|")
