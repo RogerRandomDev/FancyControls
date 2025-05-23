@@ -14,6 +14,7 @@ func reload_codeview()->void:
 	var scr=GDScript.new()
 	scr.source_code="@tool\nextends RefCounted\n"+converted_view.code.replace("%METHOD_NAME%","PLACEHOLDER_NAME")
 	scr.reload()
+	
 	$VBoxContainer/Container/AnimatedRoundContainer.set_animation_group(scr)
 
 

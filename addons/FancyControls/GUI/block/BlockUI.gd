@@ -5,6 +5,9 @@ extends GraphEdit
 
 var undo:UndoRedo=UndoRedo.new()
 
+var connection_map:Dictionary={}
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -24,6 +27,7 @@ func _ready():
 	$StartNode.set_meta(&"value_5","total_items")
 	$StartNode.set_meta(&"type_5",TYPE_INT)
 	$StartNode.set_meta(&"value_count",4)
+	$StartNode.set_meta(&"ignore_in_compile",true)
 	
 	$StartContainerNode.set_meta(&"runnable",false)
 	$StartContainerNode.set_meta(&"type","function")
@@ -37,6 +41,7 @@ func _ready():
 	$StartContainerNode.set_meta(&"value_3","container_info.rotation")
 	$StartContainerNode.set_meta(&"type_3",TYPE_FLOAT)
 	$StartContainerNode.set_meta(&"value_count",4)
+	$StartContainerNode.set_meta(&"ignore_in_compile",true)
 	
 	
 	
@@ -59,9 +64,25 @@ func _input(event):
 	
 
 
+func generate_connection_map()->void:
+	connection_map={}
+	connections.map(map_connection)
+func map_connection(connection)->void:
+	var connection_data=connection_map.get(connection.from_node,[])
+	connection_data.push_back(
+		{
+			"from":get_node(String(connection.from_node)),
+			"to":get_node(String(connection.to_node)),
+			"from_port":connection.from_port,
+			"to_port":connection.to_port
+		}
+	)
+	connection_map.set(connection.from_node,connection_data)
+
 
 
 func _on_connection_request(from_node, from_port, to_node, to_port):
+	
 	undo.create_action("UndoConnection")
 	undo.add_do_method(connection_request_logic.bind(from_node,from_port,to_node,to_port))
 	undo.add_undo_method(disconnection_request_logic.bind(from_node,from_port,to_node,to_port))
@@ -69,36 +90,64 @@ func _on_connection_request(from_node, from_port, to_node, to_port):
 	
 func connection_request_logic(from_node,from_port,to_node,to_port):
 	if code_funcs==null:code_funcs=code_block_funcs.new()
-	
+	generate_connection_map()
 	#hide the editable section when it is set externally
-	var node_port=get_node(String(to_node)).get_child(get_node(String(to_node)).get_input_port_slot(to_port))
+	var from_block = get_block(from_node)
+	var to_block = get_block(to_node)
 	
+	var node_port=to_block.get_child(to_block.get_input_port_slot(to_port))
+	var connection_list=connection_map.get(from_node,[])
 	
 	#actions can only chain
-	if get_node(String(from_node)).get_meta(&"runnable") and from_port==0 and get_connection_list().filter(func(v):return v.from_node==from_node and v.from_port==0).size()!=0:return
-	if get_connection_list().filter(func(v):return v.to_node==to_node and v.to_port==to_port).size()!=0:return
-	if get_node(String(to_node)).get_input_port_slot(to_port)>0 or not get_node(String(from_node)).get_meta(&"runnable"):
-		get_node(String(to_node)).set_meta(
-			&"value_%s"%str(get_node(String(to_node)).get_input_port_slot(to_port)-int(get_node(String(to_node)).get_meta(&"runnable"))),
-			String(from_node)+"|value_%s"%get_node(String(from_node)).get_output_port_slot(from_port)
-			 if not get_node(String(from_node)).get_meta(&"type")=="variable" else String(from_node)+"|value_0"
+	if from_block.get_meta(&"runnable") and from_port==0 and connection_list.any(check_from_connected.bind(from_block,from_port)):return
+	if connection_list.any(check_to_connected.bind(to_block,to_port)):return
+	
+	var to_port_slot=to_block.get_input_port_slot(to_port)
+	var from_port_slot=from_block.get_output_port_slot(from_port)
+	if to_block.has_meta(&"SourceRef"):
+		var ref = to_block.get_meta(&"SourceRef",null)
+		if ref:ref.value_changed.call_deferred(to_block,to_port_slot,true)
+	if from_block.has_meta(&"SourceRef"):
+		var ref=from_block.get_meta(&"SourceRef",null)
+		if ref:ref.value_changed.call_deferred(from_block,from_port_slot,true)
+	
+	
+	
+	if to_port_slot>0:
+		to_block.set_meta(
+			&"value_%s"%str(to_port_slot),
+			get_port_value(from_node,from_block,from_port)
 		)
-	var node=get_node(String(from_node))
-	if code_funcs.has_method(str(node.get_meta(&"action"))+"_connected"):
-		code_funcs.call_deferred(node.get_meta(&"action")+"_connected",from_node,to_node,from_port,to_port,self)
+		
+	
+	var check_methods=[
+		str(from_block.get_meta(&"action")).to_lower()+"_connected",
+		str(to_block.get_meta(&"action")).to_lower()+"_connected"
+	]
+	for method_name in check_methods:
+		if not code_funcs.has_method(method_name):continue
+		code_funcs.call_deferred(method_name,from_node,to_node,from_port,to_port,self)
+	
+	
 	if node_port.get_child_count()>1:
 		for child in range(1,node_port.get_child_count()):
 			node_port.get_child(child).hide()
-		
-	node.get_output_port_slot(from_port)
-	
-	node=get_node(String(to_node))
-	if code_funcs.has_method(str(node.get_meta(&"action"))+"_connected"):
-		code_funcs.call_deferred(node.get_meta(&"action")+"_connected",from_node,to_node,from_port,to_port,self)
 	if node_port.get_child_count()>1:node_port.get_child(1).hide()
-	node.get_input_port_slot(to_port)
 	
 	connect_node(from_node,from_port,to_node,to_port)
+
+
+func get_block(block_name):
+	return get_node_or_null(String(block_name))
+func check_to_connected(from,to,to_port)->bool:
+	return from.get("to",null)==to and from.get("to_port",-1) == to_port
+func check_from_connected(from,to,to_port)->bool:
+	return from.get("from",null)==to and from.get("from_port",-1) == to_port
+
+func get_port_value(from_name:String,node_block,from_port:int)->String:
+	return String(from_name)+"|value_%s"%node_block.get_output_port_slot(from_port) if not node_block.get_meta(&"type")=="variable" else String(from_name)+"|value_0"
+
+
 
 
 func _on_disconnection_request(from_node, from_port, to_node, to_port):
@@ -110,26 +159,35 @@ func _on_disconnection_request(from_node, from_port, to_node, to_port):
 
 
 func disconnection_request_logic(from_node,from_port,to_node,to_port):
-	#needs fixed this still doesnt properly update the type of resource connected for ADD_connected and ADD_disconnected.
-	#great pain fills me
+	generate_connection_map()
+	
+	var from_block = get_block(from_node)
+	var to_block = get_block(to_node)
+	
+	var to_port_slot=to_block.get_input_port_slot(to_port)
+	var node_port=to_block.get_child(to_port_slot)
 	
 	#hide the editable section when it is set externally
-	var node_port=get_node(String(to_node)).get_child(get_node(String(to_node)).get_input_port_slot(to_port))
-	get_node(String(to_node)).emit_signal("disconnected_port",get_node(String(to_node)).get_input_port_slot(to_port),node_port)
+	to_block.emit_signal("disconnected_port",to_port_slot,node_port)
 	
 	if node_port.get_child_count()>1:
 		for child in range(1,node_port.get_child_count()):
 			node_port.get_child(child).show()
 	disconnect_node(from_node,from_port,to_node,to_port)
 	
+	var source_ref=to_block.get_meta(&"SourceRef")
+	if source_ref:source_ref.reset_value(to_block,
+		to_port_slot,to_block.get_meta(&"runnable",false)
+	)
 	
-	var node=get_node(String(from_node))
-	
-	if code_funcs.has_method(str(node.get_meta(&"action"))+"_disconnected"):
-		code_funcs.call_deferred(node.get_meta(&"action")+"_disconnected",from_node,to_node,from_port,to_port,self)
-	node=get_node(String(to_node))
-	if code_funcs.has_method(str(node.get_meta(&"action"))+"_disconnected"):
-		code_funcs.call_deferred(node.get_meta(&"action")+"_disconnected",from_node,to_node,from_port,to_port,self)
+
+	var check_methods=[
+		str(from_block.get_meta(&"action")).to_lower()+"_disconnected",
+		str(to_block.get_meta(&"action")).to_lower()+"_disconnected"
+	]
+	for method_name in check_methods:
+		if not code_funcs.has_method(method_name):continue
+		code_funcs.call_deferred(method_name,from_node,to_node,from_port,to_port,self)
 	
 	
 
@@ -196,11 +254,6 @@ func _on_end_node_move():
 	for node in current_selected_nodes:
 		undo.add_do_property(node,"position_offset",node.position_offset)
 	undo.commit_action()
-
-
-
-
-
 
 
 ## because undo-redo is always a nice feature to have, this acts as the builder to call
